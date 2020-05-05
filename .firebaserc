@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "skill-board-bbe02"
+  },
+  "targets": {
+    "skill-board-bbe02": {
+      "hosting": {
+        "to-camp": [
+          "skill-board-bbe02"
+        ]
+      }
+    }
   }
 }

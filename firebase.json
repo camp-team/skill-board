@@ -11,16 +11,6 @@
   },
   "hosting": [
     {
-      "public": "dist/skill-board",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
       "target": "skill-board",
       "public": "dist/skill-board",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],

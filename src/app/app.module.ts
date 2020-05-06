@@ -26,7 +26,7 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
     AngularFireFunctionsModule,
     AngularFireAnalyticsModule,
   ],
-  providers: [],
+  providers: [{ provide: REGION, useValue: 'asia-northeast1' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

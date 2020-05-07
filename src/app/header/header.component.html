@@ -1,1 +1,23 @@
-<p>header works!</p>
+<mat-toolbar class="header">
+  <mat-toolbar-row class="header__row">
+    <p class="header__logo">SkillBoard</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="search">
+      <input
+        class="search__input"
+        formControlName="searchInput"
+        matInput
+        placeholder="検索したいスキル名"
+        autocomplate="off"
+      />
+
+      <button class="search__button" mat-icon-button>
+        <mat-icon class="mat-18">search</mat-icon>
+      </button>
+    </form>
+
+    <div class="login">
+      <button mat-button (click)="login()">ログイン</button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

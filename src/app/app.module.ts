@@ -13,6 +13,12 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { HeaderComponent } from './header/header.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -26,6 +32,13 @@ import { HeaderComponent } from './header/header.component';
     AngularFireStorageModule,
     AngularFireFunctionsModule,
     AngularFireAnalyticsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   providers: [{ provide: REGION, useValue: 'asia-northeast1' }],
   bootstrap: [AppComponent],

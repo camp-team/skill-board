@@ -1,6 +1,8 @@
 <mat-toolbar class="header">
   <mat-toolbar-row class="header__row">
-    <p class="header__logo">SkillBoard</p>
+    <button mat-flat-button class="header__logo" routerLink="/">
+      SkillBoard
+    </button>
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="search">
       <input

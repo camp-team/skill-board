@@ -12,7 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { HeaderComponent } from './app/header/header.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],

@@ -12,7 +12,7 @@ export class NavigationService {
   isOpened = true;
 
   toggle() {
-    this.isOpened = !this.isOpened; // 反転させる
+    this.isOpened = !this.isOpened;
     this.isOpenSource.next(this.isOpened);
   }
 }

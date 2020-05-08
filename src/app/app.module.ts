@@ -22,9 +22,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, NavigationComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    NavigationComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

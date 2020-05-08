@@ -8,8 +8,6 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: () =>
       import('./ranking/ranking.module').then((m) => m.RankingModule),
-    // canLoad: [AuthGuard],
-    // canActivate: [AuthGuard],
   },
 ];
 

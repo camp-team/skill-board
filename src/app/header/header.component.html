@@ -1,7 +1,13 @@
 <mat-toolbar class="header">
-  <a mat-flat-button class="header__logo" routerLink="/">
-    SkillBoard
-  </a>
+  <div>
+    <button (click)="navToggle()" mat-icon-button>
+      <mat-icon class="nav-icon">menu</mat-icon>
+    </button>
+
+    <a mat-flat-button class="header__logo" routerLink="/">
+      SkillBoard
+    </a>
+  </div>
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="search">
     <input
@@ -13,7 +19,7 @@
     />
 
     <button class="search__button" mat-icon-button>
-      <mat-icon class="mat-18">search</mat-icon>
+      <mat-icon>search</mat-icon>
     </button>
   </form>
 

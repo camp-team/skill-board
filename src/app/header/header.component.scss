@@ -6,10 +6,8 @@
   justify-content: space-between;
 
   &__logo {
-    height: 34px;
+    vertical-align: middle;
     font-size: 24px;
-    margin: 0px;
-    display: block;
   }
 }
 
@@ -32,8 +30,6 @@
   }
 
   &__button {
-    width: 34px;
-    height: 34px;
     color: rgba(0, 0, 0, 0.32);
   }
 }

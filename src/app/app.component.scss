@@ -1,12 +1,6 @@
-html,
-body {
-  min-height: 100%;
-  height: 100%;
-}
-
 .content {
-  display: flex; // 縦並びにする
-  flex-flow: column; // 縦並びにする
+  display: flex;
+  flex-flow: column;
   min-height: 100%;
 }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationService } from './services/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'skill-board';
+
+  navOpened = true;
+
+  constructor(private navService: NavigationService) {
+    this.navService.isOpen$.subscribe((opened) => (this.navOpened = opened));
+  }
 }

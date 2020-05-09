@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
     searchInput: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private navService: NavigationService) {}
 
   ngOnInit(): void {}
 
@@ -21,5 +22,9 @@ export class HeaderComponent implements OnInit {
 
   login() {
     console.log('login');
+  }
+
+  navToggle() {
+    this.navService.toggle();
   }
 }

@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+mat-sidenav-container {
+  flex: 1;
+}

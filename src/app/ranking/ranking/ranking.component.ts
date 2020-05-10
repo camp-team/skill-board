@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AggregationResultService } from 'src/app/services/aggregation-result.service';
+import { AggregationResult } from 'src/app/interfaces/ aggregation-result';
 
 @Component({
   selector: 'app-ranking',
@@ -6,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ranking.component.scss'],
 })
 export class RankingComponent implements OnInit {
-  constructor() {}
+  results: AggregationResult[] = this.resultService.getResults();
+
+  constructor(private resultService: AggregationResultService) {}
 
   ngOnInit(): void {}
 }

@@ -17,14 +17,14 @@ export class AggregationResultService {
     },
     {
       skill: { name: 'Vue' },
-      price: 500000,
-      vacancy: 100,
+      price: 400000,
+      vacancy: 80,
       aggregationDate: new Date('2020/5/10'),
     },
     {
       skill: { name: 'React' },
-      price: 500000,
-      vacancy: 100,
+      price: 300000,
+      vacancy: 60,
       aggregationDate: new Date('2020/5/10'),
     },
   ];

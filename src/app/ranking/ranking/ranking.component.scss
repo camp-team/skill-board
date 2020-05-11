@@ -1,0 +1,16 @@
+.content {
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  &__footer {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
+.filter {
+  width: 200px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}

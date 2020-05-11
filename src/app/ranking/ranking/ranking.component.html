@@ -1,7 +1,24 @@
 <div class="container">
-  <ul>
-    <li *ngFor="let result of results">
-      {{ result.skill.name }}
-    </li>
-  </ul>
+  <div class="content">
+    <h1 class="content__header">ランキング</h1>
+
+    <div class="content__body">
+      <div class="result">
+        <ul>
+          <li *ngFor="let result of results; let i = index">
+            <app-result [result]="result" [rank]="i + 1"></app-result>
+          </li>
+        </ul>
+        <p>ranking結果のUIはcard化する</p>
+      </div>
+
+      <div class="filter">
+        <app-filter-form></app-filter-form>
+      </div>
+    </div>
+
+    <div class="content__footer">
+      <app-banner></app-banner>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,81 @@
-<p>
-  {{ rank }}位 / {{ result.skill.name }} / 単価 ¥{{ result.price | number }} /
-  求人{{ result.vacancy }}件
-</p>
+<mat-card class="result-card">
+  <mat-card-header>
+    <div
+      class="avatar"
+      mat-card-avatar
+      style="background-image:
+      url('/assets/images/skill/{{ result.skill.name }}.svg');"
+    ></div>
+
+    <mat-card-title>{{ rank }}. {{ result.skill.caption }}</mat-card-title>
+    <mat-card-subtitle>
+      <ng-container *ngFor="let category of getCategries(); first as isFirst">
+        <a class="caterogy" href="">#{{ category.caption }}</a>
+      </ng-container>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <table class="score-table">
+      <tr class="score-table__row">
+        <td class="score-table__title">平均単価</td>
+        <td class="score-table__score">¥{{ result.price | number }}</td>
+        <td>
+          <button mat-button><mat-icon>show_chart</mat-icon>推移</button>
+          <button mat-button><mat-icon>pie_chart</mat-icon>内訳</button>
+          <button mat-button><mat-icon>bar_chart</mat-icon>分布</button>
+        </td>
+      </tr>
+      <tr class="score-table__row">
+        <td class="score-table__title">求人数</td>
+        <td class="score-table__score">{{ result.vacancy }}件</td>
+        <td>
+          <button mat-button><mat-icon>show_chart</mat-icon>推移</button>
+          <button mat-button><mat-icon>pie_chart</mat-icon>内訳</button>
+          <button mat-button><mat-icon>bar_chart</mat-icon>分布</button>
+        </td>
+      </tr>
+    </table>
+
+    <!-- <table class="score-table">
+      <tr class="score-table__row">
+        <td class="score-table__title">単価</td>
+        <td class="score-table__score">¥{{ result.price | number }}</td>
+        <td>
+          <a class="score-table__detail-link" routerLink="/">推移</a>
+          <a class="score-table__detail-link" routerLink="/">内訳</a>
+          <a class="score-table__detail-link" routerLink="/">分布</a>
+        </td>
+      </tr>
+      <tr class="score-table__row">
+        <td class="score-table__title">求人</td>
+        <td class="score-table__score">{{ result.vacancy }}件</td>
+        <td>
+          <a class="score-table__detail-link" routerLink="/">推移</a>
+          <a class="score-table__detail-link" routerLink="/">内訳</a>
+          <a class="score-table__detail-link" routerLink="/">分布</a>
+        </td>
+      </tr>
+      <tr class="score-table__row">
+        <td class="score-table__title">トレンド</td>
+        <td class="score-table__score">XXX</td>
+        <td>
+          <a class="score-table__detail-link" routerLink="/">推移</a>
+          <a class="score-table__detail-link" routerLink="/">内訳</a>
+          <a class="score-table__detail-link" routerLink="/">分布</a>
+        </td>
+      </tr>
+    </table> -->
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="action-buttons">
+      <div class="action-buttons__left">
+        <button mat-button>LIKE</button>
+        <span class="like-count">158</span>
+      </div>
+      <div class="action-buttons__right">
+        <button mat-button>SHARE</button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

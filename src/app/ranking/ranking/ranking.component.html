@@ -4,12 +4,11 @@
 
     <div class="content__body">
       <div class="result">
-        <ul>
-          <li *ngFor="let result of results; let i = index">
-            <app-result [result]="result" [rank]="i + 1"></app-result>
-          </li>
-        </ul>
-        <p>ranking結果のUIはcard化する</p>
+        <app-result
+          *ngFor="let result of results; let i = index"
+          [result]="result"
+          [rank]="i + 1"
+        ></app-result>
       </div>
 
       <div class="filter">

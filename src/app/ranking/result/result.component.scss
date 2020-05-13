@@ -1,0 +1,53 @@
+.result-card {
+  // width: 100px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  border-radius: 0px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.caterogy {
+  margin-right: 8px;
+  font-style: 16px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.score-table {
+  margin-left: 24px;
+  // border: 1px solid rgba(0, 0, 0, 0.12);
+  // border-radius: 4px;
+  // border-collapse: collapse;
+
+  &__row {
+    height: 32px;
+    // border-bottom: 1px solid #000 0.54;
+    // border: 1px solid #333;
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+    padding: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  &__title {
+    width: 64px;
+  }
+
+  &__score {
+    text-align: right;
+    width: 80px;
+    padding-right: 24px;
+  }
+
+  &__detail-link {
+    margin-right: 8px;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}

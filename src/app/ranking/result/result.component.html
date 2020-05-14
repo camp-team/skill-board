@@ -1,4 +1,41 @@
-<p>
-  {{ rank }}位 / {{ result.skill.name }} / 単価 ¥{{ result.price | number }} /
-  求人{{ result.vacancy }}件
-</p>
+<mat-card>
+  <mat-card-header>
+    <div
+      class="avatar"
+      mat-card-avatar
+      style="background-image:
+      url('/assets/images/skill/{{ result.skill.name }}.svg');"
+    ></div>
+    <mat-card-title>{{ rank }}. {{ result.skill.caption }}</mat-card-title>
+    <mat-card-subtitle>
+      <div>
+        <ng-container *ngFor="let category of getCategries(); first as isFirst">
+          <a class="caterogy" href="">
+            <span class="category__caption">{{ category.caption }}</span>
+          </a>
+        </ng-container>
+      </div>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="score">
+      <div class="score__title">平均単価</div>
+      <div>¥{{ result.price | number }}</div>
+    </div>
+    <div class="score">
+      <span class="score__title">求人数</span>
+      <span>{{ result.vacancy }}件</span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div>
+      <button mat-button>LIKE</button>
+      <span class="like-count">123</span>
+    </div>
+    <div>
+      <button mat-button>SHARE</button>
+    </div>
+  </mat-card-actions>
+</mat-card>

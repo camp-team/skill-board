@@ -1,0 +1,47 @@
+mat-card {
+  margin-bottom: 24px;
+  width: 360px;
+}
+
+.avatar {
+  border-radius: 0px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.caterogy {
+  align-items: center;
+  background-color: #eee;
+  color: #666;
+  padding: 3px 4px;
+  border-radius: 3px;
+  margin-right: 4px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.caterogy:hover {
+  text-decoration: underline;
+}
+
+mat-card-content {
+  padding-left: 24px;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.score {
+  justify-content: start;
+  display: flex;
+  margin-right: 40px;
+
+  &__title {
+    width: 80px;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}

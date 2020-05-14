@@ -10,10 +10,27 @@
   background-position: center center;
 }
 
+// .caterogy {
+//   margin-right: 8px;
+//   font-style: 16px;
+//   color: rgba(0, 0, 0, 0.54);
+// }
+
 .caterogy {
-  margin-right: 8px;
-  font-style: 16px;
-  color: rgba(0, 0, 0, 0.54);
+  // display: flex;
+  align-items: center;
+  background-color: #eee;
+  color: #666;
+  padding: 3px 4px;
+  border-radius: 3px;
+  margin-right: 4px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .score-table {
@@ -33,7 +50,7 @@
   }
 
   &__title {
-    width: 64px;
+    width: 72px;
   }
 
   &__score {

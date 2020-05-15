@@ -16,6 +16,6 @@ export class ResultComponent implements OnInit {
   ngOnInit(): void {}
 
   getCategries(): SkillCategory[] {
-    return this.result.skill.categries;
+    return []; // this.result.skill.categries;
   }
 }

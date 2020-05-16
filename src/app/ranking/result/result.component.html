@@ -4,14 +4,16 @@
       class="avatar"
       mat-card-avatar
       style="background-image:
-      url('/assets/images/skill/{{ result.skill.name }}.svg');"
+      url('/assets/images/skill/{{ result.skillId }}.svg');"
     ></div>
-    <mat-card-title>{{ rank }}. {{ result.skill.caption }}</mat-card-title>
+    <mat-card-title>{{ rank }}. {{ result.skillCaption }}</mat-card-title>
     <mat-card-subtitle>
       <div>
-        <ng-container *ngFor="let category of getCategries(); first as isFirst">
+        <ng-container
+          *ngFor="let category of getSkillCategries(); first as isFirst"
+        >
           <a class="caterogy" href="">
-            <span class="category__caption">{{ category.caption }}</span>
+            <span class="category__caption">{{ category }}</span>
           </a>
         </ng-container>
       </div>

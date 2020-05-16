@@ -5,7 +5,7 @@
     <div class="content__body">
       <div class="result">
         <app-result
-          *ngFor="let result of results; let i = index"
+          *ngFor="let result of results$ | async; let i = index"
           [result]="result"
           [rank]="i + 1"
         ></app-result>

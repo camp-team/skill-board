@@ -6,8 +6,6 @@ import { AngularFirestoreDocument } from '@angular/fire/firestore/public_api';
  */
 export interface AggregationResult {
   skillId: string;
-  skillCaption: string;
-  skillCategories: string[];
   price: number;
   vacancy: number;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AggregationResult } from 'src/app/interfaces/aggregation-result';
+import { ResultToSkillPipe } from 'src/app/pipes/result-to-skill.pipe';
 
 @Component({
   selector: 'app-result',
@@ -13,8 +14,4 @@ export class ResultComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  getSkillCategries(): string[] {
-    return this.result.skillCategories;
-  }
 }

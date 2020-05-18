@@ -9,6 +9,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./ranking/ranking.module').then((m) => m.RankingModule),
   },
+
+  {
+    path: 'skill',
+    loadChildren: () =>
+      import('./skill/skill.module').then((m) => m.SkillModule),
+  },
 ];
 
 @NgModule({

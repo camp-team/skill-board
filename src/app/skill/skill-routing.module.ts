@@ -9,8 +9,9 @@ const routes: Routes = [
     pathMatch: 'full',
     component: SkillListComponent,
   },
+
   {
-    path: ':skill-id',
+    path: ':id',
     pathMatch: 'full',
     component: SkillDetailComponent,
   },

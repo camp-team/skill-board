@@ -13,7 +13,15 @@ const routes: Routes = [
   {
     path: 'skill',
     loadChildren: () =>
-      import('./skill/skill.module').then((m) => m.SkillModule),
+      import('./skill-list/skill-list.module').then((m) => m.SkillListModule),
+  },
+
+  {
+    path: 'skill/:id',
+    loadChildren: () =>
+      import('./skill-detail/skill-detail.module').then(
+        (m) => m.SkillDetailModule
+      ),
   },
 ];
 

@@ -17,4 +17,10 @@ export class AggregationResultService {
       )
       .valueChanges();
   }
+
+  getResult(skillId: string): Observable<AggregationResult> {
+    return this.afs
+      .doc<AggregationResult>('aggregation-result/' + skillId)
+      .valueChanges();
+  }
 }

@@ -1,0 +1,64 @@
+.content {
+  max-width: 800px;
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__footer {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
+mat-card {
+  margin-bottom: 24px;
+  min-width: 360px;
+}
+
+.avatar {
+  border-radius: 0px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.caterogy {
+  align-items: center;
+  background-color: #eee;
+  color: #666;
+  padding: 3px 4px;
+  border-radius: 3px;
+  margin-right: 4px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.caterogy:hover {
+  text-decoration: underline;
+}
+
+.skill {
+  padding-left: 24px;
+  margin-bottom: 24px;
+  display: flex;
+}
+
+.score {
+  justify-content: start;
+  display: flex;
+  margin-right: 40px;
+
+  &__title {
+    width: 80px;
+  }
+}
+
+.tab-content {
+  margin: 16px;
+}
+
+.tab-bottom {
+  display: flex;
+  justify-content: space-between;
+}

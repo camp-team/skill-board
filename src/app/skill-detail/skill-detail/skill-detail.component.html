@@ -1,2 +1,100 @@
-<p>skill-detail works!</p>
-<p>skillId = {{ skillId }}</p>
+<div class="container">
+  <div class="content">
+    <h1 class="content__header">スキル詳細</h1>
+
+    <!-- とりあえず、result.compoentのコピー -->
+    <mat-card *ngIf="result$ | async as result">
+      <mat-card-header>
+        <div
+          class="avatar"
+          mat-card-avatar
+          style="background-image:
+      url('/assets/images/skill/{{ result.skillId }}.svg');"
+        ></div>
+        <mat-card-title>{{
+          (result | resultToSkill).skillCaption
+        }}</mat-card-title>
+        <mat-card-subtitle>
+          <div>
+            <ng-container
+              *ngFor="
+                let category of (result | resultToSkill).skillCategories;
+                first as isFirst
+              "
+            >
+              <a class="caterogy" href="">
+                <span class="category__caption">{{ category }}</span>
+              </a>
+            </ng-container>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="skill">
+          <div class="score">
+            <div class="score__title">平均単価</div>
+            <div>¥{{ result.price | number }}</div>
+          </div>
+          <div class="score">
+            <span class="score__title">求人数</span>
+            <span>{{ result.vacancy }}件</span>
+          </div>
+        </div>
+
+        <div>
+          <mat-tab-group animationDuration="0ms">
+            <mat-tab label="内訳">
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">pie_chart</mat-icon>
+                内訳
+              </ng-template>
+              <div class="tab-content">内訳の表を表示</div>
+              <div class="tab-bottom">
+                <div>
+                  <button mat-button>LIKE</button>
+                  <span class="like-count">123</span>
+                </div>
+                <div>
+                  <button mat-button>SHARE</button>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="推移">
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">show_chart</mat-icon>
+                推移
+              </ng-template>
+              <div class="tab-content">推移グラフを表示</div>
+              <div class="tab-bottom">
+                <div>
+                  <button mat-button>LIKE</button>
+                  <span class="like-count">123</span>
+                </div>
+                <div>
+                  <button mat-button>SHARE</button>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="分布">
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">bar_chart</mat-icon>
+                分布
+              </ng-template>
+              <div class="tab-content">分布図を表示</div>
+              <div class="tab-bottom">
+                <div>
+                  <button mat-button>LIKE</button>
+                  <span class="like-count">123</span>
+                </div>
+                <div>
+                  <button mat-button>SHARE</button>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

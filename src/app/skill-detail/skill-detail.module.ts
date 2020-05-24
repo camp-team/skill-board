@@ -1,23 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RankingRoutingModule } from './ranking-routing.module';
-import { RankingComponent } from './ranking/ranking.component';
-import { ResultComponent } from './result/result.component';
+import { SkillDetailRoutingModule } from './skill-detail-routing.module';
+import { SkillDetailComponent } from './skill-detail/skill-detail.component';
 import { SharedModule } from '../shared/shared.module';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [RankingComponent, ResultComponent],
+  declarations: [SkillDetailComponent],
   imports: [
     CommonModule,
-    RankingRoutingModule,
+    SkillDetailRoutingModule,
     SharedModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatTabsModule,
   ],
 })
-export class RankingModule {}
+export class SkillDetailModule {}

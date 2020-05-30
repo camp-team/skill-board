@@ -44,12 +44,16 @@
 
         <div>
           <mat-tab-group animationDuration="0ms">
-            <mat-tab label="内訳">
+            <mat-tab label="推移">
               <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">pie_chart</mat-icon>
-                内訳
+                <mat-icon class="example-tab-icon">show_chart</mat-icon>
+                推移
               </ng-template>
-              <div class="tab-content">内訳の表を表示</div>
+              <div class="tab-content">
+                <app-skill-transition
+                  [skill]="result | resultToSkill"
+                ></app-skill-transition>
+              </div>
               <div class="tab-bottom">
                 <div>
                   <button mat-button>LIKE</button>
@@ -60,12 +64,12 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="推移">
+            <mat-tab label="内訳">
               <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">show_chart</mat-icon>
-                推移
+                <mat-icon class="example-tab-icon">pie_chart</mat-icon>
+                内訳
               </ng-template>
-              <div class="tab-content">推移グラフを表示</div>
+              <div class="tab-content">内訳の表を表示</div>
               <div class="tab-bottom">
                 <div>
                   <button mat-button>LIKE</button>

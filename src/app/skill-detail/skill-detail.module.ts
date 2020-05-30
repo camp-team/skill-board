@@ -9,9 +9,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SkillTransitionComponent } from './skill-transition/skill-transition.component';
 
 @NgModule({
-  declarations: [SkillDetailComponent],
+  declarations: [SkillDetailComponent, SkillTransitionComponent],
   imports: [
     CommonModule,
     SkillDetailRoutingModule,

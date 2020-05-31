@@ -11,15 +11,15 @@ import { AggregationResult } from 'src/app/interfaces/aggregation-result';
 export class SkillDetailTransitionComponent implements OnInit {
   @Input() skill: Skill;
 
-  // transitionResults: AggregationResult[] = [];
+  transitionResults: AggregationResult[] = [];
 
-  constructor() {} // private resultService: AggregationResultService
+  constructor(private resultService: AggregationResultService) {}
 
   ngOnInit(): void {
-    // console.log('onInit');
-    // this.transitionResults = this.resultService.getTransitionResult(
-    //   this.skill.skillId
-    // );
-    // console.log(this.transitionResults);
+    console.log('onInit');
+    this.transitionResults = this.resultService.getTransitionResult(
+      this.skill.skillId
+    );
+    console.log(this.transitionResults);
   }
 }

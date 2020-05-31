@@ -9,17 +9,16 @@ import { ResultToSkillPipe } from './result-to-skill.pipe';
   name: 'resultToChartData',
 })
 export class ResultToChartDataPipe implements PipeTransform {
-  constructor(
-    private datePipe: DatePipe,
-    private resultToSkillPipe: ResultToSkillPipe
-  ) {}
+  constructor() {}
 
   transform(results: AggregationResult[]): ChartData[] {
     const chartDataArr: ChartData[] = [];
     results.forEach((result) => {
+      // とりあえずprice固定。 引数で求人数とかにも切り替えするか？
+      // name: this.resultToSkillPipe.transform(result).skillId,
       const chartData: ChartData = {
-        name: this.resultToSkillPipe.transform(result).skillId,
-        value: this.datePipe.transform(result.price), // とりあえずprice固定。 引数で求人数とかにも切り替えするか？
+        name: result.skillId,
+        value: result.price.toString(),
       };
       chartDataArr.push(chartData);
     });

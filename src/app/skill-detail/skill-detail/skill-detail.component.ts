@@ -39,7 +39,6 @@ export class SkillDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private resultService: AggregationResultService
   ) {}
 

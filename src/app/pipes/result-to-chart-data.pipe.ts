@@ -2,26 +2,52 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AggregationResult } from '../interfaces/aggregation-result';
 import { ChartData } from '../interfaces/chart-data';
 import { SkillService } from '../services/skill.service';
-import { DatePipe } from '@angular/common';
-import { ResultToSkillPipe } from './result-to-skill.pipe';
+import { ChartDataGroup } from '../interfaces/chart-data-group';
 
 @Pipe({
   name: 'resultToChartData',
 })
 export class ResultToChartDataPipe implements PipeTransform {
-  constructor() {}
+  constructor(private skillService: SkillService) {}
 
-  transform(results: AggregationResult[]): ChartData[] {
-    const chartDataArr: ChartData[] = [];
+  transform(
+    results: AggregationResult[],
+    valueType: 'price' | 'vacancy'
+  ): ChartDataGroup[] {
+    console.log('resultToChartData');
+
+    const chartDataGroups: ChartDataGroup[] = [];
     results.forEach((result) => {
-      // とりあえずprice固定。 引数で求人数とかにも切り替えするか？
-      // name: this.resultToSkillPipe.transform(result).skillId,
+      let chartDataGroup = chartDataGroups.find(
+        (g) => g.name === result.skillId
+      );
+      if (!chartDataGroup) {
+        chartDataGroup = {
+          name: result.skillId,
+          series: [],
+        };
+        chartDataGroups.push(chartDataGroup);
+      }
+
       const chartData: ChartData = {
-        name: result.skillId,
-        value: result.price.toString(),
+        name: result.aggregationDate.toString(),
+        value: this.getChartValue(result, valueType),
       };
-      chartDataArr.push(chartData);
+      chartDataGroup.series.push(chartData);
     });
-    return chartDataArr;
+    return chartDataGroups;
+  }
+
+  private getChartValue(result: AggregationResult, valueType: string): number {
+    switch (valueType) {
+      case 'price':
+        console.log('price');
+        return result.price;
+      case 'vacancy':
+        console.log('vacancy');
+        return result.vacancy;
+      default:
+        return 0;
+    }
   }
 }

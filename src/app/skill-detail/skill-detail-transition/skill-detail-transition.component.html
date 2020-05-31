@@ -1,4 +1,11 @@
-<p>skill-detail-transition works!</p>
-<p>skillCaption:{{ skill.skillCaption }}</p>
+<app-transition-chart
+  [chartDataGroups]="transitionResults | resultToChartData: 'price'"
+  [xAxisLabel]="'月'"
+  [yAxisLabel]="'単価'"
+></app-transition-chart>
 
-<app-transition-chart></app-transition-chart>
+<app-transition-chart
+  [chartDataGroups]="transitionResults | resultToChartData: 'vacancy'"
+  [xAxisLabel]="'月'"
+  [yAxisLabel]="'求人数'"
+></app-transition-chart>

@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 
 describe('ResultToChartDataPipe', () => {
   it('create an instance', () => {
-    const pipe = new ResultToChartDataPipe();
+    const pipe = new ResultToChartDataPipe(new SkillService());
     expect(pipe).toBeTruthy();
   });
 });

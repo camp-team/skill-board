@@ -7,10 +7,10 @@ import { ChartDataGroup } from 'src/app/interfaces/chart-data-group';
   styleUrls: ['./transition-chart.component.scss'],
 })
 export class TransitionChartComponent implements OnInit {
-  @Input() chartDataGroups: ChartDataGroup[] = [];
+  @Input() height: number;
 
-  @Input() width = 700;
-  @Input() height = 300;
+  @Input() chartDataGroups: ChartDataGroup[] = [];
+  @Input() view: number[];
 
   // options
   @Input() legend = false;

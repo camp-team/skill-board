@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FilterFormComponent } from './filter-form/filter-form.component';
 import { BannerComponent } from './banner/banner.component';
 import { ResultToSkillPipe } from '../pipes/result-to-skill.pipe';
-import { ResultToChartDataPipe } from '../pipes/result-to-chart-data.pipe';
+import { ResultToChartDataGroupPipe } from '../pipes/result-to-chart-data-group.pipe';
 import { TransitionChartComponent } from './transition-chart/transition-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -12,7 +12,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     FilterFormComponent,
     BannerComponent,
     ResultToSkillPipe,
-    ResultToChartDataPipe,
+    ResultToChartDataGroupPipe,
     TransitionChartComponent,
   ],
   imports: [CommonModule, NgxChartsModule],
@@ -20,7 +20,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     FilterFormComponent,
     BannerComponent,
     ResultToSkillPipe,
-    ResultToChartDataPipe,
+    ResultToChartDataGroupPipe,
     TransitionChartComponent,
   ],
 })

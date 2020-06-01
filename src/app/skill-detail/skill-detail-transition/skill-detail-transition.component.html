@@ -1,11 +1,20 @@
-<app-transition-chart
-  [chartDataGroups]="transitionResults | resultToChartData: 'price'"
-  [xAxisLabel]="'月'"
-  [yAxisLabel]="'単価'"
-></app-transition-chart>
+<div class="tab-content">
+  <div class="chart-container">
+    <div class="__title">
+      <h3>単価</h3>
+    </div>
+    <div class="__chart">
+      <app-transition-chart
+        [chartDataGroups]="transitionResults | resultToChartDataGroup: 'price'"
+        [xAxisLabel]="'月'"
+        [yAxisLabel]="'単価'"
+      ></app-transition-chart>
+    </div>
+  </div>
 
-<app-transition-chart
-  [chartDataGroups]="transitionResults | resultToChartData: 'vacancy'"
-  [xAxisLabel]="'月'"
-  [yAxisLabel]="'求人数'"
-></app-transition-chart>
+  <app-transition-chart
+    [chartDataGroups]="transitionResults | resultToChartDataGroup: 'vacancy'"
+    [xAxisLabel]="'月'"
+    [yAxisLabel]="'求人数'"
+  ></app-transition-chart>
+</div>

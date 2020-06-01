@@ -9,7 +9,8 @@ import { ChartDataGroup } from 'src/app/interfaces/chart-data-group';
 export class TransitionChartComponent implements OnInit {
   @Input() chartDataGroups: ChartDataGroup[] = [];
 
-  view: any[] = [700, 300];
+  @Input() width = 700;
+  @Input() height = 300;
 
   // options
   @Input() legend = false;
@@ -17,6 +18,8 @@ export class TransitionChartComponent implements OnInit {
   @Input() animations = true;
   @Input() xAxis = true;
   @Input() yAxis = true;
+  @Input() showGridLines = true;
+  @Input() roundDomains = true;
   @Input() xAxisLabel = 'x';
   @Input() yAxisLabel = 'y';
   @Input() showYAxisLabel = true;
@@ -29,9 +32,7 @@ export class TransitionChartComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this);
-  }
+  ngOnInit(): void {}
 
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));

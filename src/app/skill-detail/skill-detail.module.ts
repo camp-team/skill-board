@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SkillDetailDistributionComponent } from './skill-detail-distribution/skill-detail-distribution.component';
 import { SkillDetailBreakdownComponent } from './skill-detail-breakdown/skill-detail-breakdown.component';
 import { SkillDetailTransitionComponent } from './skill-detail-transition/skill-detail-transition.component';
+
 @NgModule({
   declarations: [
     SkillDetailComponent,

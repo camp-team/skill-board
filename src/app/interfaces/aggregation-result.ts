@@ -8,4 +8,5 @@ export interface AggregationResult {
   skillId: string;
   price: number;
   vacancy: number;
+  aggregationDate?: Date; // 仮開発中なので任意項目。
 }

@@ -48,4 +48,8 @@ export class SkillService {
   getSkill(skillId: string): Skill {
     return SkillService.SKILLS.find((skill) => skill.skillId === skillId);
   }
+
+  getSkills(): Skill[] {
+    return SkillService.SKILLS.concat();
+  }
 }

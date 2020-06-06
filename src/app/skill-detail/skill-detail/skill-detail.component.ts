@@ -44,12 +44,14 @@ export class SkillDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.skillId = this.route.snapshot.paramMap.get('id');
-    console.log('skillId:' + this.skillId);
     this.result$ = this.resultService.getResult(this.skillId).pipe(take(1));
-    console.log('result:' + this.result$);
   }
 
   getActiveTab(): string {
-    return this.route.snapshot.queryParamMap.get('tab');
+    if (this.route.snapshot.queryParamMap.has('tab')) {
+      return this.route.snapshot.queryParamMap.get('tab');
+    } else {
+      return this.tabs[0].name;
+    }
   }
 }

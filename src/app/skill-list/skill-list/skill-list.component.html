@@ -1,4 +1,6 @@
-<p>skill-list works!</p>
-
-<app-skill-list-card *ngFor="let skill of getSkills()" [skill]="skill">
-</app-skill-list-card>
+<div class="container">
+  <div class="grid">
+    <app-skill-list-card *ngFor="let skill of getSkills()" [skill]="skill">
+    </app-skill-list-card>
+  </div>
+</div>

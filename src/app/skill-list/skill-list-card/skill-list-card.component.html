@@ -1,2 +1,17 @@
-<p>skill-list-card works!</p>
-<p>{{ skill.skillCaption }}</p>
+<mat-card routerLink="/skill/{{ skill.skillId }}">
+  <img mat-card-sm-image src="/assets/images/skill/{{ skill.skillId }}.svg" />
+  <mat-card-content>
+    <h3>{{ skill.skillCaption }}</h3>
+
+    <div class="categories">
+      <div
+        class="caterogy-block"
+        *ngFor="let category of skill.skillCategories"
+      >
+        <a class="caterogy" href="">
+          <span class="category__caption">{{ category }}</span>
+        </a>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -9,37 +9,37 @@ export class SkillService {
     {
       skillId: 'angular',
       skillCaption: 'Angular',
-      skillCategories: [
-        'フレームワーク',
-        'TypeScript',
-        'フロントエンド',
-        'CategoryA',
-      ],
+      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
     },
     {
       skillId: 'vue',
       skillCaption: 'Vue',
-      skillCategories: [
-        'フレームワーク',
-        'TypeScript',
-        'フロントエンド',
-        'CategoryV',
-      ],
+      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
     },
     {
       skillId: 'react',
       skillCaption: 'React',
-      skillCategories: [
-        'フレームワーク',
-        'TypeScript',
-        'フロントエンド',
-        'CategoryR',
-      ],
+      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
     },
     {
       skillId: 'java',
       skillCaption: 'Java',
-      skillCategories: ['言語', 'バックエンド', 'CategoryJ'],
+      skillCategories: ['言語', 'バックエンド'],
+    },
+    {
+      skillId: 'rails',
+      skillCaption: 'Ruby on rails',
+      skillCategories: ['フレームワーク', 'Ruby', 'バックエンド'],
+    },
+    {
+      skillId: 'nodejs',
+      skillCaption: 'Node.js',
+      skillCategories: ['JavaScript'],
+    },
+    {
+      skillId: 'jquery',
+      skillCaption: 'jQuery',
+      skillCategories: ['JavaScript', 'ライブラリ'],
     },
   ];
 

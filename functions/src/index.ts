@@ -9,6 +9,6 @@
 
 // 追加or更新したらで以下デプロイ
 // firebase deploy --only functions
-// export { createSkills } from './skill.function';
-// export { updateSkills } from './skill.function';
-export { onWritesSkills } from './skill.function';
+export { createSkill } from './skill.function';
+export { updateSkill } from './skill.function';
+export { deleteSkill } from './skill.function';

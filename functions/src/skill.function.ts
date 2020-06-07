@@ -1,23 +1,22 @@
 import * as functions from 'firebase-functions';
-import { addIndex } from './algolia'; // 上記の関数をインポート
+import { AlgoliaClinent } from './algolia-client';
 
-// export const createSkills = functions.firestore
-//   .document('skills/{id}')
-//   .onCreate(async (snap, context) => {
-//     return addIndex(snap.data()); // 上記で定義した関数を使っている
-//   });
+const algoliaClient = new AlgoliaClinent('skills');
 
-// export const updateSkills = functions.firestore
-//   .document('skills/{id}')
-//   .onUpdate(async (snap, context) => {
-//     return addIndex(snap.after.data()); // 上記で定義した関数を使っている
-//   });
-
-export const onWritesSkills = functions.firestore
+export const createSkill = functions.firestore
   .document('skills/{id}')
-  .onWrite(async (snap, context) => {
-    console.log('eventType:' + context.eventType);
-    console.log('before:' + (snap.before == null) ? 'null' : snap.before.id);
-    console.log('after:' + (snap.after == null) ? 'null' : snap.after.id);
-    return addIndex(snap.after.data()); // 上記で定義した関数を使っている
+  .onCreate(async (snap, context) => {
+    return algoliaClient.saveIndex(snap.id, snap.data());
+  });
+
+export const updateSkill = functions.firestore
+  .document('skills/{id}')
+  .onUpdate(async (snap, context) => {
+    return algoliaClient.saveIndex(snap.after.id, snap.after.data());
+  });
+
+export const deleteSkill = functions.firestore
+  .document('skills/{id}')
+  .onDelete(async (snap, context) => {
+    return algoliaClient.deleteIndex(snap.id);
   });

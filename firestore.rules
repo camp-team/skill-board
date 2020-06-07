@@ -1,10 +1,12 @@
+// ルール更新後は以下コマンド実行
+// firebase deploy --only firestore:rules
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
       // まずは読込のみ全許可
       allow read: if true;
-      allow write: if false;
+      allow write: if true;
     }
   }
 }

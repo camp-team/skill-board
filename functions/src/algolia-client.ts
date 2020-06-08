@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import algoliasearch, { SearchIndex } from 'algoliasearch';
+import { firestore } from 'firebase-admin';
 
 // Algoliaを使えるようにする
 const ALGOLIA_ID = functions.config().algolia.app_id;
@@ -23,7 +24,7 @@ export class AlgoliaClinent {
 
     // firestoreのタイムスタンプ型項目をミリ秒に変換
     for (const k of Object.keys(agData)) {
-      if (Date.prototype.isPrototypeOf(agData[k])) {
+      if (agData[k] instanceof firestore.Timestamp) {
         agData[k] = agData[k].toMillis();
       }
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NavigationService } from '../services/navigation.service';
+import { SkillService } from '../services/skill.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,11 @@ export class HeaderComponent implements OnInit {
     searchInput: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder, private navService: NavigationService) {}
+  constructor(
+    private fb: FormBuilder,
+    private navService: NavigationService,
+    private skillService: SkillService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -26,5 +31,9 @@ export class HeaderComponent implements OnInit {
 
   navToggle() {
     this.navService.toggle();
+  }
+
+  uploadSampleData() {
+    this.skillService.uploadSampleData();
   }
 }

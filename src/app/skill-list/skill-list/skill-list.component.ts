@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AggregationResult } from 'src/app/interfaces/aggregation-result';
-import { AggregationResultService } from 'src/app/services/aggregation-result.service';
-import { Observable } from 'rxjs';
 import { Skill } from 'src/app/interfaces/skill';
 import { SkillService } from 'src/app/services/skill.service';
 

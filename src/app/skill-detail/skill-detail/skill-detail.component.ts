@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { AggregationResultService } from 'src/app/services/aggregation-result.service';
-import { AggregationResult } from 'src/app/interfaces/aggregation-result';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { SkillService } from 'src/app/services/skill.service';
+import { Skill } from 'src/app/interfaces/skill';
 
 interface Tab {
   name: string;
@@ -18,7 +18,7 @@ interface Tab {
 })
 export class SkillDetailComponent implements OnInit {
   skillId: string;
-  result$: Observable<AggregationResult>;
+  skill$: Observable<Skill>;
   tabs: Tab[] = [
     {
       name: 'transition',
@@ -39,12 +39,12 @@ export class SkillDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private resultService: AggregationResultService
+    private skillService: SkillService
   ) {}
 
   ngOnInit(): void {
     this.skillId = this.route.snapshot.paramMap.get('id');
-    this.result$ = this.resultService.getResult(this.skillId).pipe(take(1));
+    this.skill$ = this.skillService.getResult(this.skillId).pipe(take(1));
   }
 
   getActiveTab(): string {

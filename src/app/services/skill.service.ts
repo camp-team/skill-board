@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SkillService {
-  // 画面実装用ダミーデータ
-  static TRANSITION_RESULTS_DUMMY: Skill[] = [
+  // 遷移チャート用サンプルデータ
+  static TRANSITION_SKILLS: Skill[] = [
     {
       skillId: 'angular',
       skillCaption: 'Angular',
@@ -53,7 +53,8 @@ export class SkillService {
     },
   ];
 
-  static SKILLS: ReadonlyArray<Skill> = [
+  // 更新用サンプルデータ
+  static SKILLS_FOR_UPLOAD: ReadonlyArray<Skill> = [
     {
       id: 'angular',
       skillId: 'angular',
@@ -135,33 +136,25 @@ export class SkillService {
 
   constructor(private afs: AngularFirestore) {}
 
-  getSkill(skillId: string): Skill {
-    return SkillService.SKILLS.find((skill) => skill.skillId === skillId);
-  }
-
-  getSkills(): Skill[] {
-    return SkillService.SKILLS.concat();
-  }
-
   // とりあえず引数なし。ゆくゆくは条件渡してピックアップするイメージ
-  getResults(): Observable<Skill[]> {
+  getSkills(): Observable<Skill[]> {
     return this.afs
       .collection<Skill>('skills', (ref) => ref.orderBy('price', 'desc'))
       .valueChanges();
   }
 
-  getResult(skillId: string): Observable<Skill> {
+  getSkill(skillId: string): Observable<Skill> {
     return this.afs.doc<Skill>('skills/' + skillId).valueChanges();
   }
 
-  getTransitionResult(skillId: string): Skill[] {
-    return SkillService.TRANSITION_RESULTS_DUMMY;
+  getTransitionSkills(skillId: string): Skill[] {
+    return SkillService.TRANSITION_SKILLS;
   }
 
   // 今だけメソッド　テストデータをfirestoreに登録
   uploadSampleData(): void {
     console.log('uploadSampleData');
-    SkillService.SKILLS.forEach((skill) => {
+    SkillService.SKILLS_FOR_UPLOAD.forEach((skill) => {
       // 更新日
       skill.updatedAt = new Date();
 

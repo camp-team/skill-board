@@ -17,7 +17,6 @@ interface Tab {
   styleUrls: ['./skill-detail.component.scss'],
 })
 export class SkillDetailComponent implements OnInit {
-  skillId: string;
   skill$: Observable<Skill>;
   tabs: Tab[] = [
     {
@@ -43,8 +42,8 @@ export class SkillDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.skillId = this.route.snapshot.paramMap.get('id');
-    this.skill$ = this.skillService.getResult(this.skillId).pipe(take(1));
+    const skillId = this.route.snapshot.paramMap.get('id');
+    this.skill$ = this.skillService.getSkill(skillId).pipe(take(1));
   }
 
   getActiveTab(): string {

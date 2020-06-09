@@ -2,7 +2,10 @@
   <div class="content">
     <h1>スキル一覧</h1>
     <div class="grid">
-      <app-skill-list-card *ngFor="let skill of getSkills()" [skill]="skill">
+      <app-skill-list-card
+        *ngFor="let skill of getSkills() | async"
+        [skill]="skill"
+      >
       </app-skill-list-card>
     </div>
   </div>

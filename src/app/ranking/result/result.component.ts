@@ -7,7 +7,7 @@ import { Skill } from 'src/app/interfaces/skill';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  @Input() result: Skill;
+  @Input() skill: Skill;
   @Input() rank: number;
 
   constructor() {}

@@ -16,7 +16,7 @@ export class SkillDetailTransitionComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('onInit');
-    this.transitionSkills = this.skillService.getTransitionResult(
+    this.transitionSkills = this.skillService.getTransitionSkills(
       this.skill.skillId
     );
     console.log(this.transitionSkills);

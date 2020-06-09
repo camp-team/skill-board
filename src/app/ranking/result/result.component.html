@@ -1,16 +1,16 @@
-<mat-card routerLink="skill/{{ result.skillId }}">
+<mat-card routerLink="skill/{{ skill.skillId }}">
   <mat-card-header>
     <div
       class="avatar"
       mat-card-avatar
       style="background-image:
-      url('/assets/images/skill/{{ result.skillId }}.svg');"
+      url('/assets/images/skill/{{ skill.skillId }}.svg');"
     ></div>
-    <mat-card-title>{{ rank }}. {{ result.skillCaption }}</mat-card-title>
+    <mat-card-title>{{ rank }}. {{ skill.skillCaption }}</mat-card-title>
     <mat-card-subtitle>
       <div>
         <ng-container
-          *ngFor="let category of result.skillCategories; first as isFirst"
+          *ngFor="let category of skill.skillCategories; first as isFirst"
         >
           <a class="caterogy" href="">
             <span class="category__caption">{{ category }}</span>
@@ -23,11 +23,11 @@
   <mat-card-content>
     <div class="score">
       <div class="score__title">平均単価</div>
-      <div>¥{{ result.price | number }}</div>
+      <div>¥{{ skill.price | number }}</div>
     </div>
     <div class="score">
       <span class="score__title">求人数</span>
-      <span>{{ result.vacancy }}件</span>
+      <span>{{ skill.vacancy }}件</span>
     </div>
   </mat-card-content>
 

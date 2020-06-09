@@ -8,7 +8,7 @@ import { SkillService } from 'src/app/services/skill.service';
   styleUrls: ['./ranking.component.scss'],
 })
 export class RankingComponent implements OnInit {
-  results$: Observable<Skill[]> = this.skillService.getResults();
+  skills$: Observable<Skill[]> = this.skillService.getSkills();
 
   constructor(private skillService: SkillService) {}
 

@@ -1,18 +1,14 @@
 import { Pipe, PipeTransform, LOCALE_ID, Inject } from '@angular/core';
 import { ChartData } from '../interfaces/chart-data';
-import { SkillService } from '../services/skill.service';
 import { ChartDataGroup } from '../interfaces/chart-data-group';
 import { formatDate } from '@angular/common';
 import { Skill } from '../interfaces/skill';
 
 @Pipe({
-  name: 'resultToChartDataGroup',
+  name: 'skillsToChartDataGroup',
 })
-export class ResultToChartDataGroupPipe implements PipeTransform {
-  constructor(
-    private skillService: SkillService,
-    @Inject(LOCALE_ID) private locale: string
-  ) {
+export class SkillsToChartDataGroupPipe implements PipeTransform {
+  constructor(@Inject(LOCALE_ID) private locale: string) {
     console.log('locale:' + locale);
   }
 
@@ -21,8 +17,6 @@ export class ResultToChartDataGroupPipe implements PipeTransform {
     valueType: 'price' | 'vacancy',
     dateFormat = 'yy/MM'
   ): ChartDataGroup[] {
-    console.log('resultToChartData');
-
     const chartDataGroups: ChartDataGroup[] = [];
     results.forEach((result) => {
       let chartDataGroup = chartDataGroups.find(
@@ -37,7 +31,7 @@ export class ResultToChartDataGroupPipe implements PipeTransform {
       }
 
       const chartData: ChartData = {
-        name: formatDate(result.aggregationDate, dateFormat, this.locale),
+        name: formatDate(result.aggregatedAt.toDate(), dateFormat, this.locale),
         value: this.getChartValue(result, valueType),
       };
       chartDataGroup.series.push(chartData);

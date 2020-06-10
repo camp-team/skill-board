@@ -1,78 +1,73 @@
-<ng-container *ngIf="result$ | async as result">
-  <ng-container *ngIf="result | resultToSkill as skill">
-    <div class="container">
-      <div class="content">
-        <mat-card>
-          <mat-card-header>
-            <div
-              class="avatar"
-              mat-card-avatar
-              style="background-image:
-          url('/assets/images/skill/{{ result.skillId }}.svg');"
-            ></div>
-            <mat-card-title>{{ skill.skillCaption }}</mat-card-title>
-            <mat-card-subtitle>
-              <div>
-                <ng-container
-                  *ngFor="
-                    let category of skill.skillCategories;
-                    first as isFirst
-                  "
-                >
-                  <a class="caterogy" href="">
-                    <span class="category__caption">{{ category }}</span>
-                  </a>
-                </ng-container>
-              </div>
-            </mat-card-subtitle>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="skill">
-              <div class="score">
-                <div class="score__title">平均単価</div>
-                <div>¥{{ result.price | number }}</div>
-              </div>
-              <div class="score">
-                <span class="score__title">求人数</span>
-                <span>{{ result.vacancy }}件</span>
-              </div>
-            </div>
-
+<ng-container *ngIf="skill$ | async as skill">
+  <div class="container">
+    <div class="content">
+      <mat-card>
+        <mat-card-header>
+          <div
+            class="avatar"
+            mat-card-avatar
+            style="background-image:
+          url('/assets/images/skill/{{ skill.skillId }}.svg');"
+          ></div>
+          <mat-card-title>{{ skill.skillCaption }}</mat-card-title>
+          <mat-card-subtitle>
             <div>
-              <nav mat-tab-nav-bar>
-                <a
-                  mat-tab-link
-                  *ngFor="let tab of tabs"
-                  [routerLink]=""
-                  [queryParams]="{ tab: tab.name }"
-                  [active]="tab.name == getActiveTab()"
-                >
-                  <mat-icon>{{ tab.icon }}</mat-icon>
-                  {{ tab.caption }}
+              <ng-container
+                *ngFor="let category of skill.skillCategories; first as isFirst"
+              >
+                <a class="caterogy" href="">
+                  <span class="category__caption">{{ category }}</span>
                 </a>
-              </nav>
-
-              <ng-container [ngSwitch]="getActiveTab()">
-                <app-skill-detail-transition
-                  *ngSwitchCase="'transition'"
-                  [skill]="skill"
-                ></app-skill-detail-transition>
-
-                <app-skill-detail-breakdown
-                  *ngSwitchCase="'breakdown'"
-                  [skill]="skill"
-                ></app-skill-detail-breakdown>
-
-                <app-skill-detail-distribution
-                  *ngSwitchCase="'distribution'"
-                  [skill]="skill"
-                ></app-skill-detail-distribution>
               </ng-container>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="skill">
+            <div class="score">
+              <div class="score__title">平均単価</div>
+              <div>¥{{ skill.price | number }}</div>
+            </div>
+            <div class="score">
+              <span class="score__title">求人数</span>
+              <span>{{ skill.vacancy }}件</span>
+            </div>
+          </div>
+
+          <div>
+            <nav mat-tab-nav-bar>
+              <a
+                mat-tab-link
+                *ngFor="let tab of tabs"
+                [routerLink]=""
+                [queryParams]="{ tab: tab.name }"
+                [active]="tab.name == getActiveTab()"
+              >
+                <mat-icon>{{ tab.icon }}</mat-icon>
+                {{ tab.caption }}
+              </a>
+            </nav>
+
+            <ng-container [ngSwitch]="getActiveTab()">
+              <app-skill-detail-transition
+                *ngSwitchCase="'transition'"
+                [skill]="skill"
+              ></app-skill-detail-transition>
+
+              <app-skill-detail-breakdown
+                *ngSwitchCase="'breakdown'"
+                [skill]="skill"
+              ></app-skill-detail-breakdown>
+
+              <app-skill-detail-distribution
+                *ngSwitchCase="'distribution'"
+                [skill]="skill"
+              ></app-skill-detail-distribution>
+            </ng-container>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </ng-container>
+  </div>
 </ng-container>

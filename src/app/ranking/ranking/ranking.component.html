@@ -5,8 +5,8 @@
     <div class="content__body">
       <div class="result">
         <app-result
-          *ngFor="let result of results$ | async; let i = index"
-          [result]="result"
+          *ngFor="let skill of skills$ | async; let i = index"
+          [skill]="skill"
           [rank]="i + 1"
         ></app-result>
       </div>

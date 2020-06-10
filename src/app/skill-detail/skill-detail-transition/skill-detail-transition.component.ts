@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from 'src/app/interfaces/skill';
-import { AggregationResultService } from 'src/app/services/aggregation-result.service';
-import { AggregationResult } from 'src/app/interfaces/aggregation-result';
+import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
   selector: 'app-skill-detail-transition',
@@ -11,15 +10,15 @@ import { AggregationResult } from 'src/app/interfaces/aggregation-result';
 export class SkillDetailTransitionComponent implements OnInit {
   @Input() skill: Skill;
 
-  transitionResults: AggregationResult[] = [];
+  transitionSkills: Skill[] = [];
 
-  constructor(private resultService: AggregationResultService) {}
+  constructor(private skillService: SkillService) {}
 
   ngOnInit(): void {
     console.log('onInit');
-    this.transitionResults = this.resultService.getTransitionResult(
+    this.transitionSkills = this.skillService.getTransitionSkills(
       this.skill.skillId
     );
-    console.log(this.transitionResults);
+    console.log(this.transitionSkills);
   }
 }

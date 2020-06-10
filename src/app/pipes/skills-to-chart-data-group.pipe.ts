@@ -1,28 +1,22 @@
 import { Pipe, PipeTransform, LOCALE_ID, Inject } from '@angular/core';
-import { AggregationResult } from '../interfaces/aggregation-result';
 import { ChartData } from '../interfaces/chart-data';
-import { SkillService } from '../services/skill.service';
 import { ChartDataGroup } from '../interfaces/chart-data-group';
 import { formatDate } from '@angular/common';
+import { Skill } from '../interfaces/skill';
 
 @Pipe({
-  name: 'resultToChartDataGroup',
+  name: 'skillsToChartDataGroup',
 })
-export class ResultToChartDataGroupPipe implements PipeTransform {
-  constructor(
-    private skillService: SkillService,
-    @Inject(LOCALE_ID) private locale: string
-  ) {
+export class SkillsToChartDataGroupPipe implements PipeTransform {
+  constructor(@Inject(LOCALE_ID) private locale: string) {
     console.log('locale:' + locale);
   }
 
   transform(
-    results: AggregationResult[],
+    results: Skill[],
     valueType: 'price' | 'vacancy',
     dateFormat = 'yy/MM'
   ): ChartDataGroup[] {
-    console.log('resultToChartData');
-
     const chartDataGroups: ChartDataGroup[] = [];
     results.forEach((result) => {
       let chartDataGroup = chartDataGroups.find(
@@ -37,7 +31,7 @@ export class ResultToChartDataGroupPipe implements PipeTransform {
       }
 
       const chartData: ChartData = {
-        name: formatDate(result.aggregationDate, dateFormat, this.locale),
+        name: formatDate(result.aggregatedAt.toDate(), dateFormat, this.locale),
         value: this.getChartValue(result, valueType),
       };
       chartDataGroup.series.push(chartData);
@@ -45,7 +39,7 @@ export class ResultToChartDataGroupPipe implements PipeTransform {
     return chartDataGroups;
   }
 
-  private getChartValue(result: AggregationResult, valueType: string): number {
+  private getChartValue(result: Skill, valueType: string): number {
     switch (valueType) {
       case 'price':
         console.log('price');

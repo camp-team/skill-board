@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NavigationService } from '../services/navigation.service';
 import { SkillService } from '../services/skill.service';
 

@@ -9,19 +9,35 @@
     </a>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="search">
+  <form class="search" (ngSubmit)="routeSearch(searchControl.value)">
     <input
       class="search__input"
-      formControlName="searchInput"
+      [formControl]="searchControl"
       matInput
-      placeholder="検索したいスキル名"
-      autocomplate="off"
+      placeholder="検索したいスキル名・カテゴリ"
+      [matAutocomplete]="auto"
     />
 
-    <button class="search__button" mat-icon-button>
+    <button
+      (click)="routeSearch(searchControl.value)"
+      class="search__button"
+      mat-icon-button
+    >
       <mat-icon>search</mat-icon>
     </button>
   </form>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionActivated)="setSearchQuery($event.option?.value)"
+    (optionSelected)="routeSearch($event.option?.value)"
+  >
+    <mat-option
+      *ngFor="let option of autoComplateOptions"
+      [value]="option.skillCaption"
+      >{{ option.skillCaption }}</mat-option
+    >
+  </mat-autocomplete>
 
   <div class="login">
     <button mat-button (click)="uploadSampleData()">サンプルデータ更新</button>

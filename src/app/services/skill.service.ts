@@ -3,6 +3,13 @@ import { Skill } from '../interfaces/skill';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { firestore } from 'firebase';
+import { environment } from 'src/environments/environment';
+import algoliasearch from 'algoliasearch/lite';
+
+const searchClient = algoliasearch(
+  environment.algolia.appId,
+  environment.algolia.searchKey
+);
 
 @Injectable({
   providedIn: 'root',
@@ -127,6 +134,11 @@ export class SkillService {
       updatedAt: firestore.Timestamp.now(),
     },
   ];
+
+  index = {
+    skills: searchClient.initIndex('skills'),
+    // ゆくゆくはsort順ごとのindex追加
+  };
 
   constructor(private afs: AngularFirestore) {}
 

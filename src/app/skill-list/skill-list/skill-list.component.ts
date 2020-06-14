@@ -40,7 +40,7 @@ export class SkillListComponent implements OnInit {
       this.resultList = [];
       // TODO:要実装
       // this.index = this.searchService.index[map.get('sort') || 'popular'];
-      // this.query = map.get('searchQuery') || '';
+      this.query = map.get('searchQuery') || '';
       // this.requestOptions = {
       //   page: +map.get('page') > 0 ? +map.get('page') - 1 : 0,
       //   hitsPerPage: map.get('perPage') ? +map.get('perPage') : 20,

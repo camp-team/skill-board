@@ -23,6 +23,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './footer/footer.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FooterComponent } from './footer/footer.component';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatAutocompleteModule,
   ],
   providers: [{ provide: REGION, useValue: 'asia-northeast1' }],
   bootstrap: [AppComponent],

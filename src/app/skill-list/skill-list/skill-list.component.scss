@@ -1,9 +1,8 @@
 .content {
-  // max-width: 1000px;
-
   &__body {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 24px;
   }
 
   &__footer {
@@ -13,13 +12,13 @@
 
 .grid {
   width: 100%;
+  height: 100%;
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(auto-fill, 190px);
+  margin-right: 8px;
 }
 
 .filter {
   width: 300px;
-  // border: 1px solid rgba(0, 0, 0, 0.12);
-  margin-bottom: 24px;
 }

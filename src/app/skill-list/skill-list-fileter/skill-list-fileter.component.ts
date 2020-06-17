@@ -3,7 +3,6 @@ import { SkillService } from 'src/app/services/skill.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSelectionListChange } from '@angular/material/list';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-skill-list-fileter',
@@ -21,6 +20,7 @@ export class SkillListFileterComponent implements OnInit {
   }[] = [];
   tagFilter = new FormControl();
   tagRule = new FormControl('and');
+  tagControl = new FormControl();
 
   constructor(
     private route: ActivatedRoute,
@@ -67,11 +67,8 @@ export class SkillListFileterComponent implements OnInit {
     this.index
       .searchForFacetValues('skillCategories', facetQuery)
       .then((result) => {
-        this.tags = result.facetHits.map((tag) => ({
-          ...tag,
-          selected: defaultTags && defaultTags.includes(tag.value),
-        }));
-        console.log('tags:' + JSON.stringify(this.tags));
+        this.tags = result.facetHits;
+        this.tagControl.patchValue(defaultTags, { emitEvent: false });
       });
   }
 

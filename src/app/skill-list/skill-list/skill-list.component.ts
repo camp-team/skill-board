@@ -37,42 +37,40 @@ export class SkillListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((map) => {
+      console.log('skill-list.subscribe');
+
       this.resultList = [];
-      // TODO:要実装
+      // TODO:必要があればあとで実装
       // this.index = this.searchService.index[map.get('sort') || 'popular'];
       this.query = map.get('searchQuery') || '';
+      // TODO:必要があればあとで実装
       // this.requestOptions = {
       //   page: +map.get('page') > 0 ? +map.get('page') - 1 : 0,
       //   hitsPerPage: map.get('perPage') ? +map.get('perPage') : 20,
       // };
-      // this.tagFilter = {
-      //   rule: map.get('rule')?.match(/and|or/) ? map.get('rule') : 'and',
-      //   tags: map.get('tags') ? map.get('tags').split(',') : [],
-      // };
+      this.tagFilter = {
+        rule: map.get('rule')?.match(/and|or/) ? map.get('rule') : 'and',
+        tags: map.get('tags') ? map.get('tags').split(',') : [],
+      };
       this.algoliaSearch();
     });
   }
 
   algoliaSearch() {
-    // TODO:要実装
-    // const rule = this.tagFilter.tags.map((tag) => 'categories:' + tag);
-
-    console.log('algoliaSearch');
+    const rule = this.tagFilter.tags.map((tag) => 'skillCategories:' + tag);
 
     this.loading = true;
     this.index
       .search<Skill>(this.query, {
-        // TODO:要実装
-        //        facetFilters: this.tagFilter.rule === 'and' ? rule : [rule],
-        //        ...this.requestOptions,
+        facetFilters: this.tagFilter.rule === 'and' ? rule : [rule],
+        ...this.requestOptions,
       })
       .then((result) => {
         console.log(result);
         this.result = result;
-        const items = result.hits as any[]; // TODO: 型対応後調整(https://github.com/algolia/algoliasearch-client-javascript/pull/1086)
+        const items = result.hits as any[];
         this.resultList.push(...items);
         this.loading = false;
-
         this.skills = result.hits as any[];
       });
   }

@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-content>
+    <h2>カテゴリ一覧</h2>
+
+    <div>
+      <label
+        ><input type="radio" value="and" [formControl]="tagRule" checked />
+        AND</label
+      >
+      <label
+        ><input type="radio" value="or" [formControl]="tagRule" /> OR</label
+      >
+    </div>
+
+    <mat-form-field>
+      <mat-label>カテゴリ絞り込み</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="tagFilter"
+        autocomplete="off"
+      />
+    </mat-form-field>
+
+    <mat-selection-list
+      [formControl]="tagControl"
+      dense
+      (selectionChange)="updateTags($event)"
+    >
+      <mat-list-option *ngFor="let tag of tags" [value]="tag.value">
+        {{ tag.value }}({{ tag.count }})
+      </mat-list-option>
+    </mat-selection-list>
+    <button mat-button routerLink="./">条件をクリア</button>
+  </mat-card-content>
+</mat-card>

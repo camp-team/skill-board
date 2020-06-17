@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-content>
+    <h2>カテゴリ絞り込み</h2>
+
+    <mat-selection-list dense (selectionChange)="updateTags($event)">
+      <mat-list-option
+        *ngFor="let tag of tags"
+        [selected]="tag.selected"
+        [value]="tag.value"
+      >
+        {{ tag.value }}({{ tag.count }})
+      </mat-list-option>
+    </mat-selection-list>
+
+    <!-- <button (click)="" mat-icon-button> -->
+    <!-- <button mat-raised-button (click)="clearFilter()">
+      絞り込み解除
+    </button> -->
+
+    <button mat-button routerLink="./">条件をクリア</button>
+  </mat-card-content>
+</mat-card>

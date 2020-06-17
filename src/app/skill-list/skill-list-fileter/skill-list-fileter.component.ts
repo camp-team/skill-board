@@ -78,7 +78,8 @@ export class SkillListFileterComponent implements OnInit {
     );
     this.updateParams({
       tags: values.length ? values.join(',') : null,
-      page: 1,
+      // TODO:必要があればあとで実装
+      // page: 1,
     });
   }
 }

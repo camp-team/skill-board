@@ -40,9 +40,10 @@ export class SkillListComponent implements OnInit {
       console.log('skill-list.subscribe');
 
       this.resultList = [];
-      // TODO:要実装
+      // TODO:必要があればあとで実装
       // this.index = this.searchService.index[map.get('sort') || 'popular'];
       this.query = map.get('searchQuery') || '';
+      // TODO:必要があればあとで実装
       // this.requestOptions = {
       //   page: +map.get('page') > 0 ? +map.get('page') - 1 : 0,
       //   hitsPerPage: map.get('perPage') ? +map.get('perPage') : 20,
@@ -56,25 +57,20 @@ export class SkillListComponent implements OnInit {
   }
 
   algoliaSearch() {
-    // TODO:要実装
     const rule = this.tagFilter.tags.map((tag) => 'skillCategories:' + tag);
-
-    console.log('algoliaSearch');
 
     this.loading = true;
     this.index
       .search<Skill>(this.query, {
-        // TODO:要実装
         facetFilters: this.tagFilter.rule === 'and' ? rule : [rule],
         ...this.requestOptions,
       })
       .then((result) => {
         console.log(result);
         this.result = result;
-        const items = result.hits as any[]; // TODO: 型対応後調整(https://github.com/algolia/algoliasearch-client-javascript/pull/1086)
+        const items = result.hits as any[];
         this.resultList.push(...items);
         this.loading = false;
-
         this.skills = result.hits as any[];
       });
   }

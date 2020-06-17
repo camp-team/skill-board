@@ -3,6 +3,7 @@ import { SkillService } from 'src/app/services/skill.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSelectionListChange } from '@angular/material/list';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-skill-list-fileter',
@@ -17,9 +18,9 @@ export class SkillListFileterComponent implements OnInit {
     highlighted: string;
     count: number;
     selected?: boolean;
-  }[];
-  // tagFilter = new FormControl();
-  // tagRule = new FormControl('and');
+  }[] = [];
+  tagFilter = new FormControl();
+  tagRule = new FormControl('and');
 
   constructor(
     private route: ActivatedRoute,
@@ -28,40 +29,33 @@ export class SkillListFileterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
-
     this.route.queryParamMap.subscribe((map) => {
-      // this.tagRule.patchValue(map.get('rule') || 'and', {
-      //   emitEvent: false,
-      // });
+      this.tagRule.patchValue(map.get('rule') || 'and', {
+        emitEvent: false,
+      });
 
-      // const tagFilter = map.get('tagFilter') || '';
-      // this.tagFilter.patchValue(tagFilter, {
-      //   emitEvent: false,
-      // });
-
-      console.log('skill-list-fileter.subscribe');
+      const tagFilter = map.get('tagFilter') || '';
+      this.tagFilter.patchValue(tagFilter, {
+        emitEvent: false,
+      });
 
       const defaultTags = map.get('tags') ? map.get('tags').split(',') : [];
-      this.buildTags('', defaultTags);
-      // console.log('defaultTags:' + defaultTags);
-
-      // this.tags.forEach((tag) => {
-      //   tag.selected = defaultTags.includes(tag.value);
-      // });
+      this.buildTags(tagFilter, defaultTags);
     });
 
-    // this.tagFilter.valueChanges.subscribe((facetQuery) => {
-    //   this.updateParams({
-    //     tagFilter: facetQuery || null,
-    //   });
-    // });
-    // this.tagRule.valueChanges.subscribe((rule) => {
-    //   this.updateParams({
-    //     rule,
-    //   });
-    // });
+    this.tagFilter.valueChanges.subscribe((facetQuery) => {
+      this.updateParams({
+        tagFilter: facetQuery || null,
+      });
+    });
+
+    this.tagRule.valueChanges.subscribe((rule) => {
+      this.updateParams({
+        rule,
+      });
+    });
   }
+
   private updateParams(params: object) {
     this.router.navigate([], {
       queryParamsHandling: 'merge',
@@ -70,16 +64,15 @@ export class SkillListFileterComponent implements OnInit {
   }
 
   private buildTags(facetQuery: string = '', defaultTags?: string[]) {
-    console.log('buildTags' + defaultTags);
-    this.index.searchForFacetValues('skillCategories', '').then((result) => {
-      console.log('before:' + JSON.stringify(this.tags));
-      this.tags = result.facetHits.map((tag) => ({
-        ...tag,
-        selected: defaultTags && defaultTags.includes(tag.value),
-      }));
-      console.log('after:' + JSON.stringify(this.tags));
-    });
-    this.tags[0].value = this.tags[0].value + '_';
+    this.index
+      .searchForFacetValues('skillCategories', facetQuery)
+      .then((result) => {
+        this.tags = result.facetHits.map((tag) => ({
+          ...tag,
+          selected: defaultTags && defaultTags.includes(tag.value),
+        }));
+        console.log('tags:' + JSON.stringify(this.tags));
+      });
   }
 
   updateTags(event: MatSelectionListChange) {

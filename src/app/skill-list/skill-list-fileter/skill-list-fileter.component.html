@@ -1,22 +1,25 @@
-<mat-card>
-  <mat-card-content>
-    <h2>カテゴリ絞り込み</h2>
+<h2>タグ一覧</h2>
 
-    <mat-selection-list dense (selectionChange)="updateTags($event)">
-      <mat-list-option
-        *ngFor="let tag of tags"
-        [selected]="tag.selected"
-        [value]="tag.value"
-      >
-        {{ tag.value }}({{ tag.count }})
-      </mat-list-option>
-    </mat-selection-list>
+<div>
+  <label
+    ><input type="radio" value="and" [formControl]="tagRule" checked />
+    AND</label
+  >
+  <label><input type="radio" value="or" [formControl]="tagRule" /> OR</label>
+</div>
 
-    <!-- <button (click)="" mat-icon-button> -->
-    <!-- <button mat-raised-button (click)="clearFilter()">
-      絞り込み解除
-    </button> -->
+<mat-form-field>
+  <mat-label>タグ絞り込み</mat-label>
+  <input type="text" matInput [formControl]="tagFilter" autocomplete="off" />
+</mat-form-field>
 
-    <button mat-button routerLink="./">条件をクリア</button>
-  </mat-card-content>
-</mat-card>
+<mat-selection-list dense (selectionChange)="updateTags($event)">
+  <mat-list-option
+    *ngFor="let tag of tags"
+    [selected]="tag.selected"
+    [value]="tag.value"
+  >
+    {{ tag.value }}({{ tag.count }})
+  </mat-list-option>
+</mat-selection-list>
+<button mat-button routerLink="./">条件をクリア</button>

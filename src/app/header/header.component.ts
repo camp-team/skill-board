@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { Skill } from '../interfaces/skill';
 // パターン2
-import { Page, Browser, launch, devices } from 'puppeteer';
+// import { Page, Browser, launch, devices } from 'puppeteer';
 
 @Component({
   selector: 'app-header',

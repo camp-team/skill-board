@@ -5,6 +5,7 @@ import { SkillService } from '../services/skill.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { Skill } from '../interfaces/skill';
+// import { Page, Browser, launch, devices } from 'puppeteer';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit {
   searchControl = new FormControl('');
   autoComplateOptions = [];
   index = this.skillService.index.skills;
+
+  // puppeteer = require('puppeteer');
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -59,4 +62,28 @@ export class HeaderComponent implements OnInit {
   uploadSampleData() {
     this.skillService.uploadSampleData();
   }
+
+  puppeteerTest() {
+    console.log('puppeteerTest');
+  }
+
+  // sync puppeteerTest() {
+  // const browser = await this.puppeteer.launch();
+  // const page = await browser.newPage();
+  // await page.goto('https://www.google.com');
+  // await page.screenshot({path: 'screenshot.png'});
+  // await browser.close();
+  // }
+
+  // async puppeteerTest() {
+  //   const browser: Browser = await launch();
+  //   const page: Page = await browser.newPage();
+  //   await page.emulate(devices['iPhone X']);
+  //   const url = 'https://google.com/';
+  //   await page.goto(url, { waitUntil: 'networkidle0' });
+  //   await page.screenshot({ path: 'home1.png' });
+  //   const title = await page.title();
+  //   console.log(title);
+  //   await browser.close();
+  // }
 }

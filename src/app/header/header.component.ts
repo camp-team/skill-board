@@ -5,7 +5,8 @@ import { SkillService } from '../services/skill.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { Skill } from '../interfaces/skill';
-// import { Page, Browser, launch, devices } from 'puppeteer';
+// パターン2
+import { Page, Browser, launch, devices } from 'puppeteer';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
   autoComplateOptions = [];
   index = this.skillService.index.skills;
 
+  // パターン1
   // puppeteer = require('puppeteer');
 
   constructor(
@@ -67,6 +69,7 @@ export class HeaderComponent implements OnInit {
     console.log('puppeteerTest');
   }
 
+  // パターン1
   // async puppeteerTest() {
   //   const browser = await this.puppeteer.launch();
   //   const page = await browser.newPage();
@@ -75,6 +78,7 @@ export class HeaderComponent implements OnInit {
   //   await browser.close();
   // }
 
+  // パターン2
   // async puppeteerTest() {
   //   const browser: Browser = await launch();
   //   const page: Page = await browser.newPage();

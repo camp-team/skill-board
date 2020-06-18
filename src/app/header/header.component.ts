@@ -67,12 +67,12 @@ export class HeaderComponent implements OnInit {
     console.log('puppeteerTest');
   }
 
-  // sync puppeteerTest() {
-  // const browser = await this.puppeteer.launch();
-  // const page = await browser.newPage();
-  // await page.goto('https://www.google.com');
-  // await page.screenshot({path: 'screenshot.png'});
-  // await browser.close();
+  // async puppeteerTest() {
+  //   const browser = await this.puppeteer.launch();
+  //   const page = await browser.newPage();
+  //   await page.goto('https://www.google.com');
+  //   await page.screenshot({ path: 'screenshot.png' });
+  //   await browser.close();
   // }
 
   // async puppeteerTest() {

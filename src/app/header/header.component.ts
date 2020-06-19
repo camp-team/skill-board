@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit {
   autoComplateOptions = [];
   index = this.skillService.index.skills;
 
+  // パターン1
+  // puppeteer = require('puppeteer');
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

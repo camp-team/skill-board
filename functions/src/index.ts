@@ -12,4 +12,4 @@
 export { createSkill } from './skill.function';
 export { updateSkill } from './skill.function';
 export { deleteSkill } from './skill.function';
-export { puppeteerExcute } from './puppeteer-client';
+export { puppeteerSample } from './puppeteer-sample';

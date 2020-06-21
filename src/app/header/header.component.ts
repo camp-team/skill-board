@@ -18,15 +18,11 @@ export class HeaderComponent implements OnInit {
   autoComplateOptions = [];
   index = this.skillService.index.skills;
 
-  // パターン1
-  // puppeteer = require('puppeteer');
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private navService: NavigationService,
-    private skillService: SkillService,
-    private fns: AngularFireFunctions
+    private skillService: SkillService
   ) {}
 
   ngOnInit(): void {
@@ -64,11 +60,5 @@ export class HeaderComponent implements OnInit {
 
   uploadSampleData() {
     this.skillService.uploadSampleData();
-  }
-
-  executePuppeteerFunction() {
-    const callable = this.fns.httpsCallable('puppeteerExcute');
-    const data$: Observable<any> = callable({});
-    data$.pipe(tap((r) => console.log(r))).subscribe();
   }
 }

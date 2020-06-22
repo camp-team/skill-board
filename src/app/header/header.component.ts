@@ -3,8 +3,10 @@ import { FormControl } from '@angular/forms';
 import { NavigationService } from '../services/navigation.service';
 import { SkillService } from '../services/skill.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { debounceTime, startWith } from 'rxjs/operators';
+import { debounceTime, startWith, tap } from 'rxjs/operators';
 import { Skill } from '../interfaces/skill';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',

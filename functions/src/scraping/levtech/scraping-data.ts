@@ -3,6 +3,6 @@ export interface ScrapingData {
   skill?: string;
   contract?: string;
   skillCateries?: string[];
-  price?: string;
+  price?: number;
   location?: string;
 }

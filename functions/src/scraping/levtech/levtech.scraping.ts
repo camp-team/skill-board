@@ -6,6 +6,49 @@ interface PageResult {
   dataList: ScrapingData[];
 }
 
+export async function scrapingExecute() {
+  const start: number = Date.now();
+  const browser: puppeteer.Browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
+  console.log('lunch');
+  const page: puppeteer.Page = await browser.newPage();
+  console.log('newPage');
+  const url = 'https://freelance.levtech.jp/project/search/';
+  await page.goto(url);
+  console.log('goto');
+
+  let scrapingDataList: ScrapingData[] = [];
+  let next = true;
+  while (next) {
+    const pageResult = await scrapingPage(page);
+    next = pageResult.next;
+    scrapingDataList = scrapingDataList.concat(pageResult.dataList);
+    if (next) {
+      const nextButton = await page.$('span.next > a');
+      if (nextButton) {
+        await nextButton.click();
+        await page.waitForNavigation({
+          waitUntil: 'domcontentloaded',
+        });
+      } else {
+        next = false;
+      }
+    }
+  }
+
+  await browser.close();
+  const end: number = Date.now();
+  const executionTime = end - start;
+  return {
+    status: 'success',
+    executionTime: executionTime,
+    scrapingDataCount: scrapingDataList.length,
+    scrapingDataList: JSON.stringify(scrapingDataList),
+  };
+}
+
 async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
   return page.evaluate(() => {
     const result: PageResult = {
@@ -26,8 +69,17 @@ async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
         return;
       }
 
-      // const price = prj.querySelector('.prjContent__summary__price');
-      // const contract = prj.querySelector('.prjContent__summary__contract');
+      const priceAreaElm = prj.querySelector('.prjContent__summary__price');
+      const priceElm = priceAreaElm ? priceAreaElm.querySelector('span') : null;
+
+      const priceText = priceElm ? priceElm.innerHTML : '';
+      let price: number = Number(priceText.replace('円', '').replace(',', ''));
+
+      if (priceAreaElm?.innerHTML.match(/／時/)) {
+        price = price * 160; // 時給の場合は、月額に換算
+      }
+
+      const contract = prj.querySelector('.prjContent__summary__contract');
 
       let location: string | null = null;
       const categories: string[] = [];
@@ -53,61 +105,15 @@ async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
 
       const data: ScrapingData = {
         count: count,
-        // price: price ? price.innerHTML : '',
-        // contract: contract ? contract.innerHTML : '',
+        price: price,
+        contract: contract ? contract.innerHTML : '',
         location: location ? location : '',
-        // skillCateries: categories,
+        skillCateries: categories,
       };
       result.dataList.push(data);
     });
     return result;
   });
-}
-
-export async function scrapingExecute() {
-  const start: number = Date.now();
-  const browser: puppeteer.Browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox'],
-  });
-  console.log('lunch');
-  const page: puppeteer.Page = await browser.newPage();
-  console.log('newPage');
-  const url = 'https://freelance.levtech.jp/project/search/';
-  await page.goto(url);
-  console.log('goto');
-
-  let scrapingDataList: ScrapingData[] = [];
-  let next = true;
-  while (next) {
-    const pageResult = await scrapingPage(page);
-    next = pageResult.next;
-    scrapingDataList = scrapingDataList.concat(pageResult.dataList);
-    // console.log('scrapingDataList:' + JSON.stringify(scrapingDataList));
-    if (next) {
-      console.log('page.next');
-      const nextButton = await page.$('span.next > a');
-      if (nextButton) {
-        await nextButton.click();
-        await page.waitForNavigation({
-          waitUntil: 'domcontentloaded',
-        });
-      } else {
-        next = false;
-      }
-    }
-  }
-
-  await browser.close();
-  const end: number = Date.now();
-  const executionTime = end - start;
-  return {
-    status: 'finish',
-    executionTime: executionTime,
-    scrapingDataCount: scrapingDataList.length,
-    // scrapingDataList: JSON.stringify(scrapingDataList),
-    scrapingDataList: JSON.stringify(scrapingDataList),
-  };
 }
 
 // tslint:disable-next-line: no-floating-promises

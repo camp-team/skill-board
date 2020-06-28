@@ -76,17 +76,14 @@ export class LevtechScraping {
       const priceAreaElm = prj.querySelector('.prjContent__summary__price');
       const priceElm = priceAreaElm ? priceAreaElm.querySelector('span') : null;
       const priceText = priceElm ? priceElm.innerHTML : '';
-      let price: number = Number(priceText.replace('円', '').replace(',', ''));
+      let price: number = Number(priceText.replace(/円|,/g, ''));
       if (priceAreaElm?.innerHTML.match(/／時/)) {
         price = price * 160; // 時給の場合は、月額に換算
       }
 
       const contractElm = prj.querySelector('.prjContent__summary__contract');
       let contract = contractElm ? contractElm.innerHTML : '';
-      contract = contract // 不要な文字列をトリミング
-        .replace('\n', '')
-        .replace('（フリーランス）', '')
-        .replace(' ', '');
+      contract = contract.replace(/\n|（フリーランス）|\s/g, ''); // 不要な文字列をトリミング
 
       let location = '';
       let prefectures = '';

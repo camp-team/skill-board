@@ -22,7 +22,7 @@ export class LevtechDataConverter {
   }
 
   // スキル名を、内部管理用のid形式に変換
-  private convertSkillSet(skills: string[]): Set<string> {
+  public convertSkillSet(skills: string[]): Set<string> {
     const skillSet = new Set<string>();
     skills.forEach((skill) => {
       if (this.skillConvertMap.has(skill)) {
@@ -30,10 +30,9 @@ export class LevtechDataConverter {
         skillSet.add(this.skillConvertMap.get(skill) + '');
       } else {
         // 特殊変換対象以外は、機械的に置換(小文字にして、空白&カンマを取り除く)
-        skillSet.add(skill.toLowerCase().trim().replace('.', ''));
+        skillSet.add(skill.toLowerCase().replace(/\.|\s|　/g, ''));
       }
     });
-
     return skillSet;
   }
 }

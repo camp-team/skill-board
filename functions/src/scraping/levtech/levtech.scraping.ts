@@ -10,6 +10,8 @@ interface PageResult {
 }
 
 export class LevtechScraping {
+  dataConverter = new LevtechDataConverter();
+
   public async exec(): Promise<ScrapingResult> {
     const start: number = Date.now();
     const browser: puppeteer.Browser = await puppeteer.launch({
@@ -50,7 +52,7 @@ export class LevtechScraping {
       scrapingTarget: 'levtech',
       status: 'success',
       executionTime: executionTime,
-      scrapingDataList: scrapingDataList,
+      scrapingDataList: this.dataConverter.exec(scrapingDataList),
     };
   }
 
@@ -134,6 +136,5 @@ export class LevtechScraping {
 // [単体実行コマンド]npx ts-node levtech.scraping.ts
 // tslint:disable-next-line: no-floating-promises
 new LevtechScraping().exec().then((r) => {
-  const dataList = new LevtechDataConverter().exec(r.scrapingDataList);
-  dataList.forEach((d) => console.log(JSON.stringify(d)));
+  r.scrapingDataList.forEach((d) => console.log(d));
 });

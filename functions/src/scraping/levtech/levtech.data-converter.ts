@@ -15,14 +15,14 @@ export class LevtechDataConverter {
 
   public exec(scrapingDataList: ScrapingData[]): ScrapingData[] {
     scrapingDataList.forEach((scrapingData) => {
-      scrapingData.skillSet = this.convertSkillSet(scrapingData.skills);
+      scrapingData.skillIdSet = this.convertSkillIdSet(scrapingData.skills);
     });
 
     return scrapingDataList;
   }
 
   // スキル名を、内部管理用のid形式に変換
-  public convertSkillSet(skills: string[]): Set<string> {
+  public convertSkillIdSet(skills: string[]): Set<string> {
     const skillSet = new Set<string>();
     skills.forEach((skill) => {
       if (this.skillConvertMap.has(skill)) {

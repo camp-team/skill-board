@@ -1,64 +1,66 @@
 import * as puppeteer from 'puppeteer';
-import { ScrapingData } from './scraping-data';
+import { ScrapingData } from '../scraping-data';
+import { ScrapingResult } from '../scraping-result';
+import { LevtechDataConverter } from './levtech.data-converter';
+import { firestore } from 'firebase-admin';
 
 interface PageResult {
   next: boolean;
   dataList: ScrapingData[];
 }
 
-export async function scrapingExecute() {
-  const start: number = Date.now();
-  const browser: puppeteer.Browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox'],
-  });
-  console.log('lunch');
-  const page: puppeteer.Page = await browser.newPage();
-  console.log('newPage');
-  const url = 'https://freelance.levtech.jp/project/search/';
-  await page.goto(url);
-  console.log('goto');
+export class LevtechScraping {
+  public async exec(): Promise<ScrapingResult> {
+    const start: number = Date.now();
+    const browser: puppeteer.Browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox'],
+    });
+    const page: puppeteer.Page = await browser.newPage();
+    const url = 'https://freelance.levtech.jp/project/search/';
+    await page.goto(url);
 
-  let scrapingDataList: ScrapingData[] = [];
-  let next = true;
-  while (next) {
-    const pageResult = await scrapingPage(page);
-    next = pageResult.next;
-    scrapingDataList = scrapingDataList.concat(pageResult.dataList);
-    if (next) {
-      const nextButton = await page.$('span.next > a');
-      if (nextButton) {
-        await nextButton.click();
-        await page.waitForNavigation({
-          waitUntil: 'domcontentloaded',
-        });
-      } else {
-        next = false;
+    let scrapingDataList: ScrapingData[] = [];
+    let next = true;
+    while (next) {
+      const pageResult = await page.evaluate(this.evaluatePage);
+      next = pageResult.next;
+      scrapingDataList = scrapingDataList.concat(pageResult.dataList);
+      if (next) {
+        const nextButton = await page.$('span.next > a');
+        if (nextButton) {
+          await nextButton.click();
+          await page.waitForNavigation({
+            waitUntil: 'domcontentloaded',
+          });
+        } else {
+          next = false;
+        }
       }
     }
+
+    await page.close();
+    await browser.close();
+
+    const end: number = Date.now();
+    const executionTime = end - start;
+
+    return {
+      scrapingAt: firestore.Timestamp.now(),
+      scrapingTarget: 'levtech',
+      status: 'success',
+      executionTime: executionTime,
+      scrapingDataList: scrapingDataList,
+    };
   }
 
-  await browser.close();
-  const end: number = Date.now();
-  const executionTime = end - start;
-  return {
-    status: 'success',
-    executionTime: executionTime,
-    scrapingDataCount: scrapingDataList.length,
-    scrapingDataList: JSON.stringify(scrapingDataList),
-  };
-}
-
-async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
-  return page.evaluate(() => {
+  private evaluatePage(): PageResult {
     const result: PageResult = {
       next: true,
       dataList: [],
     };
-    let i = 0;
-    document.querySelectorAll('ul.prjList > li').forEach((prj) => {
-      const count = i++; // for Debug
 
+    document.querySelectorAll('ul.prjList > li').forEach((prj) => {
       if (prj.querySelector('p.prjList__item__banner')) {
         return; // バナー行はスキップ
       }
@@ -71,18 +73,24 @@ async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
 
       const priceAreaElm = prj.querySelector('.prjContent__summary__price');
       const priceElm = priceAreaElm ? priceAreaElm.querySelector('span') : null;
-
       const priceText = priceElm ? priceElm.innerHTML : '';
       let price: number = Number(priceText.replace('円', '').replace(',', ''));
-
       if (priceAreaElm?.innerHTML.match(/／時/)) {
         price = price * 160; // 時給の場合は、月額に換算
       }
 
-      const contract = prj.querySelector('.prjContent__summary__contract');
+      const contractElm = prj.querySelector('.prjContent__summary__contract');
+      let contract = contractElm ? contractElm.innerHTML : '';
+      contract = contract // 不要な文字列をトリミング
+        .replace('\n', '')
+        .replace('（フリーランス）', '')
+        .replace(' ', '');
 
-      let location: string | null = null;
-      const categories: string[] = [];
+      let location = '';
+      let prefectures = '';
+      let station = '';
+      const skills: string[] = [];
+
       prj
         .querySelectorAll('ul.prjTable > li.prjTable__item')
         .forEach((item) => {
@@ -92,29 +100,40 @@ async function scrapingPage(page: puppeteer.Page): Promise<PageResult> {
             case '最寄り駅':
               const locationElm = item.querySelector('p.prjTable__item__desc');
               location = locationElm ? locationElm.innerHTML : '';
+              if (location.includes('（')) {
+                // [新宿（東京都）]の形式になっているので、駅名と都道府県に分割
+                const split = location.split('（');
+                station = split[0];
+                prefectures = split[1].replace(')', '');
+              }
               break;
+
             case '開発環境':
               item
                 .querySelectorAll('p.prjTable__item__desc > a.tagLink')
                 .forEach((tag) => {
-                  categories.push(tag.innerHTML);
+                  skills.push(tag.innerHTML);
                 });
               break;
           }
         });
 
       const data: ScrapingData = {
-        count: count,
         price: price,
-        contract: contract ? contract.innerHTML : '',
-        location: location ? location : '',
-        skillCateries: categories,
+        contract: contract,
+        prefectures: prefectures,
+        station: station,
+        skills: skills,
       };
       result.dataList.push(data);
     });
     return result;
-  });
+  }
 }
 
+// [単体実行コマンド]npx ts-node levtech.scraping.ts
 // tslint:disable-next-line: no-floating-promises
-scrapingExecute().then((r) => console.log(r));
+new LevtechScraping().exec().then((r) => {
+  const dataList = new LevtechDataConverter().exec(r.scrapingDataList);
+  dataList.forEach((d) => console.log(JSON.stringify(d)));
+});

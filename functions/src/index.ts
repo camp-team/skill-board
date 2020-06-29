@@ -13,3 +13,4 @@ export { createSkill } from './skill.function';
 export { updateSkill } from './skill.function';
 export { deleteSkill } from './skill.function';
 export { puppeteerSample } from './puppeteer-sample';
+export { scrapingFirestore } from './scraping/scraping-firestore';

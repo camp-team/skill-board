@@ -136,10 +136,3 @@ export class LevtechScraping {
     return result;
   }
 }
-
-// [単体実行コマンド]npx ts-node src/scraping/levtech/levtech.scraping.ts
-// tslint:disable-next-line: no-floating-promises
-new LevtechScraping().exec().then((r) => {
-  r.scrapingDataList.forEach((d) => console.log(d));
-  // console.log('executionTime:' + r.executionTime);
-});

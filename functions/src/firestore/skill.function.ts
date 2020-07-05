@@ -3,21 +3,21 @@ import { AlgoliaClinent } from './algolia-client';
 
 const algoliaClient = new AlgoliaClinent('skills');
 
-export const createSkill = functions
+export const skillCreate = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onCreate(async (snap, context) => {
     return algoliaClient.saveIndex(snap.id, snap.data());
   });
 
-export const updateSkill = functions
+export const skillUpdate = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onUpdate(async (snap, context) => {
     return algoliaClient.saveIndex(snap.after.id, snap.after.data());
   });
 
-export const deleteSkill = functions
+export const skillDelete = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onDelete(async (snap, context) => {

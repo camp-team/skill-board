@@ -10,10 +10,11 @@ interface PageResult {
 }
 
 export class LevtechScraping {
-  dataConverter = new LevtechDataConverter();
+  private dataConverter = new LevtechDataConverter();
 
   public async exec(): Promise<ScrapingResult> {
     const start: number = Date.now();
+    // console.log('LevtechScraping.exec.start:' + start);
     const browser: puppeteer.Browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox'],
@@ -25,6 +26,7 @@ export class LevtechScraping {
     let scrapingDataList: ScrapingData[] = [];
     let next = true;
     while (next) {
+      console.debug('LevtechScraping.page-next');
       const pageResult = await page.evaluate(this.evaluatePage);
       next = pageResult.next;
       scrapingDataList = scrapingDataList.concat(pageResult.dataList);
@@ -46,6 +48,7 @@ export class LevtechScraping {
 
     const end: number = Date.now();
     const executionTime = end - start;
+    // console.log('LevtechScraping.exec.end:' + executionTime);
 
     return {
       scrapingAt: firestore.Timestamp.now(),
@@ -130,8 +133,9 @@ export class LevtechScraping {
   }
 }
 
-// [単体実行コマンド]npx ts-node levtech.scraping.ts
+// [単体実行コマンド]npx ts-node src/scraping/levtech/levtech.scraping.ts
 // tslint:disable-next-line: no-floating-promises
-new LevtechScraping().exec().then((r) => {
-  r.scrapingDataList.forEach((d) => console.log(d));
-});
+// new LevtechScraping().exec().then((r) => {
+//   r.scrapingDataList.forEach((d) => console.log(d));
+//   console.log('executionTime:' + r.executionTime);
+// });

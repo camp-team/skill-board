@@ -1,37 +1,60 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
-interface skill {
-  skillId: string;
-  skillCaption: string;
-}
-
-const runtimeOpts: functions.RuntimeOptions = {
-  timeoutSeconds: 300,
-  memory: '1GB',
-};
-
-export const scrapingFirestore = functions
-  .region('asia-northeast1')
-  .runWith(runtimeOpts)
-  .https.onRequest(async (req, res) => {
-    const result = await new ScrapingFirestore().docSet();
-    return res
-      .status(500)
-      .json({ status: 'success', writeTime: result.writeTime });
-  });
+import { ScrapingResult } from './scraping-result';
 
 export class ScrapingFirestore {
-  public docSet(): Promise<admin.firestore.WriteResult> {
+  private db: admin.firestore.Firestore;
+
+  constructor() {
     admin.initializeApp();
+    this.db = admin.firestore();
+  }
 
-    const fs: admin.firestore.Firestore = admin.firestore();
+  public async exec(result: ScrapingResult) {
+    console.log('ScrapingFirestore.exec.start');
+    const collectionPath = this.makeCollectionPath(result);
 
-    const s: skill = {
-      skillId: 'admintest',
-      skillCaption: 'テスト',
-    };
+    // let i: number = 1;
+    // let batch = this.db.batch();
 
-    return fs.doc('skills/admintest').set(s);
+    // for (const data of result.scrapingDataList) {
+    //   const id = i++;
+    //   const doc = this.db.collection(collectionPath).doc(id + '');
+    //   batch.set(doc, data);
+    //   if (i % 500 === 0) {
+    //     console.log('batch.commit.start');
+    //     await batch.commit();
+    //     batch = this.db.batch();
+    //     console.log('batch.commit.end');
+    //   }
+    // }
+
+    // if (i % 500 > 0) {
+    //   console.log('batch.commit.start');
+    //   await batch.commit();
+    //   console.log('batch.commit.end');
+    // }
+
+    await Promise.all(
+      result.scrapingDataList.map(
+        async (d) => await this.db.collection(collectionPath).add(d)
+      )
+    );
+
+    // result.scrapingDataList.forEach(async (d) => {
+    //   await this.db.collection(collectionPath).add(d);
+    // });
+
+    console.log('ScrapingFirestore.exec.end');
+  }
+
+  private makeCollectionPath(result: ScrapingResult): string {
+    const scrapingDate = result.scrapingAt.toDate();
+
+    const scrapingDateNum: number =
+      scrapingDate.getFullYear() * 10000 +
+      (scrapingDate.getMonth() + 1) * 100 +
+      scrapingDate.getDate();
+
+    return 'scraping-data/' + result.scrapingTarget + '/' + scrapingDateNum;
   }
 }

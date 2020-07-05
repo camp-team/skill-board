@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
-import { ScrapingResult } from './scraping-result';
+import { ScrapingResult } from '../interface/scraping-result';
+import { ScrapingLog } from '../interface/scraping-log';
 
 export class ScrapingFirestore {
   private db: admin.firestore.Firestore;
@@ -11,38 +12,24 @@ export class ScrapingFirestore {
 
   public async exec(result: ScrapingResult) {
     console.log('ScrapingFirestore.exec.start');
+
+    // スクレイピングデータ
     const collectionPath = this.makeCollectionPath(result);
-
-    // let i: number = 1;
-    // let batch = this.db.batch();
-
-    // for (const data of result.scrapingDataList) {
-    //   const id = i++;
-    //   const doc = this.db.collection(collectionPath).doc(id + '');
-    //   batch.set(doc, data);
-    //   if (i % 500 === 0) {
-    //     console.log('batch.commit.start');
-    //     await batch.commit();
-    //     batch = this.db.batch();
-    //     console.log('batch.commit.end');
-    //   }
-    // }
-
-    // if (i % 500 > 0) {
-    //   console.log('batch.commit.start');
-    //   await batch.commit();
-    //   console.log('batch.commit.end');
-    // }
-
     await Promise.all(
-      result.scrapingDataList.map(
-        async (d) => await this.db.collection(collectionPath).add(d)
-      )
+      result.scrapingDataList.map(async (d) => {
+        d.scrapingAt = result.scrapingAt;
+        d.scrapingTarget = result.scrapingTarget;
+        await this.db.collection(collectionPath).add(d);
+      })
     );
 
-    // result.scrapingDataList.forEach(async (d) => {
-    //   await this.db.collection(collectionPath).add(d);
-    // });
+    // スクレイピング実行ログ
+    const scrapingLog: ScrapingLog = {
+      scrapingAt: result.scrapingAt,
+      scrapingTarget: result.scrapingTarget,
+      scrapingDataLength: result.scrapingDataList.length,
+    };
+    await this.db.collection('scraping-log').add(scrapingLog);
 
     console.log('ScrapingFirestore.exec.end');
   }

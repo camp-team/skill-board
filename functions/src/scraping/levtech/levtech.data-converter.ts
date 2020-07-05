@@ -1,4 +1,4 @@
-import { ScrapingData } from '../scraping-data';
+import { ScrapingData } from '../../interface/scraping-data';
 
 export class LevtechDataConverter {
   // スキル名の特殊置換対象

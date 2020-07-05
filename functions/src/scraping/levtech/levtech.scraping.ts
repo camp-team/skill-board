@@ -80,9 +80,13 @@ export class LevtechScraping {
       // 厳密ではないが、リモート関連のワードが含まれていたら、リモート対象とみなす。
       // (レバテックは、リモート有無を項目として管理していない)
 
+      const prjHead = prj.querySelector('.prjHead__ttl > .js-link_rel');
+      const prjUrl = prjHead ? prjHead.getAttribute('href') + '' : '';
+
       const priceAreaElm = prj.querySelector('.prjContent__summary__price');
-      const priceElm = priceAreaElm ? priceAreaElm.querySelector('span') : null;
-      const priceText = priceElm ? priceElm.innerHTML : '';
+      const priceText = priceAreaElm
+        ? priceAreaElm.querySelector('span')?.innerHTML + ''
+        : '';
       let price: number = Number(priceText.replace(/円|,/g, ''));
       if (priceAreaElm?.innerHTML.match(/／時/)) {
         price = price * 160; // 時給の場合は、月額に換算
@@ -124,6 +128,7 @@ export class LevtechScraping {
         });
 
       const data: ScrapingData = {
+        url: prjUrl,
         price: price,
         contract: contract,
         prefectures: prefectures,

@@ -1,4 +1,3 @@
-import { AngularFirestoreDocument } from '@angular/fire/firestore/public_api';
 import { firestore } from 'firebase';
 
 export interface Skill {

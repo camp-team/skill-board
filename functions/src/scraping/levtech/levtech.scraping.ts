@@ -1,6 +1,6 @@
 import * as puppeteer from 'puppeteer';
-import { ScrapingData } from '../scraping-data';
-import { ScrapingResult } from '../scraping-result';
+import { ScrapingData } from '../../interface/scraping-data';
+import { ScrapingResult } from '../../interface/scraping-result';
 import { LevtechDataConverter } from './levtech.data-converter';
 import { firestore } from 'firebase-admin';
 
@@ -10,10 +10,14 @@ interface PageResult {
 }
 
 export class LevtechScraping {
-  dataConverter = new LevtechDataConverter();
+  private dataConverter = new LevtechDataConverter();
 
   public async exec(): Promise<ScrapingResult> {
-    const start: number = Date.now();
+    console.log('LevtechScraping.exec.start');
+
+    const scrapingAt = firestore.Timestamp.now();
+    const scrapingTarget = 'levtech';
+
     const browser: puppeteer.Browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox'],
@@ -44,14 +48,11 @@ export class LevtechScraping {
     await page.close();
     await browser.close();
 
-    const end: number = Date.now();
-    const executionTime = end - start;
+    console.log('LevtechScraping.exec.end');
 
     return {
-      scrapingAt: firestore.Timestamp.now(),
-      scrapingTarget: 'levtech',
-      status: 'success',
-      executionTime: executionTime,
+      scrapingAt: scrapingAt,
+      scrapingTarget: scrapingTarget,
       scrapingDataList: this.dataConverter.exec(scrapingDataList),
     };
   }
@@ -73,9 +74,19 @@ export class LevtechScraping {
         return;
       }
 
+      const prjHtml = prj.innerHTML;
+      const remoteable: boolean =
+        !!prjHtml.match(/リモート/) || !!prjHtml.match(/テレワーク/);
+      // 厳密ではないが、リモート関連のワードが含まれていたら、リモート対象とみなす。
+      // (レバテックは、リモート有無を項目として管理していない)
+
+      const prjHead = prj.querySelector('.prjHead__ttl > .js-link_rel');
+      const prjUrl = prjHead ? prjHead.getAttribute('href') + '' : '';
+
       const priceAreaElm = prj.querySelector('.prjContent__summary__price');
-      const priceElm = priceAreaElm ? priceAreaElm.querySelector('span') : null;
-      const priceText = priceElm ? priceElm.innerHTML : '';
+      const priceText = priceAreaElm
+        ? priceAreaElm.querySelector('span')?.innerHTML + ''
+        : '';
       let price: number = Number(priceText.replace(/円|,/g, ''));
       if (priceAreaElm?.innerHTML.match(/／時/)) {
         price = price * 160; // 時給の場合は、月額に換算
@@ -85,7 +96,6 @@ export class LevtechScraping {
       let contract = contractElm ? contractElm.innerHTML : '';
       contract = contract.replace(/\n|（フリーランス）|\s/g, ''); // 不要な文字列をトリミング
 
-      let location = '';
       let prefectures = '';
       let station = '';
       const skills: string[] = [];
@@ -98,7 +108,7 @@ export class LevtechScraping {
           switch (ttl) {
             case '最寄り駅':
               const locationElm = item.querySelector('p.prjTable__item__desc');
-              location = locationElm ? locationElm.innerHTML : '';
+              const location = locationElm ? locationElm.innerHTML : '';
               if (location.includes('（')) {
                 // [新宿（東京都）]の形式になっているので、駅名と都道府県に分割
                 const split = location.split('（');
@@ -118,20 +128,16 @@ export class LevtechScraping {
         });
 
       const data: ScrapingData = {
+        url: prjUrl,
         price: price,
         contract: contract,
         prefectures: prefectures,
         station: station,
         skills: skills,
+        remoteable: remoteable,
       };
       result.dataList.push(data);
     });
     return result;
   }
 }
-
-// [単体実行コマンド]npx ts-node levtech.scraping.ts
-// tslint:disable-next-line: no-floating-promises
-new LevtechScraping().exec().then((r) => {
-  r.scrapingDataList.forEach((d) => console.log(d));
-});

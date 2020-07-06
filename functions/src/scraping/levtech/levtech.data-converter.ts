@@ -1,4 +1,4 @@
-import { ScrapingData } from '../scraping-data';
+import { ScrapingData } from '../../interface/scraping-data';
 
 export class LevtechDataConverter {
   // スキル名の特殊置換対象
@@ -14,25 +14,26 @@ export class LevtechDataConverter {
   ]);
 
   public exec(scrapingDataList: ScrapingData[]): ScrapingData[] {
+    console.log('LevtechDataConverter.exec.start');
     scrapingDataList.forEach((scrapingData) => {
-      scrapingData.skillIdSet = this.convertSkillIdSet(scrapingData.skills);
+      scrapingData.skillIds = this.convertSkillIds(scrapingData.skills);
     });
-
+    console.log('LevtechDataConverter.exec.end');
     return scrapingDataList;
   }
 
   // スキル名を、内部管理用のid形式に変換
-  public convertSkillIdSet(skills: string[]): Set<string> {
-    const skillSet = new Set<string>();
+  public convertSkillIds(skills: string[]): string[] {
+    const skillIdSet = new Set<string>();
     skills.forEach((skill) => {
       if (this.skillConvertMap.has(skill)) {
         // 特殊変換対象
-        skillSet.add(this.skillConvertMap.get(skill) + '');
+        skillIdSet.add(this.skillConvertMap.get(skill) + '');
       } else {
         // 特殊変換対象以外は、機械的に置換(小文字にして、空白&カンマを取り除く)
-        skillSet.add(skill.toLowerCase().replace(/\.|\s|　/g, ''));
+        skillIdSet.add(skill.toLowerCase().replace(/\.|\s|　/g, ''));
       }
     });
-    return skillSet;
+    return Array.from(skillIdSet.values());
   }
 }

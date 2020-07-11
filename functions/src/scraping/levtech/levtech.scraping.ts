@@ -1,8 +1,6 @@
 import * as puppeteer from 'puppeteer';
 import { ScrapingData } from '../../interface/scraping-data';
-import { ScrapingResult } from '../../interface/scraping-result';
 import { LevtechDataConverter } from './levtech.data-converter';
-import { firestore } from 'firebase-admin';
 
 interface PageResult {
   next: boolean;
@@ -12,11 +10,8 @@ interface PageResult {
 export class LevtechScraping {
   private dataConverter = new LevtechDataConverter();
 
-  public async exec(): Promise<ScrapingResult> {
+  public async exec(): Promise<ScrapingData[]> {
     console.log('LevtechScraping.exec.start');
-
-    const scrapingAt = firestore.Timestamp.now();
-    const scrapingTarget = 'levtech';
 
     const browser: puppeteer.Browser = await puppeteer.launch({
       headless: true,
@@ -50,11 +45,7 @@ export class LevtechScraping {
 
     console.log('LevtechScraping.exec.end');
 
-    return {
-      scrapingAt: scrapingAt,
-      scrapingTarget: scrapingTarget,
-      scrapingDataList: this.dataConverter.exec(scrapingDataList),
-    };
+    return this.dataConverter.exec(scrapingDataList);
   }
 
   private evaluatePage(): PageResult {

@@ -15,7 +15,7 @@ export const scrapingLevtech = functions
   .runWith(runtimeOpts)
   .https.onRequest(async (req, res) => {
     const context = new ScrapingContext('levtech');
-    context.setDataList(await new LevtechScraping().exec());
+    await new LevtechScraping().exec(context);
     await new ScrapingFirestore().exec(context);
     return res.status(200).json(context.getDataHeader());
   });

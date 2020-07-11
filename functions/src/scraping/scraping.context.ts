@@ -2,6 +2,7 @@ import { ScrapingDataHeader } from '../interface/scraping-data-header';
 import { ScrapingData } from '../interface/scraping-data';
 import { firestore } from 'firebase-admin';
 
+// 一連のスクレイピング処理を通して、管理が必要な情報等を本クラスで一元管理。
 export class ScrapingContext {
   private dataHeader: ScrapingDataHeader;
   private dataList: ScrapingData[] = [];

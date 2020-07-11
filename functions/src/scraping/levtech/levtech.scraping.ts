@@ -1,6 +1,7 @@
 import * as puppeteer from 'puppeteer';
 import { ScrapingData } from '../../interface/scraping-data';
 import { LevtechDataConverter } from './levtech.data-converter';
+import { ScrapingContext } from '../scraping.context';
 
 interface PageResult {
   next: boolean;
@@ -10,9 +11,15 @@ interface PageResult {
 export class LevtechScraping {
   private dataConverter = new LevtechDataConverter();
 
-  public async exec(): Promise<ScrapingData[]> {
+  public async exec(context: ScrapingContext): Promise<ScrapingContext> {
     console.log('LevtechScraping.exec.start');
+    const dataList = await this.doScraping();
+    context.setDataList(this.dataConverter.exec(dataList));
+    console.log('LevtechScraping.exec.end');
+    return context;
+  }
 
+  private async doScraping(): Promise<ScrapingData[]> {
     const browser: puppeteer.Browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox'],
@@ -43,9 +50,7 @@ export class LevtechScraping {
     await page.close();
     await browser.close();
 
-    console.log('LevtechScraping.exec.end');
-
-    return this.dataConverter.exec(scrapingDataList);
+    return scrapingDataList;
   }
 
   private evaluatePage(): PageResult {

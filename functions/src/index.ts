@@ -15,4 +15,4 @@ export { skillDelete } from './firestore/skill.function';
 export { scrapingDataCreate } from './firestore/scraping-data.function';
 export { scrapingDataUpdate } from './firestore/scraping-data.function';
 export { scrapingDataDelete } from './firestore/scraping-data.function';
-export { scrapingLevtech } from './scraping/levtech/levtech.function';
+export { scrapingLevtech } from './scraping/scraping.function';

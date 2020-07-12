@@ -52,4 +52,10 @@ export class ScrapingContext {
       this.dataHeader.scrapingDate
     );
   }
+
+  // algolia保存先のindex名
+  // (最新データのみ保持するので、dateは不要)
+  public getAlgoliaIndexName(): string {
+    return 'scraping-data-' + this.dataHeader.scrapingTarget;
+  }
 }

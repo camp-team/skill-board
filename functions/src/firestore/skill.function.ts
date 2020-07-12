@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { AlgoliaClinent } from './algolia-client';
+import { AlgoliaClinent } from '../algolia/algolia.client';
 
 const algoliaClient = new AlgoliaClinent('skills');
 

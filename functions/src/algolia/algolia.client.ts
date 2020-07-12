@@ -32,4 +32,8 @@ export class AlgoliaClinent {
     // 文字数オーバーが発生する項目が追加された場合、Distinct対応&分割登録の処理が必要
     return this.index.saveObject(agData);
   }
+
+  getIndex() {
+    return this.index;
+  }
 }

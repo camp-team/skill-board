@@ -7,19 +7,19 @@ export const skillCreate = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onCreate(async (snap, context) => {
-    return algoliaClient.saveIndex(snap.id, snap.data());
+    return algoliaClient.saveObject(snap.id, snap.data());
   });
 
 export const skillUpdate = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onUpdate(async (snap, context) => {
-    return algoliaClient.saveIndex(snap.after.id, snap.after.data());
+    return algoliaClient.saveObject(snap.after.id, snap.after.data());
   });
 
 export const skillDelete = functions
   .region('asia-northeast1')
   .firestore.document('skills/{id}')
   .onDelete(async (snap, context) => {
-    return algoliaClient.deleteIndex(snap.id);
+    return algoliaClient.deleteObject(snap.id);
   });

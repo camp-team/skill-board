@@ -13,13 +13,13 @@ export class LevtechScraping {
 
   public async exec(context: ScrapingContext): Promise<ScrapingContext> {
     console.log('LevtechScraping.exec.start');
-    const dataList = await this.doScraping();
+    const dataList = await this.doScraping(context);
     context.setDataList(this.dataConverter.exec(dataList));
     console.log('LevtechScraping.exec.end');
     return context;
   }
 
-  private async doScraping(): Promise<ScrapingData[]> {
+  private async doScraping(context: ScrapingContext): Promise<ScrapingData[]> {
     const browser: puppeteer.Browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox'],
@@ -32,7 +32,7 @@ export class LevtechScraping {
     let next = true;
     while (next) {
       const pageResult = await page.evaluate(this.evaluatePage);
-      next = pageResult.next;
+      next = pageResult.next && !context.isMinimumMode(); // 最小実行モードの場合、結果問わず1ページ目で終了
       scrapingDataList = scrapingDataList.concat(pageResult.dataList);
       if (next) {
         const nextButton = await page.$('span.next > a');
@@ -78,6 +78,9 @@ export class LevtechScraping {
 
       const prjHead = prj.querySelector('.prjHead__ttl > .js-link_rel');
       const prjUrl = prjHead ? prjHead.getAttribute('href') + '' : '';
+      // 案件詳細ページへのリンク
+      // 現状利用用途はないが、これによって案件の特定ができるので、保持しておく。
+      // (最後の数値は、恐らくレバテック内の案件ID)
 
       const priceAreaElm = prj.querySelector('.prjContent__summary__price');
       const priceText = priceAreaElm

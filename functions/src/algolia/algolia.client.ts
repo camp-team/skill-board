@@ -14,11 +14,11 @@ export class AlgoliaClinent {
     this.index = client.initIndex(indexName);
   }
 
-  deleteIndex(id: string) {
+  deleteObject(id: string) {
     return this.index.deleteObject(id);
   }
 
-  saveIndex(id: string, fsData: any) {
+  saveObject(id: string, fsData: any) {
     const agData = fsData;
     agData.objectID = id;
 

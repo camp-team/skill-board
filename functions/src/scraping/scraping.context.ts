@@ -7,8 +7,14 @@ export class ScrapingContext {
   private dataHeader: ScrapingDataHeader;
   private dataList: ScrapingData[] = [];
 
-  constructor(scrapingTarget: string) {
+  // 最小実行モード有無.
+  // 通常のスクレイピング処理だと時間がかかってしまうので、少ない件数だけ素早く実行するためのモード
+  // 開発時の検証を効率化するために利用。(本番では利用しない)
+  private minimumMode: boolean;
+
+  constructor(scrapingTarget: string, minimumMode?: number) {
     this.dataHeader = this.createDataHeader(scrapingTarget);
+    this.minimumMode = !!minimumMode;
   }
 
   private createDataHeader(scrapingTarget: string): ScrapingDataHeader {
@@ -43,7 +49,9 @@ export class ScrapingContext {
     return this.dataList;
   }
 
-  // firebase保存先のpath
+  /**
+   * firebase保存先のpath
+   */
   public getCollectionPath(): string {
     return (
       'scraping-data/' +
@@ -53,9 +61,18 @@ export class ScrapingContext {
     );
   }
 
-  // algolia保存先のindex名
-  // (最新データのみ保持するので、dateは不要)
+  /**
+   * algolia保存先のindex名.
+   * 最新データのみ保持するので、dateは不要
+   */
   public getAlgoliaIndexName(): string {
     return 'scraping-data-' + this.dataHeader.scrapingTarget;
+  }
+
+  /**
+   * 最小実行モードか？
+   */
+  public isMinimumMode(): boolean {
+    return this.minimumMode;
   }
 }

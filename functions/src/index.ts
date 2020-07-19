@@ -13,3 +13,4 @@ export { skillCreate } from './firestore/skill.function';
 export { skillUpdate } from './firestore/skill.function';
 export { skillDelete } from './firestore/skill.function';
 export { scrapingLevtech } from './scraping/scraping.function';
+export { aggregateScrapingData } from './aggregate/aggregate.function';

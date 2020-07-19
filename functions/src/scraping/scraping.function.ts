@@ -1,6 +1,6 @@
+import * as functions from 'firebase-functions';
 import { LevtechScraping } from './levtech/levtech.scraping';
 import { ScrapingFirestore } from './scraping.firestore';
-import * as functions from 'firebase-functions';
 import { ScrapingContext } from './scraping.context';
 import { ScrapingAlgolia } from './scraping.algolia';
 

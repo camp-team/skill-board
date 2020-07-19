@@ -1,14 +1,14 @@
 import * as functions from 'firebase-functions';
-import algoliasearch, { SearchIndex } from 'algoliasearch';
+import * as algolia from 'algoliasearch';
 import { firestore } from 'firebase-admin';
 
 // Algoliaを使えるようにする
 const ALGOLIA_ID = functions.config().algolia.app_id;
 const ALGOLIA_ADMIN_KEY = functions.config().algolia.secret_key;
-const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+const client = algolia.default(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 
 export class AlgoliaClinent {
-  private index: SearchIndex;
+  private index: algolia.SearchIndex;
 
   constructor(indexName: string) {
     this.index = client.initIndex(indexName);

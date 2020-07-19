@@ -1,4 +1,4 @@
-// import { firestore } from 'firebase';
+import { firestore } from 'firebase';
 
 export interface Skill {
   skillId: string;
@@ -6,7 +6,7 @@ export interface Skill {
   skillCategories?: string[]; // サンプルデータ用に、暫定的に任意項目
   price: number;
   vacancy: number;
-  // aggregatedAt: firestore.Timestamp;
-  // createdAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
-  // updatedAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
+  aggregatedAt: firestore.Timestamp;
+  createdAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
+  updatedAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
 }

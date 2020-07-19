@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
-    "paths": {
-      "@interfaces/*": ["../src/app/interfaces/*"]
-    }
+    "target": "es2017"
   },
   "compileOnSave": true,
   "include": ["src"]

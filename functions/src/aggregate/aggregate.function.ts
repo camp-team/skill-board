@@ -17,31 +17,33 @@ export const aggregateScrapingData = functions
       return res.status(404).send(); // 一般公開用のapiではないので、エラー内容は出さずnot foundで返す
     }
 
-    // try {
-    const context = new AggregateContext(
-      Number(req.query.minimumMode) // オプション増えてきたら、interface化して渡す
-    );
+    try {
+      const context = new AggregateContext(
+        Number(req.query.minimumMode) // オプション増えてきたら、interface化して渡す
+      );
 
-    await new AggregateAlgolia().exec(context, 'levtech');
+      const algolia = new AggregateAlgolia();
 
-    console.log(Array.from(context.getDataMap()));
+      const scrapingTargets = ['levtech']; // スクレピング対象増えたらここに追記
+      for (const scrapingTarget of scrapingTargets) {
+        await algolia.loadScrapingData(context, scrapingTarget);
+      }
+      await new AggregateFirestore().exec(context);
+      await algolia.replaceSkillData(context);
 
-    await new AggregateFirestore().exec(context);
-
-    return res.status(200).json({
-      status: 'success',
-      result: JSON.stringify(context.getDataMap()),
-    });
-
-    // } catch (e) {
-    //   console.log(
-    //     'aggregateScrapingData.error request:' +
-    //       JSON.stringify(http.reqLogInfo(req))
-    //   );
-    //   console.log('aggregateScrapingData.error error:' + JSON.stringify(e));
-    //   return res.status(500).json({ status: 'error', error: e });
-    //   // エラー時は、再実行すれば良いので、基本的に復旧処理は不要
-    //   // (firestore〜algolia間データ不整合が発生する可能性があるが、最新データはalgoliaのみ参照しているので影響なし
-    //   //  また、再実行で同日付のデータは全削除〜置換されるので、再実行で正常終了すれば、不整合解消される。)
-    // }
+      return res.status(200).json({
+        status: 'success',
+        result: JSON.stringify(context.getDataMap()),
+      });
+    } catch (e) {
+      console.log(
+        'aggregateScrapingData.error request:' +
+          JSON.stringify(http.reqLogInfo(req))
+      );
+      console.log('aggregateScrapingData.error error:' + JSON.stringify(e));
+      return res.status(500).json({ status: 'error', error: e });
+      // エラー時は、再実行すれば良いので、基本的に復旧処理は不要
+      // (firestore〜algolia間データ不整合が発生する可能性があるが、最新データはalgoliaのみ参照しているので影響なし
+      //  また、再実行で同日付のデータは全削除〜置換されるので、再実行で正常終了すれば、不整合解消される。)
+    }
   });

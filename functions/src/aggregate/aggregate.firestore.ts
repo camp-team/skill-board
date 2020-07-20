@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import { AggregateContext } from './aggregate.context';
+import { Skill } from '../interface/skill';
 
 export class AggregateFirestore {
   private db: admin.firestore.Firestore;
@@ -9,64 +10,29 @@ export class AggregateFirestore {
     this.db = admin.firestore();
   }
 
+  /**
+   * firestoreからskillデータ取得〜集計データ反映〜firestore更新
+   * @param context
+   */
   public async exec(context: AggregateContext) {
-    console.log('AggregateFirestore.exec.star');
-
-    // const dataIterater = context.getDataMap().values();
+    console.log('AggregateFirestore.exec.start');
 
     const skillsRef = this.db.collection('skills');
-    console.log('skillsRef');
 
-    // const skillDocRefs = await skillsRef.listDocuments();
-    // for (const skillDocRef of skillDocRefs) {
-    //   const skillData = (await skillDocRef.get()).data();
-    //   console.log('skillData:' + JSON.stringify(skillData));
-    // }
-
-    const snapShot = await skillsRef.get();
-    console.log('snapShot:' + snapShot.size);
-
-    const skills = snapShot.docs.map((doc) => {
-      return doc.data();
+    const nowTs = admin.firestore.Timestamp.now();
+    const skills = (await skillsRef.get()).docs.map((doc) => {
+      return doc.data() as Skill;
     });
 
     for (const skill of skills) {
-      console.log('skill:' + JSON.stringify(skill));
+      const aggregateData = context.getAggregateData(skill.skillId);
+      skill.price = aggregateData.calcAveragePrice();
+      skill.vacancy = aggregateData.dataCount;
+      skill.updatedAt = nowTs;
+      skill.aggregatedAt = nowTs;
+      await skillsRef.doc(skill.skillId).set(skill);
+      context.skills.push(skill); // algoliaにも保存する必要があるので、context内にセット
     }
-
-    // for (const data of dataArray) {
-    //   console.log('data');
-    //   console.log(JSON.stringify(data));
-    // }
-
-    // await this.db
-    //   .collection('skills')
-    //   .get()
-    //   .then((snapshot) => {
-    //     snapshot.forEach((doc) => {
-    //       console.log(doc.id, '=>', doc.data());
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log('Error getting documents', err);
-    //   });
-
-    // // 同一日付&サイトのスクレイピングデータがあれば全削除.
-    // // (同一サイトに対して、1日複数回スクレイピングを実行した場合、最新のデータのみ残す)
-    // await this.deleteAllByCollectionPath(collectionPath);
-
-    // // スクレイピングデータ
-    // await Promise.all(
-    //   dataList.map(async (d) => {
-    //     const doc = await this.db.collection(collectionPath).add(d);
-    //     d.objectID = doc.id; // firestore内で採番されたIDをセット(alogliaで使う)
-    //   })
-    // );
-
-    // // スクレイピングデータヘッダー
-    // await this.db
-    //   .collection('scraping-data-header')
-    //   .add(context.getDataHeader());
 
     console.log('AggregateFirestore.exec.end');
   }

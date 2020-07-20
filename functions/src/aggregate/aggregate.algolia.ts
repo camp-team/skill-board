@@ -3,28 +3,66 @@ import { AggregateContext } from './aggregate.context';
 import { ScrapingData } from '../interface/scraping-data';
 
 export class AggregateAlgolia {
-  public async exec(context: AggregateContext, scrapingTarget: string) {
-    console.log('AggregateAlgolia.exec.start');
+  /**
+   * 任意のサイトの最新スクレイピングデータを取得
+   * @param context
+   * @param scrapingTarget
+   */
+  public async loadScrapingData(
+    context: AggregateContext,
+    scrapingTarget: string
+  ) {
+    console.log('AggregateAlgolia.exec.start', scrapingTarget);
 
     // index名からclientを生成(index名はスクレイピング対象ごとに決まる)
     const algoliaClient = new AlgoliaClinent('scraping-data-' + scrapingTarget);
 
     const opt = {
-      page: 1,
+      page: 0,
       hitsPerPage: 500,
     };
 
-    // let nextPage = true;
-    // while (nextPage){
-    const response = await algoliaClient
-      .getIndex()
-      .search<ScrapingData>('', opt);
-
-    for (const scrapingData of response.hits) {
-      console.log(JSON.stringify(scrapingData));
-      context.setScrapingData(scrapingData);
+    let nextPage = true;
+    let dataCount = 0;
+    while (nextPage) {
+      const response = await algoliaClient
+        .getIndex()
+        .search<ScrapingData>('', opt);
+      for (const scrapingData of response.hits) {
+        context.addScrapingData(scrapingData);
+      }
+      nextPage = response.nbPages >= response.page + 1;
+      if (!dataCount) dataCount = response.nbHits; //log出力用
     }
 
-    console.log('AggregateAlgolia.exec.end');
+    console.log(
+      'AggregateAlgolia.exec.end',
+      scrapingTarget,
+      'dataCount:' + dataCount
+    );
+  }
+
+  /**
+   * algoliaにスキルデータを反映.
+   * スキルデータが更新されるのは、集計後のみなので、firestore.triggerは使わず、replaceAllObjectsでまとめて置換
+   * @param context
+   */
+  public async replaceSkillData(context: AggregateContext) {
+    console.log('AggregateAlgolia.replaceSkillData.start');
+
+    const algoliaClient = new AlgoliaClinent('skills');
+
+    // algolia用に、objectIDを付加
+    const agSkills: any[] = [];
+    context.skills.forEach((fsSkill) => {
+      const agSkill: any = fsSkill;
+      agSkill.objectID = fsSkill.skillId;
+      agSkills.push(agSkill);
+    });
+
+    // replaceAllにて、全データ一括置換
+    await algoliaClient.getIndex().replaceAllObjects(agSkills);
+
+    console.log('AggregateAlgolia.replaceSkillData.end');
   }
 }

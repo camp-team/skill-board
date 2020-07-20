@@ -1,12 +1,13 @@
-// import { firestore } from 'firebase';
+import { firestore } from 'firebase-admin';
 
 export interface Skill {
   skillId: string;
   skillCaption: string;
-  skillCategories?: string[]; // サンプルデータ用に、暫定的に任意項目
+  skillCategories?: string[];
   price: number;
   vacancy: number;
-  // aggregatedAt: firestore.Timestamp;
-  // createdAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
-  // updatedAt?: firestore.Timestamp; // サンプルデータ用に、暫定的に任意項目
+  aggregatedDate?: number;
+  aggregatedAt: firestore.Timestamp;
+  createdAt?: firestore.Timestamp;
+  updatedAt?: firestore.Timestamp;
 }

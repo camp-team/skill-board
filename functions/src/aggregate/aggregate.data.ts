@@ -4,10 +4,11 @@ import { ScrapingData } from '../interface/scraping-data';
  * 集計データ
  */
 export class AggregateData {
-  skillId: string;
-  sumRemoteableCount: number = 0;
-  sumPrice: number = 0;
-  dataCount: number = 0;
+  public skillId: string;
+  public sumRemoteableCount: number = 0;
+  public sumPrice: number = 0;
+  public dataCount: number = 0;
+  public price: number = 0;
 
   constructor(skillId: string) {
     console.log('AggregateData.' + skillId);
@@ -23,14 +24,17 @@ export class AggregateData {
       !scrapingData.skillIds ||
       !scrapingData.skillIds.includes(this.skillId)
     ) {
-      return this;
-      // throw new Error('skillIdが一致しません'); // skillIdが一致しない場合、エラーとする
+      return this; // skillIdが一致しない場合、何もせず返す
     }
 
-    console.log('AggregateData.addScrapingData');
     if (scrapingData.remoteable) this.sumRemoteableCount++;
     this.sumPrice = this.sumPrice + scrapingData.price;
     this.dataCount++;
     return this;
+  }
+
+  public calcAveragePrice(): number {
+    this.price = Math.floor(this.sumPrice / this.dataCount);
+    return this.price;
   }
 }

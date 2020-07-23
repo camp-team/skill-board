@@ -1,4 +1,5 @@
-import * as http from '../http/http.util';
+import * as http from '../utils/http.util';
+import * as error from '../utils/error.util';
 import * as functions from 'firebase-functions';
 import { AggregateContext } from './aggregate.context';
 import { AggregateAlgolia } from './aggregate.algolia';
@@ -18,13 +19,10 @@ export const aggregateScrapingData = functions
     }
 
     try {
-      const context = new AggregateContext(
-        Number(req.query.minimumMode) // オプション増えてきたら、interface化して渡す
-      );
-
+      const context = new AggregateContext();
       const algolia = new AggregateAlgolia();
 
-      const scrapingTargets = ['levtech']; // スクレピング対象増えたらここに追記
+      const scrapingTargets = ['levtech']; // スクレピング対象が増えたら追記
       for (const scrapingTarget of scrapingTargets) {
         await algolia.loadScrapingData(context, scrapingTarget);
       }
@@ -33,17 +31,15 @@ export const aggregateScrapingData = functions
 
       return res.status(200).json({
         status: 'success',
-        result: JSON.stringify(context.aggregateDataMap),
+        result: JSON.stringify(context),
       });
     } catch (e) {
-      console.log(
-        'aggregateScrapingData.error request:' +
-          JSON.stringify(http.reqLogInfo(req))
+      console.error(
+        'aggregateScrapingData.request:' + JSON.stringify(http.forJson(req))
       );
-      console.log('aggregateScrapingData.error error:' + JSON.stringify(e));
-      return res.status(500).json({ status: 'error', error: e });
+      console.error('aggregateScrapingData.error:', error.forLog(e));
+      return res.status(500).json({ status: 'error', error: error.forJson(e) });
       // エラー時は、再実行すれば良いので、基本的に復旧処理は不要
-      // (firestore〜algolia間データ不整合が発生する可能性があるが、最新データはalgoliaのみ参照しているので影響なし
-      //  また、再実行で同日付のデータは全削除〜置換されるので、再実行で正常終了すれば、不整合解消される。)
+      // (再実行で各種データは全上書きされるので、最後に実行されたデータのみが残る)
     }
   });

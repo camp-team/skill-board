@@ -14,6 +14,8 @@ export class AggregateAlgolia {
   ) {
     console.log('AggregateAlgolia.exec.start', scrapingTarget);
 
+    throw new Date();
+
     // index名からclientを生成(index名はスクレイピング対象ごとに決まる)
     const algoliaClient = new AlgoliaClinent('scraping-data-' + scrapingTarget);
 
@@ -43,6 +45,7 @@ export class AggregateAlgolia {
   /**
    * algoliaにスキルデータを反映.
    * スキルデータが更新されるのは、集計後のみなので、firestore.triggerは使わず、replaceAllObjectsでまとめて置換
+   * (algoliaに反映するのは最新データのみ)
    * @param context
    */
   public async replaceSkillData(context: AggregateContext) {

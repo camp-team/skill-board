@@ -4,11 +4,6 @@ import { Skill } from '../interface/skill';
 
 // 一連のスクレイピング処理を通して、管理が必要な情報等を本クラスで一元管理。
 export class AggregateContext {
-  // 最小実行モード有無.
-  // 通常のスクレイピング処理だと時間がかかってしまうので、少ない件数だけ素早く実行するためのモード
-  // 開発時の検証を効率化するために利用。(本番では利用しない)
-  public readonly minimumMode: boolean;
-
   // 集計データのmap<skillId, 集計データ>
   public readonly aggregateDataMap = new Map<string, AggregateData>();
 
@@ -17,8 +12,7 @@ export class AggregateContext {
 
   public readonly aggregateDate: number;
 
-  constructor(minimumMode?: number) {
-    this.minimumMode = !!minimumMode;
+  constructor() {
     const d = new Date();
     this.aggregateDate =
       d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
@@ -33,7 +27,7 @@ export class AggregateContext {
   }
 
   /**
-   * mapからskillIdに対応したAggregateDataを取得.
+   * skillIdに対応したAggregateDataを取得.
    * @param skillId
    */
   public getAggregateData(skillId: string): AggregateData {

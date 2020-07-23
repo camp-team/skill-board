@@ -16,10 +16,7 @@ export class AggregateFirestore {
   public async exec(context: AggregateContext) {
     console.log('AggregateFirestore.exec.start');
 
-    const skillsRef = this.db.collection('skills'); // 最新データ
-    const skillsHistoryRef = this.db.collection(
-      'skills-history/' + context.aggregateDate
-    ); // 累積データ
+    const skillsRef = this.db.collection('skills');
 
     const nowTs = admin.firestore.Timestamp.now();
     const skills = (await skillsRef.get()).docs.map((doc) => {
@@ -32,8 +29,12 @@ export class AggregateFirestore {
       skill.vacancy = aggregateData.getDataCount();
       skill.updatedAt = nowTs;
       skill.aggregatedDate = context.aggregateDate;
-      await skillsRef.doc(skill.skillId).set(skill);
-      await skillsHistoryRef.doc(skill.skillId).set(skill);
+      await skillsRef.doc(skill.skillId).set(skill); // 最新データ(上書き)
+      await skillsRef
+        .doc(skill.skillId)
+        .collection('history')
+        .doc(context.aggregateDate + '')
+        .set(skill); // 累積データ(追加)
       context.skills.push(skill); // algoliaにも保存する必要があるので、context内にセットしておく
     }
 

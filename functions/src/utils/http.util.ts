@@ -9,19 +9,18 @@ export const auth = function (req: functions.https.Request): boolean {
   if (!!token && token === functions.config().fb.token) {
     return true;
   } else {
-    console.log(
-      'ScrapingFunction.httpAuth.error request:' +
-        JSON.stringify(reqLogInfo(req))
+    console.error(
+      'ScrapingFunction.httpAuth.error request:' + JSON.stringify(forJson(req))
     );
     return false;
   }
 };
 
 /**
- * ログ出力用のrequest情報を返す.
+ * Requestをjson出力可能なオブジェクトで返す.
  * @param req
  */
-export const reqLogInfo = function (req: functions.https.Request) {
+export const forJson = function (req: functions.https.Request) {
   return {
     headers: req.headers,
     query: req.query,

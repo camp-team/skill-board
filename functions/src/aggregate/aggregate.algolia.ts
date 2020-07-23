@@ -14,8 +14,6 @@ export class AggregateAlgolia {
   ) {
     console.log('AggregateAlgolia.exec.start', scrapingTarget);
 
-    throw new Date();
-
     // index名からclientを生成(index名はスクレイピング対象ごとに決まる)
     const algoliaClient = new AlgoliaClinent('scraping-data-' + scrapingTarget);
 

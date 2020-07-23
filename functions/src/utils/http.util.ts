@@ -27,3 +27,11 @@ export const forJson = function (req: functions.https.Request) {
     body: req.body,
   };
 };
+
+/**
+ * RequestをLog用文字列で返す.
+ * @param req
+ */
+export const forLog = function (req: functions.https.Request): string {
+  return JSON.stringify(forJson(req));
+};

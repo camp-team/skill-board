@@ -34,9 +34,7 @@ export const aggregateScrapingData = functions
         result: JSON.stringify(context),
       });
     } catch (e) {
-      console.error(
-        'aggregateScrapingData.request:' + JSON.stringify(http.forJson(req))
-      );
+      console.error('aggregateScrapingData.request:' + http.forLog(req));
       console.error('aggregateScrapingData.error:', error.forLog(e));
       return res.status(500).json({ status: 'error', error: error.forJson(e) });
       // エラー時は、再実行すれば良いので、基本的に復旧処理は不要

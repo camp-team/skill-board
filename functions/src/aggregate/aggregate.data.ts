@@ -1,17 +1,18 @@
 import { ScrapingData } from '../interface/scraping-data';
 
 /**
- * 集計データ
+ * 集計中データ.
+ * 加算・計算ロジックを実装するので、interfaceでなくclassとして作成
  */
 export class AggregateData {
-  public skillId: string;
-  public sumRemoteableCount: number = 0;
-  public sumPrice: number = 0;
-  public dataCount: number = 0;
-  public price: number = 0;
+  public readonly skillId: string;
+
+  // addScrapingDataからしか更新させないので、privateにしてgetterを利用
+  private sumRemoteableCount: number = 0;
+  private sumPrice: number = 0;
+  private dataCount: number = 0;
 
   constructor(skillId: string) {
-    console.log('AggregateData.' + skillId);
     this.skillId = skillId;
   }
 
@@ -33,8 +34,21 @@ export class AggregateData {
     return this;
   }
 
-  public calcAveragePrice(): number {
-    this.price = Math.floor(this.sumPrice / this.dataCount);
-    return this.price;
+  public getSumRemoteableCount(): number {
+    return this.sumRemoteableCount;
+  }
+  public getSumPrice(): number {
+    return this.sumPrice;
+  }
+
+  public getDataCount(): number {
+    return this.dataCount;
+  }
+
+  /**
+   * 平均単価を取得
+   */
+  public getAveragePrice(): number {
+    return Math.floor(this.sumPrice / this.dataCount); // 小数点以下切り捨て
   }
 }

@@ -6,7 +6,6 @@ export class AggregateFirestore {
   private db: admin.firestore.Firestore;
 
   constructor() {
-    admin.initializeApp();
     this.db = admin.firestore();
   }
 
@@ -17,7 +16,10 @@ export class AggregateFirestore {
   public async exec(context: AggregateContext) {
     console.log('AggregateFirestore.exec.start');
 
-    const skillsRef = this.db.collection('skills');
+    const skillsRef = this.db.collection('skills'); // 最新データ
+    const skillsHistoryRef = this.db.collection(
+      'skills-history/' + context.aggregateDate
+    ); // 累積データ
 
     const nowTs = admin.firestore.Timestamp.now();
     const skills = (await skillsRef.get()).docs.map((doc) => {
@@ -26,12 +28,13 @@ export class AggregateFirestore {
 
     for (const skill of skills) {
       const aggregateData = context.getAggregateData(skill.skillId);
-      skill.price = aggregateData.calcAveragePrice();
-      skill.vacancy = aggregateData.dataCount;
+      skill.price = aggregateData.getAveragePrice();
+      skill.vacancy = aggregateData.getDataCount();
       skill.updatedAt = nowTs;
-      skill.aggregatedAt = nowTs;
+      skill.aggregatedDate = context.aggregateDate;
       await skillsRef.doc(skill.skillId).set(skill);
-      context.skills.push(skill); // algoliaにも保存する必要があるので、context内にセット
+      await skillsHistoryRef.doc(skill.skillId).set(skill);
+      context.skills.push(skill); // algoliaにも保存する必要があるので、context内にセットしておく
     }
 
     console.log('AggregateFirestore.exec.end');

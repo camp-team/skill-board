@@ -33,7 +33,7 @@ export const aggregateScrapingData = functions
 
       return res.status(200).json({
         status: 'success',
-        result: JSON.stringify(context.getDataMap()),
+        result: JSON.stringify(context.aggregateDataMap),
       });
     } catch (e) {
       console.log(

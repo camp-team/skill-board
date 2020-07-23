@@ -17,21 +17,19 @@ export class AggregateAlgolia {
     // index名からclientを生成(index名はスクレイピング対象ごとに決まる)
     const algoliaClient = new AlgoliaClinent('scraping-data-' + scrapingTarget);
 
-    const opt = {
-      page: 0,
-      hitsPerPage: 500,
-    };
+    const searchOptions = { page: 0 };
 
-    let nextPage = true;
+    let nextPage = true; // 1リクエストでのデータ取得数制限があるので、ページング判定してループ処理
     let dataCount = 0;
     while (nextPage) {
       const response = await algoliaClient
         .getIndex()
-        .search<ScrapingData>('', opt);
+        .search<ScrapingData>('', searchOptions);
       for (const scrapingData of response.hits) {
         context.addScrapingData(scrapingData);
       }
       nextPage = response.nbPages >= response.page + 1;
+      searchOptions.page = searchOptions.page + 1;
       if (!dataCount) dataCount = response.nbHits; //log出力用
     }
 

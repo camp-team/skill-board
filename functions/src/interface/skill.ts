@@ -7,7 +7,6 @@ export interface Skill {
   price: number;
   vacancy: number;
   aggregatedDate?: number;
-  aggregatedAt: firestore.Timestamp;
   createdAt?: firestore.Timestamp;
   updatedAt?: firestore.Timestamp;
 }

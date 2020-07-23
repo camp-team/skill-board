@@ -6,7 +6,6 @@ export class ScrapingFirestore {
   private db: admin.firestore.Firestore;
 
   constructor() {
-    admin.initializeApp();
     this.db = admin.firestore();
   }
 

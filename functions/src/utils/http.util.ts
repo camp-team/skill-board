@@ -6,12 +6,10 @@ import * as functions from 'firebase-functions';
  */
 export const auth = function (req: functions.https.Request): boolean {
   const token = req.query.token;
-  if (!!token && token === functions.config().fb.token) {
+  if (token && token === functions.config().fb.token) {
     return true;
   } else {
-    console.error(
-      'ScrapingFunction.httpAuth.error request:' + JSON.stringify(forJson(req))
-    );
+    console.error('ScrapingFunction.httpAuth.error request:' + forLog(req));
     return false;
   }
 };

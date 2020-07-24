@@ -57,8 +57,4 @@ export class HeaderComponent implements OnInit {
   navToggle() {
     this.navService.toggle();
   }
-
-  uploadSampleData() {
-    this.skillService.uploadSampleData();
-  }
 }

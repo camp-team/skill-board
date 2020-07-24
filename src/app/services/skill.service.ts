@@ -61,80 +61,6 @@ export class SkillService {
     },
   ];
 
-  // 更新用サンプルデータ
-  static SKILLS_FOR_UPLOAD: ReadonlyArray<Skill> = [
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
-      price: 500000,
-      vacancy: 100,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'vue',
-      skillCaption: 'Vue',
-      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
-      price: 400000,
-      vacancy: 80,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'react',
-      skillCaption: 'React',
-      skillCategories: ['フレームワーク', 'TypeScript', 'フロントエンド'],
-      price: 300000,
-      vacancy: 60,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'java',
-      skillCaption: 'Java',
-      skillCategories: ['言語', 'バックエンド'],
-      price: 380000,
-      vacancy: 180,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'rails',
-      skillCaption: 'Ruby on rails',
-      skillCategories: ['フレームワーク', 'Ruby', 'バックエンド'],
-      price: 400000,
-      vacancy: 180,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'nodejs',
-      skillCaption: 'Node.js',
-      skillCategories: ['JavaScript'],
-      price: 290000,
-      vacancy: 170,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-    {
-      skillId: 'jquery',
-      skillCaption: 'jQuery',
-      skillCategories: ['JavaScript', 'ライブラリ'],
-      price: 280000,
-      vacancy: 290,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      createdAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-      updatedAt: firestore.Timestamp.now(),
-    },
-  ];
-
   index = {
     skills: searchClient.initIndex('skills'),
     // ゆくゆくはsort順ごとのindex追加
@@ -156,21 +82,5 @@ export class SkillService {
 
   getTransitionSkills(skillId: string): Skill[] {
     return SkillService.TRANSITION_SKILLS;
-  }
-
-  // 今だけメソッド　テストデータをfirestoreに登録
-  uploadSampleData(): void {
-    console.log('uploadSampleData');
-    SkillService.SKILLS_FOR_UPLOAD.forEach((skill) => {
-      // 更新日
-      (skill.updatedAt = firestore.Timestamp.now()),
-        this.afs
-          .doc('skills/' + skill.skillId)
-          .set(skill)
-          .then(() => {
-            console.log('doc:uploaded' + skill.skillId);
-          });
-    });
-    alert('uploadSampleData.finished!');
   }
 }

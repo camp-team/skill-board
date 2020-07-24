@@ -4,6 +4,7 @@ import * as functions from 'firebase-functions';
 import { AggregateContext } from './aggregate.context';
 import { AggregateAlgolia } from './aggregate.algolia';
 import { AggregateFirestore } from './aggregate.firestore';
+import { SkillsAlgolia } from '../skills/skills.algolia';
 
 const runtimeOpts: functions.RuntimeOptions = {
   timeoutSeconds: 540,
@@ -20,14 +21,14 @@ export const aggregateScrapingData = functions
 
     try {
       const context = new AggregateContext();
-      const algolia = new AggregateAlgolia();
 
       const scrapingTargets = ['levtech']; // スクレピング対象が増えたら追記
+      const algolia = new AggregateAlgolia();
       for (const scrapingTarget of scrapingTargets) {
         await algolia.loadScrapingData(context, scrapingTarget);
       }
       await new AggregateFirestore().exec(context);
-      await algolia.replaceSkillData(context);
+      await new SkillsAlgolia().replaceSkillData(context.skills);
 
       return res.status(200).json({
         status: 'success',

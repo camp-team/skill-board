@@ -25,8 +25,8 @@ export class AggregateFirestore {
 
     for (const skill of skills) {
       const aggregateData = context.getAggregateData(skill.skillId);
-      skill.price = aggregateData.getAveragePrice();
-      skill.vacancy = aggregateData.getDataCount();
+      skill.price = aggregateData.averagePrice;
+      skill.vacancy = aggregateData.dataCount;
       skill.updatedAt = nowTs;
       skill.aggregatedDate = context.aggregateDate;
       await skillsRef.doc(skill.skillId).set(skill); // 最新データ(上書き)

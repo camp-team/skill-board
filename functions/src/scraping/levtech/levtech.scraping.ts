@@ -126,6 +126,17 @@ export class LevtechScraping {
           }
         });
 
+      // レバテック内で、Tag化されていないスキルはHTML検索してカウント
+      const nonTagSkills = [
+        { name: 'typeScript', regExp: new RegExp(/typeScript/, 'i') },
+        { name: 'vue', regExp: new RegExp(/vue/, 'i') },
+      ];
+      nonTagSkills.forEach((nonTagSkill) => {
+        if (prjHtml.match(nonTagSkill.regExp)) {
+          skills.push(nonTagSkill.name);
+        }
+      });
+
       const data: ScrapingData = {
         url: prjUrl,
         price: price,

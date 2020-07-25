@@ -2,6 +2,7 @@ import * as http from '../utils/http.util';
 import * as error from '../utils/error.util';
 import * as functions from 'firebase-functions';
 import { SkillsMasterUpdateFirestore } from './skills-master-update.firestore';
+import { SkillsAlgolia } from './skills.algolia';
 
 export const skillsMasterUpdate = functions
   .region('asia-northeast1')
@@ -12,6 +13,7 @@ export const skillsMasterUpdate = functions
 
     try {
       const newDataArray = await new SkillsMasterUpdateFirestore().exec();
+      await new SkillsAlgolia().replaceSkillData(newDataArray);
       return res.status(200).json({ status: 'success', result: newDataArray });
     } catch (e) {
       console.log('skillsMasterUpdate.error request:' + http.forLog(req));

@@ -7,10 +7,19 @@ export class LevtechDataConverter {
     ['AngularJS', 'angular'],
     ['C言語', 'c'],
     ['C#.NET', 'c#'],
-    ['Google Cloud Platform', 'gcp'],
     ['Microsoft Azure', 'azure'],
     ['PL/SQL', 'plsql'],
     ['VB.NET', 'vb'],
+
+    // まとめてGCPとしてカウント
+    ['Google Cloud Platform', 'gcp'],
+    ['Google App Engine', 'gcp'],
+
+    // まとめてAWSとしてカウント
+    ['Amazon EC2', 'aws'],
+    ['Amazon S3', 'aws'],
+    ['Amazon SimpleDB', 'aws'],
+    ['Amazon VPC', 'aws'],
   ]);
 
   public exec(scrapingDataList: ScrapingData[]): ScrapingData[] {

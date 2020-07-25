@@ -26,16 +26,6 @@ export class SkillMaster {
       skillCategories: ['言語'],
     },
     {
-      skillId: 'sql',
-      skillCaption: 'SQL',
-      skillCategories: ['言語'],
-    },
-    {
-      skillId: 'sql',
-      skillCaption: 'SQL',
-      skillCategories: ['言語'],
-    },
-    {
       skillId: 'ruby',
       skillCaption: 'Ruby',
       skillCategories: ['言語'],
@@ -69,6 +59,11 @@ export class SkillMaster {
     {
       skillId: 'cobol',
       skillCaption: 'COBOL',
+      skillCategories: ['言語'],
+    },
+    {
+      skillId: 'typescript',
+      skillCaption: 'TypeScript',
       skillCategories: ['言語'],
     },
 
@@ -105,7 +100,6 @@ export class SkillMaster {
       skillCaption: 'jQuery',
       skillCategories: ['JavaScript', 'ライブラリ'],
     },
-
     {
       skillId: 'laravel',
       skillCaption: 'Laravel',
@@ -134,22 +128,51 @@ export class SkillMaster {
     },
 
     /**
-     * インフラ
+     * データベース
+     */
+    {
+      skillId: 'mysql',
+      skillCaption: 'MySQL',
+      skillCategories: ['データベース'],
+    },
+    {
+      skillId: 'oracle',
+      skillCaption: 'Oracle',
+      skillCategories: ['データベース'],
+    },
+    {
+      skillId: 'sqlserver',
+      skillCaption: 'SQL Server',
+      skillCategories: ['データベース'],
+    },
+    {
+      skillId: 'postgresql',
+      skillCaption: 'PostgreSQL',
+      skillCategories: ['データベース'],
+    },
+    {
+      skillId: 'redis',
+      skillCaption: 'Redis',
+      skillCategories: ['データベース'],
+    },
+
+    /**
+     * クラウド
      */
     {
       skillId: 'aws',
       skillCaption: 'AWS',
-      skillCategories: ['インフラ'],
+      skillCategories: ['クラウド'],
     },
     {
       skillId: 'azure',
       skillCaption: 'Microsoft Azure',
-      skillCategories: ['インフラ'],
+      skillCategories: ['クラウド'],
     },
     {
       skillId: 'gcp',
       skillCaption: 'Google Cloud Platform',
-      skillCategories: ['インフラ'],
+      skillCategories: ['クラウド'],
     },
   ];
 }

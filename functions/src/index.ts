@@ -6,3 +6,4 @@ admin.initializeApp();
 // firebase deploy --only functions
 export { scrapingLevtech } from './scraping/scraping.function';
 export { aggregateScrapingData } from './aggregate/aggregate.function';
+export { skillsMasterUpdate } from './skills/skills-master-update.function';

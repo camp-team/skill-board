@@ -16,10 +16,10 @@ export class LevtechDataConverter {
     ['Google App Engine', 'gcp'],
 
     // まとめてAWSとしてカウント
-    ['Amazon EC2', 'AWS'],
-    ['Amazon S3', 'AWS'],
-    ['Amazon SimpleDB', 'AWS'],
-    ['Amazon VPC', 'AWS'],
+    ['Amazon EC2', 'aws'],
+    ['Amazon S3', 'aws'],
+    ['Amazon SimpleDB', 'aws'],
+    ['Amazon VPC', 'aws'],
   ]);
 
   public exec(scrapingDataList: ScrapingData[]): ScrapingData[] {

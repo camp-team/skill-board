@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Skill } from '../interfaces/skill';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { firestore } from 'firebase';
 import { environment } from 'src/environments/environment';
 import algoliasearch from 'algoliasearch/lite';
 import { map } from 'rxjs/operators';

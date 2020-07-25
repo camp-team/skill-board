@@ -5,7 +5,9 @@
     </div>
     <div class="__chart">
       <app-transition-chart
-        [chartDataGroups]="transitionSkills | skillsToChartDataGroup: 'price'"
+        [chartDataGroups]="
+          transitionSkills | async | skillsToChartDataGroup: 'price'
+        "
         [xAxisLabel]="'月'"
         [showYAxisLabel]="false"
         [height]="360"
@@ -18,7 +20,9 @@
     </div>
     <div class="__chart">
       <app-transition-chart
-        [chartDataGroups]="transitionSkills | skillsToChartDataGroup: 'vacancy'"
+        [chartDataGroups]="
+          transitionSkills | async | skillsToChartDataGroup: 'vacancy'
+        "
         [xAxisLabel]="'月'"
         [showYAxisLabel]="false"
         [height]="360"

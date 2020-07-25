@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from 'src/app/interfaces/skill';
 import { SkillService } from 'src/app/services/skill.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-skill-detail-transition',
@@ -10,15 +11,13 @@ import { SkillService } from 'src/app/services/skill.service';
 export class SkillDetailTransitionComponent implements OnInit {
   @Input() skill: Skill;
 
-  transitionSkills: Skill[] = [];
+  transitionSkills: Observable<Skill[]>;
 
   constructor(private skillService: SkillService) {}
 
   ngOnInit(): void {
-    console.log('onInit');
     this.transitionSkills = this.skillService.getTransitionSkills(
       this.skill.skillId
     );
-    console.log(this.transitionSkills);
   }
 }

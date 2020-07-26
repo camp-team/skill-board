@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Skill } from '../interfaces/skill';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { firestore } from 'firebase';
 import { environment } from 'src/environments/environment';
 import algoliasearch from 'algoliasearch/lite';
+import { map } from 'rxjs/operators';
 
 const searchClient = algoliasearch(
   environment.algolia.appId,
@@ -15,52 +15,6 @@ const searchClient = algoliasearch(
   providedIn: 'root',
 })
 export class SkillService {
-  // 遷移チャート用サンプルデータ
-  static TRANSITION_SKILLS: Skill[] = [
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 1000000,
-      vacancy: 101,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 0, 1)),
-    },
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 1500000,
-      vacancy: 121,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 1, 1)),
-    },
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 2000000,
-      vacancy: 141,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 2, 1)),
-    },
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 1500001,
-      vacancy: 151,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 3, 1)),
-    },
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 1500001,
-      vacancy: 151,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 4, 1)),
-    },
-    {
-      skillId: 'angular',
-      skillCaption: 'Angular',
-      price: 1500001,
-      vacancy: 151,
-      aggregatedAt: firestore.Timestamp.fromDate(new Date(2020, 5, 1)),
-    },
-  ];
-
   index = {
     skills: searchClient.initIndex('skills'),
     // ゆくゆくはsort順ごとのindex追加
@@ -80,7 +34,18 @@ export class SkillService {
     return this.afs.doc<Skill>('skills/' + skillId).valueChanges();
   }
 
-  getTransitionSkills(skillId: string): Skill[] {
-    return SkillService.TRANSITION_SKILLS;
+  getTransitionSkills(skillId: string): Observable<Skill[]> {
+    // 累積データ(history)から、直近の10件を取得
+    // ※firestore取得時は件数制限するために降順にしているが、pipe(map)で昇順に戻す
+    return this.afs
+      .collection<Skill>('skills/' + skillId + '/history', (ref) =>
+        ref.orderBy('aggregatedDate', 'desc').limit(10)
+      )
+      .valueChanges()
+      .pipe(
+        map((skills) =>
+          skills.sort((a, b) => a.aggregatedDate - b.aggregatedDate)
+        )
+      );
   }
 }

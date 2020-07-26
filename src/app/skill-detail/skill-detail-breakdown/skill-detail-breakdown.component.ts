@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from 'src/app/interfaces/skill';
+import { ScrapingDataService } from 'src/app/services/scraping-data.service';
+import { ChartData } from 'src/app/interfaces/chart-data';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-skill-detail-breakdown',
@@ -9,7 +12,14 @@ import { Skill } from 'src/app/interfaces/skill';
 export class SkillDetailBreakdownComponent implements OnInit {
   @Input() skill: Skill;
 
-  constructor() {}
+  prefecturesChartData: Promise<ChartData[]>;
 
-  ngOnInit(): void {}
+  constructor(private scrapingDataService: ScrapingDataService) {}
+
+  ngOnInit(): void {
+    this.prefecturesChartData = this.scrapingDataService.getBreakdownChartData(
+      'prefectures',
+      this.skill.skillId
+    );
+  }
 }

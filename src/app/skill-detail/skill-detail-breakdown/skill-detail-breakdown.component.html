@@ -1,2 +1,14 @@
-<p>skill-detail-breakdown works!</p>
-<p>skillCaption:{{ skill.skillCaption }}</p>
+<div class="tab-content">
+  <div class="chart-container">
+    <div class="__title">
+      <h3>勤務地</h3>
+    </div>
+    <div class="__chart">
+      <app-breakdown-chart
+        [chartData]="prefecturesChartData | async"
+        [showLegend]="false"
+        [view]="[540, 360]"
+      ></app-breakdown-chart>
+    </div>
+  </div>
+</div>

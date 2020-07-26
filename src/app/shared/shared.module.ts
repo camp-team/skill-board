@@ -5,6 +5,7 @@ import { BannerComponent } from './banner/banner.component';
 import { SkillsToChartDataGroupPipe } from '../pipes/skills-to-chart-data-group.pipe';
 import { TransitionChartComponent } from './transition-chart/transition-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BreakdownChartComponent } from './breakdown-chart/breakdown-chart.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     BannerComponent,
     SkillsToChartDataGroupPipe,
     TransitionChartComponent,
+    BreakdownChartComponent,
   ],
   imports: [CommonModule, NgxChartsModule],
   exports: [
@@ -19,6 +21,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     BannerComponent,
     SkillsToChartDataGroupPipe,
     TransitionChartComponent,
+    BreakdownChartComponent,
   ],
 })
 export class SharedModule {}

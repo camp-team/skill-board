@@ -15,8 +15,12 @@ export class SkillsToChartDataGroupPipe implements PipeTransform {
   transform(
     results: Skill[],
     valueType: 'price' | 'vacancy',
-    dateFormat = 'yy/MM'
+    dateFormat = 'yy/MM/dd'
   ): ChartDataGroup[] {
+    if (!results) {
+      return [];
+    }
+
     const chartDataGroups: ChartDataGroup[] = [];
     results.forEach((result) => {
       let chartDataGroup = chartDataGroups.find(
@@ -31,7 +35,7 @@ export class SkillsToChartDataGroupPipe implements PipeTransform {
       }
 
       const chartData: ChartData = {
-        name: formatDate(result.aggregatedAt.toDate(), dateFormat, this.locale),
+        name: this.aggregatedDateFormat(dateFormat, result.aggregatedDate),
         value: this.getChartValue(result, valueType),
       };
       chartDataGroup.series.push(chartData);
@@ -39,13 +43,20 @@ export class SkillsToChartDataGroupPipe implements PipeTransform {
     return chartDataGroups;
   }
 
+  private aggregatedDateFormat(dateFormat: string, num: number): string {
+    // num(aggregatedDate)は、yyyymmdd形式の8桁数字なので、一旦Dateにして任意の形式でフォーマット
+    const y = num / 10000;
+    const m = (num % 10000) / 100;
+    const d = num % 100;
+    const aggregatedDate = new Date(y, m - 1, d);
+    return formatDate(aggregatedDate, dateFormat, this.locale);
+  }
+
   private getChartValue(result: Skill, valueType: string): number {
     switch (valueType) {
       case 'price':
-        console.log('price');
         return result.price;
       case 'vacancy':
-        console.log('vacancy');
         return result.vacancy;
       default:
         return 0;

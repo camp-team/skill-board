@@ -6,6 +6,7 @@ import { SkillsToChartDataGroupPipe } from '../pipes/skills-to-chart-data-group.
 import { TransitionChartComponent } from './transition-chart/transition-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BreakdownChartComponent } from './breakdown-chart/breakdown-chart.component';
+import { NgxPieChartZeroMarginDirective } from '../directives/ngx-pie-chart-zero-margin.directive';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { BreakdownChartComponent } from './breakdown-chart/breakdown-chart.compo
     SkillsToChartDataGroupPipe,
     TransitionChartComponent,
     BreakdownChartComponent,
+    NgxPieChartZeroMarginDirective,
   ],
   imports: [CommonModule, NgxChartsModule],
   exports: [

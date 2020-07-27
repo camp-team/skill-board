@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from 'src/app/interfaces/skill';
+import { ScrapingDataService } from 'src/app/services/scraping-data.service';
+import { ChartData } from 'src/app/interfaces/chart-data';
 
 @Component({
   selector: 'app-skill-detail-distribution',
@@ -9,7 +11,13 @@ import { Skill } from 'src/app/interfaces/skill';
 export class SkillDetailDistributionComponent implements OnInit {
   @Input() skill: Skill;
 
-  constructor() {}
+  chartData: Promise<ChartData[]>;
 
-  ngOnInit(): void {}
+  constructor(private scrapingDataService: ScrapingDataService) {}
+
+  ngOnInit(): void {
+    this.chartData = this.scrapingDataService.getPriceLevelChartData(
+      this.skill.skillId
+    );
+  }
 }

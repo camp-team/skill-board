@@ -24,19 +24,32 @@ export class ScrapingDataService {
     new Array<SearchIndex>()
   );
 
+  readonly showPriceLevels: string[] = [
+    '30万-',
+    '40万-',
+    '50万-',
+    '60万-',
+    '70万-',
+    '80万-',
+    '90万-',
+    '100万-',
+  ];
+
   constructor() {}
 
-  public async getBreakdownChartData(
-    breakdownTarget: string,
+  // algoliaのfacetからチャート用のデータを取得
+  // (ChartData.name=facetName, ChartData.value=dataCount)
+  private async getChartDataMapFromFacets(
+    scrapingTarget: string,
     skillId: string
-  ): Promise<ChartData[]> {
+  ): Promise<Map<string, ChartData>> {
     // Map<name, data>
     // スクレイピング対象ごとにindexが分かれているので、本mapで合算を保持する
     const chartDataMap = new Map<string, ChartData>();
 
     const results = await Promise.all(
       this.scrapingDataIndices.map((index) => {
-        return index.searchForFacetValues(breakdownTarget, '', {
+        return index.searchForFacetValues(scrapingTarget, '', {
           maxFacetHits: 100,
           facetFilters: ['skillIds:' + skillId],
         });
@@ -55,7 +68,37 @@ export class ScrapingDataService {
       }
     });
 
-    // mapの値(chartData)をvalue(件数)の降順でソートして返す
+    return chartDataMap;
+  }
+
+  public async getBreakdownChartData(
+    breakdownTarget: string,
+    skillId: string
+  ): Promise<ChartData[]> {
+    const chartDataMap = await this.getChartDataMapFromFacets(
+      breakdownTarget,
+      skillId
+    );
     return Array.from(chartDataMap.values()).sort((a, b) => b.value - a.value);
+  }
+
+  public async getPriceLevelChartData(skillId: string): Promise<ChartData[]> {
+    const chartDataMap = await this.getChartDataMapFromFacets(
+      'priceLevel',
+      skillId
+    );
+
+    const showChartDataArray: ChartData[] = [];
+
+    // 件数が0件だったfacet(金額帯)も、value=0件で返す
+    for (const priceLevel of this.showPriceLevels) {
+      let chartData = chartDataMap.get(priceLevel);
+      if (!chartData) {
+        chartData = { name: priceLevel, value: 0 };
+      }
+      showChartDataArray.push(chartData);
+    }
+
+    return showChartDataArray;
   }
 }

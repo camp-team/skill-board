@@ -1,2 +1,16 @@
-<p>skill-detail-distribution works!</p>
-<p>skillCaption:{{ skill.skillCaption }}</p>
+<div class="tab-content">
+  <div class="chart-container">
+    <div class="__title">
+      <h3>単価</h3>
+    </div>
+    <div class="__chart">
+      <app-distribution-chart
+        [chartData]="chartData | async"
+        [showLegend]="false"
+        [showXAxisLabel]="false"
+        [showYAxisLabel]="false"
+        [view]="[540, 360]"
+      ></app-distribution-chart>
+    </div>
+  </div>
+</div>

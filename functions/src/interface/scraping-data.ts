@@ -1,3 +1,5 @@
+import { PriceLevel } from './price-level';
+
 export interface ScrapingData {
   objectID?: string; // algolia用のID。firestore保存時に、採番されたIDをセット
   skills: string[]; // スクレイピングした生データ
@@ -5,6 +7,7 @@ export interface ScrapingData {
   contract: string;
   remoteable: boolean;
   price: number;
+  priceLevel?: PriceLevel;
   prefectures: string;
   station: string;
   url: string;

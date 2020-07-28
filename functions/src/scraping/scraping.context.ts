@@ -1,6 +1,7 @@
 import { ScrapingDataHeader } from '../interface/scraping-data-header';
 import { ScrapingData } from '../interface/scraping-data';
 import { firestore } from 'firebase-admin';
+import { priceToLevel } from '../interface/price-level';
 
 // 一連のスクレイピング処理を通して、管理が必要な情報等を本クラスで一元管理。
 export class ScrapingContext {
@@ -39,6 +40,7 @@ export class ScrapingContext {
   public setDataList(dataList: ScrapingData[]) {
     this.dataList = dataList;
     this.dataList.forEach((d) => {
+      d.priceLevel = priceToLevel(d.price);
       d.scrapingDate = this.dataHeader.scrapingDate;
       d.scrapingTarget = this.dataHeader.scrapingTarget;
     });

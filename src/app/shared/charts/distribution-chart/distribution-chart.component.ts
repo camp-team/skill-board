@@ -9,7 +9,6 @@ import { ChartData } from 'src/app/interfaces/chart-data';
 export class DistributionChartComponent implements OnInit {
   @Input() chartData: ChartData[] = [];
   @Input() view: number[] = [];
-  // view: any[] = [700, 400];
 
   // options
   @Input() showXAxis = true;

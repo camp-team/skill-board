@@ -5,7 +5,9 @@ import { ReplaySubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class NavigationService {
-  constructor() {}
+  constructor() {
+    this.toggle();
+  }
 
   isOpenSource = new ReplaySubject<boolean>(1);
   isOpen$: Observable<boolean> = this.isOpenSource.asObservable();

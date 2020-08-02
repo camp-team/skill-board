@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SkillDetailRoutingModule } from './skill-detail-routing.module';
 import { SkillDetailComponent } from './skill-detail/skill-detail.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';

@@ -7,19 +7,21 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./ranking/ranking.module').then((m) => m.RankingModule),
+      import('./old/ranking/ranking.module').then((m) => m.RankingModule),
   },
 
   {
-    path: 'skill',
+    path: 'old/skill',
     loadChildren: () =>
-      import('./skill-list/skill-list.module').then((m) => m.SkillListModule),
+      import('./old/skill-list/skill-list.module').then(
+        (m) => m.SkillListModule
+      ),
   },
 
   {
-    path: 'skill/:id',
+    path: 'old/skill/:id',
     loadChildren: () =>
-      import('./skill-detail/skill-detail.module').then(
+      import('./old/skill-detail/skill-detail.module').then(
         (m) => m.SkillDetailModule
       ),
   },

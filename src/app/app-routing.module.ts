@@ -2,24 +2,30 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  // ミニマム構成の時点では、rankingページをトップページとする
+  {
+    path: 'skill',
+    loadChildren: () =>
+      import('./skill/skill.module').then((m) => m.SkillModule),
+  },
+
+  // 以下、リニューアル前ページ。リニューアル後に削除
   {
     path: '',
     pathMatch: 'full',
     loadChildren: () =>
-      import('./ranking/ranking.module').then((m) => m.RankingModule),
+      import('./old/ranking/ranking.module').then((m) => m.RankingModule),
   },
-
   {
-    path: 'skill',
+    path: 'old/skill',
     loadChildren: () =>
-      import('./skill-list/skill-list.module').then((m) => m.SkillListModule),
+      import('./old/skill-list/skill-list.module').then(
+        (m) => m.SkillListModule
+      ),
   },
-
   {
-    path: 'skill/:id',
+    path: 'old/skill/:id',
     loadChildren: () =>
-      import('./skill-detail/skill-detail.module').then(
+      import('./old/skill-detail/skill-detail.module').then(
         (m) => m.SkillDetailModule
       ),
   },

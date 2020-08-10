@@ -1,0 +1,34 @@
+.skill-pills {
+  box-sizing: border-box;
+  padding: 0 32px;
+  background-color: white; // TODO 上位で白にするか検討(mat-sidenav-content内なので色がついている)
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+  @media screen and (min-width: 1152px) {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1151px) {
+    padding: 0 64px;
+  }
+
+  @media screen and (max-width: 640px) {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  &__grid {
+    border-left: 1px solid rgba(0, 0, 0, 0.12); // skill-pillのborderと二重にならないようにleftのみ
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+
+    @media screen and (min-width: 1152px) {
+      width: 1024px;
+    }
+
+    @media screen and (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

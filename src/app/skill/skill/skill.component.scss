@@ -22,7 +22,10 @@
     border-left: 1px solid rgba(0, 0, 0, 0.12); // skill-pillのborderと二重にならないようにleftのみ
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    max-width: 1150px;
+
+    @media screen and (min-width: 1152px) {
+      width: 1150px;
+    }
 
     @media screen and (max-width: 640px) {
       grid-template-columns: 1fr;

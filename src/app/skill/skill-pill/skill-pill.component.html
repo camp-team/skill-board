@@ -1,0 +1,27 @@
+<div class="skill-pill-container" *ngIf="skill$ | async as skill">
+  <span
+    class="skill-pill-bullet"
+    ng-style="{ color: ' ' + color }"
+    style="color: rgb(66, 133, 244);"
+    >•</span
+  >
+
+  <div class="skill-pill">
+    <div class="caption">{{ skill.skillCaption }}</div>
+  </div>
+
+  <!-- <div class="action"> -->
+  <button
+    class="remove-button"
+    mat-icon-button
+    aria-label="clear skill"
+    (click)="doRemovePill()"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+  <!-- </div> -->
+
+  <div class="caterogy-wrapper">
+    <div class="caterogy">{{ skill.skillCategories.join(', ') }}</div>
+  </div>
+</div>

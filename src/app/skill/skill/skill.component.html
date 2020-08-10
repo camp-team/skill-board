@@ -1,1 +1,16 @@
-<p>skill works!</p>
+<div class="content-header">
+  <div class="skill-pills">
+    <div class="skill-pills__grid">
+      <app-skill-pill
+        *ngFor="let skill of skills"
+        [skillId]="skill"
+        (removePill)="onRemoveSkillPill($event)"
+      >
+      </app-skill-pill>
+    </div>
+  </div>
+
+  <div class="content-filter"></div>
+</div>
+
+<div class="content-body"></div>

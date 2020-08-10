@@ -1,0 +1,24 @@
+.skill-pills {
+  box-sizing: border-box;
+  padding: 0 32px;
+  background-color: white; // TODO 上位で白にする？
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+  @media screen and (min-width: 1024px) {
+    padding: 0 64px;
+  }
+
+  @media screen and (max-width: 640px) {
+    padding: 0;
+  }
+
+  &__grid {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+
+    @media screen and (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

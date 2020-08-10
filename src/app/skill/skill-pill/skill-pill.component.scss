@@ -3,7 +3,7 @@
   width: 100%;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   position: relative;
-  z-index: 50;
+  z-index: 1;
 
   @media screen and (max-width: 640px) {
     height: 72px;
@@ -68,7 +68,7 @@
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
-  z-index: 100; // skill-pill-containerより優先度上げて、hover認識される範囲を広げる
+  z-index: 2; // skill-pill-containerより優先度上げて、ボタンがhover認識される範囲を広げる
 
   @media screen and (max-width: 640px) {
     right: 16px;

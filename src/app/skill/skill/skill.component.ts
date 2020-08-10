@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-skill',
@@ -10,6 +8,16 @@ import { JsonPipe } from '@angular/common';
 })
 export class SkillComponent implements OnInit {
   skills: string[];
+
+  // 暫定(他に移動するかも)
+  private readonly skillColorScheme = [
+    '#0096EF',
+    '#FF443E',
+    '#FFCA43',
+    '#2FA04E',
+    '#A228AD',
+  ];
+
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
@@ -35,5 +43,10 @@ export class SkillComponent implements OnInit {
       queryParamsHandling: 'merge',
       queryParams: params,
     });
+  }
+
+  // 暫定(他に移動するかも)
+  getSkillColor(index: number): string {
+    return this.skillColorScheme[(index + 5) % 5];
   }
 }

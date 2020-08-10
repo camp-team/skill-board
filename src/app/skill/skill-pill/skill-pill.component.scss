@@ -1,4 +1,4 @@
-.skill-pill-container {
+.skill-pill {
   height: 128px;
   width: 100%;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
@@ -7,10 +7,11 @@
 
   @media screen and (max-width: 640px) {
     height: 72px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); // 縦並びになるので、境界の枠を追加
   }
 }
 
-.skill-pill-container:hover {
+.skill-pill:hover {
   background-color: #fafafa;
   z-index: 0; // 左borderが表示されるように表示順位下げる
 }
@@ -24,21 +25,23 @@
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
+
+  @media screen and (max-width: 640px) {
+    left: 20px;
+  }
 }
 
-// .action {
-.remove-button {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  z-index: 100; // skill-pill-containerより優先度上げて、hover認識されやすくする
+.skill-pill-center {
+  height: 100%;
+  padding: 42px 44px 0px 34px;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 640px) {
+    padding: 16px 44px 0px 44px;
+  }
 }
 
-.caption {
-  padding: 42px 44px 62px 34px;
+.skill-pill-caption {
   font-size: 16px;
   line-height: 24px;
   overflow: hidden;
@@ -48,19 +51,26 @@
   box-sizing: border-box;
 }
 
-.caterogy-wrapper {
-  padding: 6px 44px 6px 34px;
-  position: absolute;
-  top: 63px;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.caterogy {
+.skill-pill-caterogy {
   color: rgba(0, 0, 0, 0.54);
   height: 18px;
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.skill-pill-button {
+  color: rgba(0, 0, 0, 0.54);
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  z-index: 100; // skill-pill-containerより優先度上げて、hover認識される範囲を広げる
+
+  @media screen and (max-width: 640px) {
+    right: 16px;
+  }
 }

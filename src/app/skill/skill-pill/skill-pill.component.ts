@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class SkillPillComponent implements OnInit {
   @Input() skillId: string;
+  @Input() skillColor: string;
+
   skill$: Observable<Skill>;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();

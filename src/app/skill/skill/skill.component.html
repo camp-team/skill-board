@@ -2,8 +2,9 @@
   <div class="skill-pills">
     <div class="skill-pills__grid">
       <app-skill-pill
-        *ngFor="let skill of skills"
+        *ngFor="let skill of skills; index as i"
         [skillId]="skill"
+        [skillColor]="getSkillColor(i)"
         (removePill)="onRemoveSkillPill($event)"
       >
       </app-skill-pill>

@@ -37,8 +37,10 @@ export class SkillComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    // pillの追加・削除によって、幅が変わるので、resize処理を実行
-    this.pillList.forEach((pill) => pill.doResize());
+    // 幅広 かつ 4カラム以下の場合、skill-pill内のfontを大きくする
+    const isSkillPillLargeFont =
+      window.innerWidth >= 960 && this.skills.length <= 4; // TODO 検索欄が追加された場合、lenghtの判定を修正 #117
+    this.pillList.forEach((pill) => (pill.isLargeFont = isSkillPillLargeFont));
   }
 
   onRemoveSkillPill(removeSkillId: string) {

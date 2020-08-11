@@ -1,4 +1,8 @@
-<div class="skill-pill" #skillPill *ngIf="skill$ | async as skill">
+<div
+  class="skill-pill"
+  [class.skill-pill-large-font]="isLargeFont"
+  *ngIf="skill$ | async as skill"
+>
   <span class="skill-pill-bullet" [ngStyle]="{ color: skillColor }">•</span>
 
   <div class="skill-pill-center">

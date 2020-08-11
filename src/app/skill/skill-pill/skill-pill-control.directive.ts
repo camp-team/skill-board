@@ -15,16 +15,16 @@ export class SkillPillControlDirective implements AfterViewInit {
     this.resize();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   resize() {
     // skill-pillが、非mobileかつ幅広の場合に、文字を大きくするためのclassを付加する
     if (
       this.pillElm.nativeElement.offsetHeight >= 128 &&
       this.pillElm.nativeElement.offsetWidth > 446
     ) {
-      this.pillElm.nativeElement.classList.add('skill-pill-large');
+      this.pillElm.nativeElement.classList.add('skill-pill-large-font');
     } else {
-      this.pillElm.nativeElement.classList.remove('skill-pill-large');
+      this.pillElm.nativeElement.classList.remove('skill-pill-large-font');
     }
   }
 }

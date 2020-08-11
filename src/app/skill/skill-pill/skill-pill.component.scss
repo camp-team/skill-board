@@ -10,8 +10,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.12); // 縦並びになるので、境界の枠を追加
   }
 }
-
-.skill-pill:hover {
+ß .skill-pill:hover {
   background-color: #fafafa;
   z-index: 0; // 左側のborder(他要素で描画)が表示されるように表示順位下げる
 }
@@ -52,12 +51,21 @@
 }
 
 .skill-pill-caterogy {
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.54);
   height: 18px;
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+// SkillPillControlDirectiveによって[.skill-pill-large]がon/offされるので、それに応じて文字サイズ切り替え
+.skill-pill-large-font .skill-pill-caption {
+  font-size: 20px;
+}
+.skill-pill-large-font .skill-pill-caterogy {
+  font-size: 15px;
 }
 
 .skill-pill-button {

@@ -1,4 +1,4 @@
-<div class="skill-pill" *ngIf="skill$ | async as skill">
+<div class="skill-pill" appSkillPillControl *ngIf="skill$ | async as skill">
   <span class="skill-pill-bullet" [ngStyle]="{ color: skillColor }">•</span>
 
   <div class="skill-pill-center">

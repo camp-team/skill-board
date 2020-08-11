@@ -60,7 +60,7 @@
   white-space: nowrap;
 }
 
-// SkillPillComponent#doResizeによって、[.skill-pill-large-font]がスイッチされるので、それに応じて文字サイズ切り替え
+// SkillComponent#ngAfterViewChecked経由で、[.skill-pill-large-font]がスイッチされるので、それに応じて文字サイズ切り替え
 .skill-pill-large-font .skill-pill-caption {
   font-size: 20px;
 }

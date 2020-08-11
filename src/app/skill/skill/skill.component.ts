@@ -38,7 +38,7 @@ export class SkillComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     // pillの追加・削除によって、幅が変わるので、resize処理を実行
-    this.pillList.forEach((pill) => pill.doResizePill());
+    this.pillList.forEach((pill) => pill.doResize());
   }
 
   onRemoveSkillPill(removeSkillId: string) {

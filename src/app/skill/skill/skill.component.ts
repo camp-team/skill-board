@@ -9,7 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SkillComponent implements OnInit {
   skills: string[];
 
-  // 暫定(他に移動するかも)
+  // TODO #115にて実装見直し
+  // https://github.com/camp-team/skill-board/issues/115
   private readonly skillColorScheme = [
     '#0096EF',
     '#FF443E',
@@ -45,7 +46,8 @@ export class SkillComponent implements OnInit {
     });
   }
 
-  // 暫定(他に移動するかも)
+  // TODO #115にて実装見直し
+  // https://github.com/camp-team/skill-board/issues/115
   getSkillColor(index: number): string {
     return this.skillColorScheme[(index + 5) % 5];
   }

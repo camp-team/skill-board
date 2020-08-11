@@ -13,7 +13,7 @@
 
 .skill-pill:hover {
   background-color: #fafafa;
-  z-index: 0; // 左borderが表示されるように表示順位下げる
+  z-index: 0; // 左側のborder(他要素で描画)が表示されるように表示順位下げる
 }
 
 .skill-pill-bullet {

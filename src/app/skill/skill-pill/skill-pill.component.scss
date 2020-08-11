@@ -60,7 +60,7 @@
   white-space: nowrap;
 }
 
-// SkillPillControlDirectiveによって[.skill-pill-large]がon/offされるので、それに応じて文字サイズ切り替え
+// SkillPillControlDirectiveによって[.skill-pill-large]がスイッチされるので、それに応じて文字サイズ切り替え
 .skill-pill-large-font .skill-pill-caption {
   font-size: 20px;
 }

@@ -1,13 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewChecked,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SkillPillComponent } from '../skill-pill/skill-pill.component';
 
 @Component({
   selector: 'app-skill',
   templateUrl: './skill.component.html',
   styleUrls: ['./skill.component.scss'],
 })
-export class SkillComponent implements OnInit {
+export class SkillComponent implements OnInit, AfterViewChecked {
   skills: string[];
+
+  @ViewChildren(SkillPillComponent) pillList: QueryList<SkillPillComponent>;
 
   // TODO #115にて実装見直し
   // https://github.com/camp-team/skill-board/issues/115
@@ -27,9 +36,12 @@ export class SkillComponent implements OnInit {
     });
   }
 
-  onRemoveSkillPill(removeSkillId: string) {
-    console.log('onSkillPillDelete:' + removeSkillId);
+  ngAfterViewChecked(): void {
+    // pillの追加・削除によって、幅が変わるので、resize処理を実行
+    this.pillList.forEach((pill) => pill.doResizePill());
+  }
 
+  onRemoveSkillPill(removeSkillId: string) {
     // 該当のskillIdをqueryParamから除外
     this.updateParams({
       skills: this.skills
@@ -39,7 +51,6 @@ export class SkillComponent implements OnInit {
   }
 
   private updateParams(params: object) {
-    console.log('updateParams' + JSON.stringify(params));
     this.router.navigate([], {
       queryParamsHandling: 'merge',
       queryParams: params,

@@ -1,7 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { SkillService } from 'src/app/services/skill.service';
 import { Skill } from 'functions/src/interface/skill';
 import { Observable } from 'rxjs';
+import { SkillPillControlDirective } from './skill-pill-control.directive';
 
 @Component({
   selector: 'app-skill-pill',
@@ -13,6 +21,8 @@ export class SkillPillComponent implements OnInit {
   @Input() skillColor: string;
 
   skill$: Observable<Skill>;
+
+  @ViewChild(SkillPillControlDirective) pillCtrl: SkillPillControlDirective;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();
   @Output() changePill: EventEmitter<string> = new EventEmitter();
@@ -29,5 +39,11 @@ export class SkillPillComponent implements OnInit {
 
   doChangePill() {
     this.changePill.emit(this.skillId);
+  }
+
+  doResizePill() {
+    if (this.pillCtrl) {
+      this.pillCtrl.resize();
+    }
   }
 }

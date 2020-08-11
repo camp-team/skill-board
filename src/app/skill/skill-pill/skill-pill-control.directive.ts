@@ -1,19 +1,10 @@
-import {
-  Directive,
-  ElementRef,
-  HostListener,
-  AfterViewInit,
-} from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[appSkillPillControl]',
 })
-export class SkillPillControlDirective implements AfterViewInit {
+export class SkillPillControlDirective {
   constructor(private pillElm: ElementRef) {}
-
-  ngAfterViewInit() {
-    this.resize();
-  }
 
   @HostListener('window:resize')
   resize() {

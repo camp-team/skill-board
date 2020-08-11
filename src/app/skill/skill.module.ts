@@ -7,9 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 import { SkillRoutingModule } from './skill-routing.module';
 import { SkillComponent } from './skill/skill.component';
 import { SkillPillComponent } from './skill-pill/skill-pill.component';
+import { SkillPillControlDirective } from './skill-pill/skill-pill-control.directive';
 
 @NgModule({
-  declarations: [SkillComponent, SkillPillComponent],
+  declarations: [SkillComponent, SkillPillComponent, SkillPillControlDirective],
   imports: [
     CommonModule,
     SkillRoutingModule,

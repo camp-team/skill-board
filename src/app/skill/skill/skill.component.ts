@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewChecked,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SkillPillComponent } from '../skill-pill/skill-pill.component';
 
 @Component({
   selector: 'app-skill',
   templateUrl: './skill.component.html',
   styleUrls: ['./skill.component.scss'],
 })
-export class SkillComponent implements OnInit {
+export class SkillComponent implements OnInit, AfterViewChecked {
   skills: string[];
 
-  // 暫定(他に移動するかも)
+  @ViewChildren(SkillPillComponent) pillList: QueryList<SkillPillComponent>;
+
+  // TODO #115にて実装見直し
+  // https://github.com/camp-team/skill-board/issues/115
   private readonly skillColorScheme = [
     '#0096EF',
     '#FF443E',
@@ -26,9 +36,14 @@ export class SkillComponent implements OnInit {
     });
   }
 
-  onRemoveSkillPill(removeSkillId: string) {
-    console.log('onSkillPillDelete:' + removeSkillId);
+  ngAfterViewChecked(): void {
+    // 幅広 かつ 4カラム以下の場合、skill-pill内のfontを大きくする
+    const isSkillPillLargeFont =
+      window.innerWidth >= 960 && this.skills.length <= 4; // TODO 検索欄が追加された場合、lenghtの判定を修正 #117
+    this.pillList.forEach((pill) => (pill.isLargeFont = isSkillPillLargeFont));
+  }
 
+  onRemoveSkillPill(removeSkillId: string) {
     // 該当のskillIdをqueryParamから除外
     this.updateParams({
       skills: this.skills
@@ -38,14 +53,14 @@ export class SkillComponent implements OnInit {
   }
 
   private updateParams(params: object) {
-    console.log('updateParams' + JSON.stringify(params));
     this.router.navigate([], {
       queryParamsHandling: 'merge',
       queryParams: params,
     });
   }
 
-  // 暫定(他に移動するかも)
+  // TODO #115にて実装見直し
+  // https://github.com/camp-team/skill-board/issues/115
   getSkillColor(index: number): string {
     return this.skillColorScheme[(index + 5) % 5];
   }

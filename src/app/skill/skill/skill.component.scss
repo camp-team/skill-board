@@ -1,15 +1,15 @@
 .skill-pills {
   box-sizing: border-box;
   padding: 0 32px;
-  background-color: white; // TODO 上位で白にするか検討(mat-sidenav-content内なので色がついている)
+  background-color: white; // TODO 上位で白にするか検討(mat-sidenav-content内なので色がついている) #116実装時に見直し
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
-  @media screen and (min-width: 1152px) {
+  @media screen and (min-width: 1280px) {
     display: flex;
     justify-content: center;
   }
 
-  @media screen and (min-width: 1024px) and (max-width: 1151px) {
+  @media screen and (min-width: 1024px) and (max-width: 1279px) {
     padding: 0 64px;
   }
 
@@ -23,8 +23,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 
-    @media screen and (min-width: 1152px) {
-      width: 1024px;
+    @media screen and (min-width: 1280px) {
+      width: 1152px;
     }
 
     @media screen and (max-width: 640px) {

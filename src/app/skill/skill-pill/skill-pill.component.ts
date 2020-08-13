@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SkillService } from 'src/app/services/skill.service';
 import { Skill } from 'functions/src/interface/skill';
 import { Observable } from 'rxjs';
-import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 
 @Component({
   selector: 'app-skill-pill',
@@ -21,10 +11,9 @@ import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 export class SkillPillComponent implements OnInit {
   @Input() skillId: string;
   @Input() skillColor: string;
+  @Input() isLargeFont: boolean;
 
   skill$: Observable<Skill>;
-
-  isLargeFont = false;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();
   @Output() changePill: EventEmitter<string> = new EventEmitter();

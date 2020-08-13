@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  AfterViewChecked,
-  ViewChildren,
-  QueryList,
-} from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SkillPillComponent } from '../skill-pill/skill-pill.component';
 
 @Component({
   selector: 'app-skill',
@@ -15,8 +8,7 @@ import { SkillPillComponent } from '../skill-pill/skill-pill.component';
 })
 export class SkillComponent implements OnInit, AfterViewChecked {
   skills: string[];
-
-  @ViewChildren(SkillPillComponent) pillList: QueryList<SkillPillComponent>;
+  isSkillPillLargeFont: boolean;
 
   // TODO #115にて実装見直し
   // https://github.com/camp-team/skill-board/issues/115
@@ -37,10 +29,11 @@ export class SkillComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    // 幅広 かつ 4カラム以下の場合、skill-pill内のfontを大きくする
-    const isSkillPillLargeFont =
-      window.innerWidth >= 960 && this.skills.length <= 4; // TODO 検索欄が追加された場合、lenghtの判定を修正 #117
-    this.pillList.forEach((pill) => (pill.isLargeFont = isSkillPillLargeFont));
+    setTimeout(() => {
+      // 幅広 かつ 4カラム以下の場合、skill-pill内のfontを大きくする
+      this.isSkillPillLargeFont =
+        window.innerWidth >= 960 && this.skills.length <= 4; // TODO 検索欄が追加された場合、lenghtの判定を修正 #117
+    }, 0); // ExpressionChangedAfterItHasBeenCheckedError対策(setTimeoutでプロパティ書き換えを処理を非同期化してエラー回避)
   }
 
   onRemoveSkillPill(removeSkillId: string) {

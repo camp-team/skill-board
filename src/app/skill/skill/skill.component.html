@@ -5,6 +5,7 @@
         *ngFor="let skill of skills; index as i"
         [skillId]="skill"
         [skillColor]="getSkillColor(i)"
+        [isLargeFont]="isSkillPillLargeFont"
         (removePill)="onRemoveSkillPill($event)"
       >
       </app-skill-pill>

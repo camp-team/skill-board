@@ -10,7 +10,8 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.12); // 縦並びになるので、境界の枠を追加
   }
 }
-ß .skill-pill:hover {
+
+.skill-pill:hover {
   background-color: #fafafa;
   z-index: 0; // 左側のborder(他要素で描画)が表示されるように表示順位下げる
 }

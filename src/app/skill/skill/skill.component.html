@@ -10,7 +10,9 @@
       >
       </app-skill-pill>
       <app-skill-search-pill
+        *ngIf="isShowSkillPillSearch"
         [isLargeFont]="isSkillPillLargeFont"
+        (addPill)="onSearchSelectSkillPill($event)"
       ></app-skill-search-pill>
     </div>
   </div>

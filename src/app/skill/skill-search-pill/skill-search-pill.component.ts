@@ -5,10 +5,12 @@ import {
   ViewChild,
   ElementRef,
   AfterViewChecked,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { SkillService } from 'src/app/services/skill.service';
-import { startWith, debounceTime, tap } from 'rxjs/operators';
+import { startWith, debounceTime } from 'rxjs/operators';
 import { Skill } from 'functions/src/interface/skill';
 
 @Component({
@@ -16,6 +18,7 @@ import { Skill } from 'functions/src/interface/skill';
   templateUrl: './skill-search-pill.component.html',
   styleUrls: ['./skill-search-pill.component.scss'],
 })
+// , AfterViewChecked
 export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
   @Input() isLargeFont: boolean;
 
@@ -25,6 +28,8 @@ export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
   index = this.skillService.index.skills;
 
   @ViewChild('skillPill') elm: ElementRef;
+
+  @Output() addPill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
@@ -39,10 +44,12 @@ export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+    // ExpressionChangedAfterItHasBeenCheckedError対策(setTimeoutでプロパティ書き換えを処理を非同期化してエラー回避);
     setTimeout(() => {
+      console.log('SkillSearchPillComponent.ngAfterViewChecked');
       // autoComplateのサイズを、pillの要素幅に合わせる
       this.autoComplateWidth = this.elm.nativeElement.clientWidth;
-    }, 0); // ExpressionChangedAfterItHasBeenCheckedError対策(setTimeoutでプロパティ書き換えを処理を非同期化してエラー回避)
+    }, 0);
   }
 
   doSearchSkillKeyDown(event: KeyboardEvent) {
@@ -54,10 +61,7 @@ export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
   }
 
   doSelect(skill: Skill) {
-    console.log('doSelect:' + JSON.stringify(skill));
-  }
-
-  doSubmit(searchQuery: string) {
-    console.log('doSubmit');
+    console.log('doSelect');
+    this.addPill.emit(skill.skillId);
   }
 }

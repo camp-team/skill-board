@@ -16,7 +16,6 @@ export class SkillPillComponent implements OnInit {
   skill$: Observable<Skill>;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();
-  @Output() changePill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
@@ -26,9 +25,5 @@ export class SkillPillComponent implements OnInit {
 
   doRemovePill() {
     this.removePill.emit(this.skillId);
-  }
-
-  doChangePill() {
-    this.changePill.emit(this.skillId);
   }
 }

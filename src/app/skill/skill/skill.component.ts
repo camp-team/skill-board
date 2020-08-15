@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./skill.component.scss'],
 })
 export class SkillComponent implements OnInit {
-  // TODO
+  // TODO #121にて保持方法見直し
   readonly allSkillMap = new Map<string, Skill>(); // <skillId, skill>
   skillIds: string[];
 
@@ -42,11 +42,13 @@ export class SkillComponent implements OnInit {
       .subscribe((skills) => {
         console.log('getSkills.subscribe');
 
+        // TODO #121にて保持方法見直し
         // まずskillデータを全読み込み(数10件程度なので、都度アクセスさせず最初に読み込んでしまう)
         skills.forEach((skill) => this.allSkillMap.set(skill.skillId, skill));
         console.log('this.skillMap:' + JSON.stringify(this.allSkillMap));
 
         this.route.queryParamMap.subscribe((map) => {
+          // TODO #121にて保持方法見直し
           // 重複排除のため、一度setを経由する
           this.skillIds = Array.from(new Set(map.get('skills')?.split(',')));
           this.refleshViewProperties();
@@ -103,7 +105,7 @@ export class SkillComponent implements OnInit {
     return this.skillColorScheme[(index + 5) % 5];
   }
 
-  // TODO #115にて実装見直し
+  // TODO #121にて実装見直し
   getSkill(skillId: string): Skill {
     return this.allSkillMap.get(skillId);
   }

@@ -30,6 +30,7 @@
     "@swimlane/ngx-charts": "^14.0.0",
     "algoliasearch": "^4.3.0",
     "firebase": "^7.14.2",
+    "lodash": "^4.17.19",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

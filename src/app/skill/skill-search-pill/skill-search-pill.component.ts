@@ -4,9 +4,9 @@ import {
   Input,
   ViewChild,
   ElementRef,
-  AfterViewChecked,
   Output,
   EventEmitter,
+  HostListener,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { SkillService } from 'src/app/services/skill.service';
@@ -18,8 +18,7 @@ import { Skill } from 'functions/src/interface/skill';
   templateUrl: './skill-search-pill.component.html',
   styleUrls: ['./skill-search-pill.component.scss'],
 })
-// , AfterViewChecked
-export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
+export class SkillSearchPillComponent implements OnInit {
   @Input() isLargeFont: boolean;
 
   searchControl = new FormControl('');
@@ -43,25 +42,26 @@ export class SkillSearchPillComponent implements OnInit, AfterViewChecked {
       });
   }
 
-  ngAfterViewChecked(): void {
-    // ExpressionChangedAfterItHasBeenCheckedError対策(setTimeoutでプロパティ書き換えを処理を非同期化してエラー回避);
-    setTimeout(() => {
-      console.log('SkillSearchPillComponent.ngAfterViewChecked');
-      // autoComplateのサイズを、pillの要素幅に合わせる
-      this.autoComplateWidth = this.elm.nativeElement.clientWidth;
-    }, 0);
+  @HostListener('window:resize', ['$event'])
+  doWindowResize(event) {
+    // autoComplateのサイズを、pillの要素幅に合わせる
+    this.autoComplateWidth = this.elm.nativeElement.clientWidth;
   }
 
   doSearchSkillKeyDown(event: KeyboardEvent) {
-    console.log('doSearchSkillKeyDown');
     // input中にenter押下で、1番目の候補を選択したと見なす
-    if (event.key === 'Enter' && this.autoComplateOptions.length > 0) {
-      this.doSelect(this.autoComplateOptions[0]);
+    // 入力から更新にラグを設けているのでautoComplateOptionsの値は使わず、直接検索実施する。
+    if (event.key === 'Enter') {
+      this.index.search<Skill[]>(this.searchControl.value).then((result) => {
+        if (result.hits.length > 0) {
+          this.doSelect((result.hits[0] as unknown) as Skill);
+        }
+      });
     }
   }
 
   doSelect(skill: Skill) {
-    console.log('doSelect');
     this.addPill.emit(skill.skillId);
+    this.searchControl.setValue('');
   }
 }

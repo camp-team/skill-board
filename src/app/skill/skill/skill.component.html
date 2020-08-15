@@ -1,14 +1,16 @@
 <div class="content-header">
   <div class="skill-pills">
     <div class="skill-pills__grid">
-      <app-skill-pill
-        *ngFor="let skill of skills; index as i"
-        [skillId]="skill"
-        [skillColor]="getSkillColor(i)"
-        [isLargeFont]="isSkillPillLargeFont"
-        (removePill)="onRemoveSkillPill($event)"
-      >
-      </app-skill-pill>
+      <ng-container *ngFor="let skillId of skillIds; index as i">
+        <app-skill-pill
+          *ngIf="getSkill(skillId) as skill"
+          [skill]="skill"
+          [skillColor]="getSkillColor(i)"
+          [isLargeFont]="isSkillPillLargeFont"
+          (removePill)="onRemoveSkillPill($event)"
+        >
+        </app-skill-pill>
+      </ng-container>
       <app-skill-search-pill
         *ngIf="isShowSkillPillSearch"
         [isLargeFont]="isSkillPillLargeFont"

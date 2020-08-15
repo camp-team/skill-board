@@ -23,19 +23,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  // width: 100%;
+  width: 100%;
   z-index: 1;
 
   border: none;
-  box-shadow: none;
   outline: none;
   background: transparent;
 
-  // border-radius: 2px;
+  top: 50%;
   bottom: 50%;
   margin: auto 0;
   padding: 0 45px 0 24px;
-  top: 50%;
+  box-sizing: border-box;
 }
 
 .skill-pill-option {
@@ -61,12 +60,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-// SkillComponent#ngAfterViewChecked経由で、[.skill-pill-large-font]がスイッチされるので、それに応じて文字サイズ切り替え
-.skill-pill-large-font .skill-pill-caption {
-  font-size: 20px;
-}
-.skill-pill-large-font .skill-pill-caterogy {
-  font-size: 15px;
 }

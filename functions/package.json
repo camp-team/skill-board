@@ -10,7 +10,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -19,7 +19,8 @@
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.1",
     "firebase-tools": "^8.5.0",
-    "puppeteer": "^2.1.0"
+    "lodash": "^4.17.19",
+    "puppeteer": "^5.2.1"
   },
   "devDependencies": {
     "@types/algoliasearch": "^3.34.10",

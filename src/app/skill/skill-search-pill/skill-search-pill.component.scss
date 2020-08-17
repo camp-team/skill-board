@@ -1,0 +1,63 @@
+.skill-pill {
+  height: 128px;
+  width: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1;
+
+  @media screen and (max-width: 640px) {
+    height: 72px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); // 縦並びになるので、境界の枠を追加
+  }
+}
+
+.skill-pill:hover {
+  background-color: #fafafa;
+  z-index: 0; // 左側のborder(他要素で描画)が表示されるように表示順位下げる
+}
+
+.skill-search {
+  height: 100%;
+  font-size: 20px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 1;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  top: 50%;
+  bottom: 50%;
+  margin: auto 0;
+  padding: 0 45px 0 24px;
+  box-sizing: border-box;
+}
+
+.skill-pill-option {
+  line-height: null; // mat-optionのstyleをクリア
+  height: 64px;
+}
+
+.skill-pill-caption {
+  font-size: 16px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.skill-pill-caterogy {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  height: 18px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

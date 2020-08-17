@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SkillService } from 'src/app/services/skill.service';
 import { Skill } from 'functions/src/interface/skill';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-skill-pill',
@@ -9,26 +8,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./skill-pill.component.scss'],
 })
 export class SkillPillComponent implements OnInit {
-  @Input() skillId: string;
   @Input() skillColor: string;
   @Input() isLargeFont: boolean;
-
-  skill$: Observable<Skill>;
+  @Input() skill: Skill;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();
-  @Output() changePill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
-  ngOnInit(): void {
-    this.skill$ = this.skillService.getSkill(this.skillId);
-  }
+  ngOnInit(): void {}
 
   doRemovePill() {
-    this.removePill.emit(this.skillId);
-  }
-
-  doChangePill() {
-    this.changePill.emit(this.skillId);
+    this.removePill.emit(this.skill.skillId);
   }
 }

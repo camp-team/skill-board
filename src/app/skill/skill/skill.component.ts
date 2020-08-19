@@ -1,8 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SkillService } from 'src/app/services/skill.service';
-import { Skill } from 'functions/src/interface/skill';
-import { take, map } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { SkillsHeaderModel } from '../model/skills-header.model';
 
 @Component({
@@ -25,11 +24,9 @@ export class SkillComponent implements OnInit {
 
   ngOnInit(): void {
     this.skillService
-      .getSkills()
+      .getAllSkillMap()
       .pipe(take(1))
-      .subscribe((skills) => {
-        const allSkillMap = new Map<string, Skill>();
-        skills.forEach((skill) => allSkillMap.set(skill.skillId, skill));
+      .subscribe((allSkillMap) => {
         this.skillHeaderModel = new SkillsHeaderModel(allSkillMap);
 
         this.route.queryParamMap.subscribe((paramMap) => {

@@ -1,5 +1,7 @@
 <div class="skill-pill" [class.skill-pill-large-font]="isLargeFont">
-  <span class="skill-pill-bullet" [ngStyle]="{ color: skillColor }">•</span>
+  <span class="skill-pill-bullet" [ngStyle]="{ color: skill.skillColor }"
+    >•</span
+  >
 
   <div class="skill-pill-center">
     <div class="skill-pill-caption">{{ skill.skillCaption }}</div>

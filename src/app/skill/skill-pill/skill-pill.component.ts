@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SkillService } from 'src/app/services/skill.service';
 import { Skill } from 'functions/src/interface/skill';
+import { SkillDataModel } from '../model/skill-data.model';
 
 @Component({
   selector: 'app-skill-pill',
@@ -8,9 +9,8 @@ import { Skill } from 'functions/src/interface/skill';
   styleUrls: ['./skill-pill.component.scss'],
 })
 export class SkillPillComponent implements OnInit {
-  @Input() skillColor: string;
   @Input() isLargeFont: boolean;
-  @Input() skill: Skill;
+  @Input() skill: SkillDataModel;
 
   @Output() removePill: EventEmitter<string> = new EventEmitter();
 

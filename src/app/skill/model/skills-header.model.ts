@@ -40,10 +40,13 @@ export class SkillsHeaderModel {
 
   /**
    * 末尾にスキルを追加.
-   * @return 追加有無(無効なskillIdだった場合、追加されない)
+   * @return 追加有無(無効なskillIdや、追加済みだった場合、追加されない)
    */
   appendSkill(skillId: string): boolean {
-    if (this.allSkillMap.has(skillId)) {
+    if (
+      this.allSkillMap.has(skillId) &&
+      !this.getSkillIds().includes(skillId)
+    ) {
       const skillData = this.allSkillMap.get(skillId) as SkillDataModel;
       skillData.skillColor = this.getSkillColor(this._skills.length - 1);
       this._skills.push(skillData);
@@ -55,7 +58,7 @@ export class SkillsHeaderModel {
 
   /**
    * スキルの除去.
-   * @return 除去有無(追加されていないskillIdだった場合、除去されない)
+   * @return 除去有無(そもそも追加されていないskillIdだった場合、除去されない)
    */
   removeSkill(skillId: string): boolean {
     const beforeLenght = this._skills.length;
@@ -77,5 +80,9 @@ export class SkillsHeaderModel {
 
   private getSkillColor(index: number): string {
     return this.skillColorScheme[index % this.skillColorScheme.length];
+  }
+
+  private getSkillIds(): string[] {
+    return this._skills.map((s) => s.skillId);
   }
 }

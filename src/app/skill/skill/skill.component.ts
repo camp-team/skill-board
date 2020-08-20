@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SkillService } from 'src/app/services/skill.service';
-import { Skill } from 'functions/src/interface/skill';
 import { take } from 'rxjs/operators';
+import { SkillsHeaderModel } from '../model/skills-header.model';
 
 @Component({
   selector: 'app-skill',
@@ -10,23 +10,11 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./skill.component.scss'],
 })
 export class SkillComponent implements OnInit {
-  // TODO #121にて保持方法見直し
-  readonly allSkillMap = new Map<string, Skill>(); // <skillId, skill>
-  skillIds: string[];
+  skillHeaderModel: SkillsHeaderModel;
 
   isSkillPillLargeFont: boolean;
   isShowSkillPillSearch: boolean;
   readonly maxSkillPillsLength = 5; // スキル欄の最大数
-
-  // TODO #115にて実装見直し
-  // https://github.com/camp-team/skill-board/issues/115
-  private readonly skillColorScheme = [
-    '#0096EF',
-    '#FF443E',
-    '#FFCA43',
-    '#2FA04E',
-    '#A228AD',
-  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -35,22 +23,14 @@ export class SkillComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.skillService
-      .getSkills()
+      .getAllSkillMap()
       .pipe(take(1))
-      .subscribe((skills) => {
-        console.log('getSkills.subscribe');
+      .subscribe((allSkillMap) => {
+        this.skillHeaderModel = new SkillsHeaderModel(allSkillMap);
 
-        // TODO #121にて保持方法見直し
-        // まずskillデータを全読み込み(数10件程度なので、都度アクセスさせず最初に読み込んでしまう)
-        skills.forEach((skill) => this.allSkillMap.set(skill.skillId, skill));
-        console.log('this.skillMap:' + JSON.stringify(this.allSkillMap));
-
-        this.route.queryParamMap.subscribe((map) => {
-          // TODO #121にて保持方法見直し
-          // 重複排除のため、一度setを経由する
-          this.skillIds = Array.from(new Set(map.get('skills')?.split(',')));
+        this.route.queryParamMap.subscribe((paramMap) => {
+          this.skillHeaderModel.setParam(paramMap);
           this.refleshViewProperties();
         });
       });
@@ -64,32 +44,23 @@ export class SkillComponent implements OnInit {
   refleshViewProperties() {
     // 幅広 かつ 4カラム以下(検索欄込み)の場合、skill-pill内のfontを大きくする
     this.isSkillPillLargeFont =
-      window.innerWidth >= 960 && this.skillIds.length < 4;
+      window.innerWidth >= 960 && this.skillHeaderModel.skills.length < 4;
 
     // 検索欄はskillが最大件数未満の場合のみ表示
     this.isShowSkillPillSearch =
-      this.skillIds.length < this.maxSkillPillsLength;
+      this.skillHeaderModel.skills.length < this.maxSkillPillsLength;
   }
 
-  onRemoveSkillPill(removeSkillId: string) {
-    // 該当のskillIdをqueryParamから除外
-    this.updateParams({
-      skills: this.skillIds
-        .filter((skillId) => skillId !== removeSkillId)
-        .join(','),
-    });
-  }
-
-  onSearchSelectSkillPill(selectSkillId: string) {
-    if (this.skillIds.includes(selectSkillId)) {
-      return; // 重複時は追加しない
+  onRemoveSkillPill(skillId: string) {
+    if (this.skillHeaderModel.removeSkill(skillId)) {
+      this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
     }
+  }
 
-    this.skillIds.push(selectSkillId);
-
-    this.updateParams({
-      skills: this.skillIds.join(','),
-    });
+  onSearchSelectSkillPill(skillId: string) {
+    if (this.skillHeaderModel.appendSkill(skillId)) {
+      this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
+    }
   }
 
   private updateParams(params: object) {
@@ -97,16 +68,5 @@ export class SkillComponent implements OnInit {
       queryParamsHandling: 'merge',
       queryParams: params,
     });
-  }
-
-  // TODO #115にて実装見直し
-  // https://github.com/camp-team/skill-board/issues/115
-  getSkillColor(index: number): string {
-    return this.skillColorScheme[(index + 5) % 5];
-  }
-
-  // TODO #121にて実装見直し
-  getSkill(skillId: string): Skill {
-    return this.allSkillMap.get(skillId);
   }
 }

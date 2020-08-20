@@ -34,6 +34,16 @@ export class SkillService {
     return this.afs.doc<Skill>('skills/' + skillId).valueChanges();
   }
 
+  getAllSkillMap(): Observable<Map<string, Skill>> {
+    return this.getSkills().pipe(
+      map((skills) => {
+        const allSkillMap = new Map<string, Skill>();
+        skills.forEach((skill) => allSkillMap.set(skill.skillId, skill));
+        return allSkillMap;
+      })
+    );
+  }
+
   getTransitionSkills(skillId: string): Observable<Skill[]> {
     // 累積データ(history)から、直近の10件を取得
     // ※firestore取得時は件数制限するために降順にしているが、pipe(map)で昇順に戻す

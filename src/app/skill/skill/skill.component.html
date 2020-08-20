@@ -1,24 +1,26 @@
-<div class="content-header">
-  <div class="skill-pills">
-    <div class="skill-pills__grid">
-      <ng-container *ngFor="let skill of skillHeaderModel.skills">
-        <app-skill-pill
-          *ngIf="skill"
-          [skill]="skill"
+<ng-container *ngIf="skillHeaderModel">
+  <div class="content-header">
+    <div class="skill-pills">
+      <div class="skill-pills__grid">
+        <ng-container *ngFor="let skill of skillHeaderModel.skills">
+          <app-skill-pill
+            *ngIf="skill"
+            [skill]="skill"
+            [isLargeFont]="isSkillPillLargeFont"
+            (removePill)="onRemoveSkillPill($event)"
+          >
+          </app-skill-pill>
+        </ng-container>
+        <app-skill-search-pill
+          *ngIf="isShowSkillPillSearch"
           [isLargeFont]="isSkillPillLargeFont"
-          (removePill)="onRemoveSkillPill($event)"
-        >
-        </app-skill-pill>
-      </ng-container>
-      <app-skill-search-pill
-        *ngIf="isShowSkillPillSearch"
-        [isLargeFont]="isSkillPillLargeFont"
-        (addPill)="onSearchSelectSkillPill($event)"
-      ></app-skill-search-pill>
+          (addPill)="onSearchSelectSkillPill($event)"
+        ></app-skill-search-pill>
+      </div>
     </div>
+
+    <div class="content-filter"></div>
   </div>
 
-  <div class="content-filter"></div>
-</div>
-
-<div class="content-body"></div>
+  <div class="content-body"></div>
+</ng-container>

@@ -48,7 +48,7 @@ export class SkillsHeaderModel {
       !this.getSkillIds().includes(skillId)
     ) {
       const skillData = this.allSkillMap.get(skillId) as SkillDataModel;
-      skillData.skillColor = this.getSkillColor(this._skills.length - 1);
+      skillData.skillColor = this.getSkillColor(this._skills.length);
       this._skills.push(skillData);
       return true;
     } else {

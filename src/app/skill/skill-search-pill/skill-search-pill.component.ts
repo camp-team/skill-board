@@ -48,16 +48,12 @@ export class SkillSearchPillComponent implements OnInit {
     this.autoComplateWidth = this.elm.nativeElement.clientWidth;
   }
 
-  doSearchSkillKeyDown(event: KeyboardEvent) {
-    // input中にenter押下で、1番目の候補を選択したと見なす
-    // 入力から更新にラグを設けているのでautoComplateOptionsの値は使わず、直接検索実施する。
-    if (event.key === 'Enter') {
-      this.index.search<Skill[]>(this.searchControl.value).then((result) => {
-        if (result.hits.length > 0) {
-          this.doSelect((result.hits[0] as unknown) as Skill);
-        }
-      });
-    }
+  doSubmit() {
+    this.index.search<Skill[]>(this.searchControl.value).then((result) => {
+      if (result.hits.length > 0) {
+        this.doSelect((result.hits[0] as unknown) as Skill);
+      }
+    });
   }
 
   doSelect(skill: Skill) {

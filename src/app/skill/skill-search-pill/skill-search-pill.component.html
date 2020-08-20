@@ -1,27 +1,28 @@
-<div class="skill-pill" #skillPill>
-  <input
-    class="skill-search"
-    [formControl]="searchControl"
-    placeholder="スキルを追加"
-    [matAutocomplete]="auto"
-    (keydown)="doSearchSkillKeyDown($event)"
-  />
+<form class="search" (ngSubmit)="doSubmit()">
+  <div class="skill-pill" #skillPill>
+    <input
+      class="skill-search"
+      [formControl]="searchControl"
+      placeholder="スキルを追加"
+      [matAutocomplete]="auto"
+    />
 
-  <mat-autocomplete
-    #auto="matAutocomplete"
-    [panelWidth]="autoComplateWidth"
-    (optionSelected)="doSelect($event.option.value)"
-  >
-    <mat-option
-      appSkillAutocomplateOption
-      *ngFor="let option of autoComplateOptions"
-      [value]="option"
-      class="skill-pill-option"
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [panelWidth]="autoComplateWidth"
+      (optionSelected)="doSelect($event.option.value)"
     >
-      <div class="skill-pill-caption">{{ option.skillCaption }}</div>
-      <div class="skill-pill-caterogy">
-        {{ option.skillCategories.join(', ') }}
-      </div>
-    </mat-option>
-  </mat-autocomplete>
-</div>
+      <mat-option
+        appSkillAutocomplateOption
+        *ngFor="let option of autoComplateOptions"
+        [value]="option"
+        class="skill-pill-option"
+      >
+        <div class="skill-pill-caption">{{ option.skillCaption }}</div>
+        <div class="skill-pill-caterogy">
+          {{ option.skillCategories.join(', ') }}
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+</form>

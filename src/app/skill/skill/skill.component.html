@@ -2,7 +2,7 @@
   <div class="content-header">
     <div class="skill-pills">
       <div class="skill-pills__grid">
-        <ng-container *ngFor="let skill of skillHeaderModel.skills">
+        <ng-container *ngFor="let skill of skillHeaderModel.getSkills()">
           <app-skill-pill
             *ngIf="skill"
             [skill]="skill"

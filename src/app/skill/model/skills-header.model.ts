@@ -7,7 +7,7 @@ export class SkillsHeaderModel {
   readonly allSkillMap: Map<string, Skill>; // <skillId, skill>
 
   // 表示用データ
-  private _skills: SkillDataModel[] = [];
+  private skills: SkillDataModel[] = [];
 
   // チャートなどで利用するスキル識別用の色
   // スキル固有の色を持っているわけではなく、表示順で割当
@@ -24,14 +24,14 @@ export class SkillsHeaderModel {
   }
 
   toParam() {
-    return { skills: this._skills.map((d) => d.skillId).join(',') };
+    return { skills: this.skills.map((d) => d.skillId).join(',') };
   }
 
   setParam(paramMap: ParamMap): SkillsHeaderModel {
     // パラメータ重複を排除するため、Setで取得
     const skillIdSet = new Set<string>(paramMap.get('skills')?.split(','));
 
-    this._skills.splice(0);
+    this.skills.splice(0);
     for (const skillId of skillIdSet.values()) {
       this.appendSkill(skillId);
     }
@@ -48,8 +48,8 @@ export class SkillsHeaderModel {
       !this.getSkillIds().includes(skillId)
     ) {
       const skillData = this.allSkillMap.get(skillId) as SkillDataModel;
-      skillData.skillColor = this.getSkillColor(this._skills.length);
-      this._skills.push(skillData);
+      skillData.skillColor = this.getSkillColor(this.skills.length);
+      this.skills.push(skillData);
       return true;
     } else {
       return false;
@@ -61,11 +61,11 @@ export class SkillsHeaderModel {
    * @return 除去有無(そもそも追加されていないskillIdだった場合、除去されない)
    */
   removeSkill(skillId: string): boolean {
-    const beforeLenght = this._skills.length;
-    this._skills = this._skills.filter((s) => s.skillId !== skillId);
+    const beforeLenght = this.skills.length;
+    this.skills = this.skills.filter((s) => s.skillId !== skillId);
 
-    if (beforeLenght > this._skills.length) {
-      this._skills.forEach(
+    if (beforeLenght > this.skills.length) {
+      this.skills.forEach(
         (s, index) => (s.skillColor = this.getSkillColor(index))
       ); // indexがずれるので、colorを更新
       return true;
@@ -74,8 +74,9 @@ export class SkillsHeaderModel {
     }
   }
 
-  get skills(): SkillDataModel[] {
-    return this._skills;
+  getSkills(): ReadonlyArray<SkillDataModel> {
+    // appendSkill&removeSkill以外からの配列の変更を許容したくないので、ReadonlyArrayで返す
+    return this.skills;
   }
 
   private getSkillColor(index: number): string {
@@ -83,6 +84,6 @@ export class SkillsHeaderModel {
   }
 
   private getSkillIds(): string[] {
-    return this._skills.map((s) => s.skillId);
+    return this.skills.map((s) => s.skillId);
   }
 }

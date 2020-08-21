@@ -36,9 +36,13 @@ export class SkillSearchPillComponent implements OnInit {
     this.searchControl.valueChanges
       .pipe(startWith(''), debounceTime(500))
       .subscribe((key) => {
-        this.index.search<Skill[]>(key).then((result) => {
-          this.autoComplateOptions = result.hits.slice(0, 4);
-        });
+        if (key) {
+          this.index.search<Skill[]>(key).then((result) => {
+            this.autoComplateOptions = result.hits.slice(0, 4);
+          });
+        } else {
+          this.autoComplateOptions = [];
+        }
       });
   }
 

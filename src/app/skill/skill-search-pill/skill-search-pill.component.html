@@ -1,4 +1,4 @@
-<form class="search" (ngSubmit)="doSubmit()">
+<form class="search" (ngSubmit)="onSubmit()">
   <div class="skill-pill" #skillPill>
     <input
       class="skill-search"
@@ -10,7 +10,7 @@
     <mat-autocomplete
       #auto="matAutocomplete"
       [panelWidth]="autoComplateWidth"
-      (optionSelected)="doSelect($event.option.value)"
+      (optionSelected)="onSelect($event.option.value)"
     >
       <mat-option
         appSkillAutocomplateOption

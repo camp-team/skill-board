@@ -51,13 +51,13 @@ export class SkillComponent implements OnInit {
       this.skillHeaderModel.skills.length < this.maxSkillPillsLength;
   }
 
-  onRemoveSkillPill(skillId: string) {
+  onRemoveSkill(skillId: string) {
     if (this.skillHeaderModel.removeSkill(skillId)) {
       this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
     }
   }
 
-  onSearchSelectSkillPill(skillId: string) {
+  onAppendSkill(skillId: string) {
     if (this.skillHeaderModel.appendSkill(skillId)) {
       this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
     }

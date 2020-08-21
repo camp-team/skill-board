@@ -28,7 +28,7 @@ export class SkillSearchPillComponent implements OnInit {
 
   @ViewChild('skillPill') elm: ElementRef;
 
-  @Output() addPill: EventEmitter<string> = new EventEmitter();
+  @Output() appendSkill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
@@ -47,21 +47,21 @@ export class SkillSearchPillComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  doWindowResize(event) {
+  onWindowResize(event) {
     // autoComplateのサイズを、pillの要素幅に合わせる
     this.autoComplateWidth = this.elm.nativeElement.clientWidth;
   }
 
-  doSubmit() {
+  onSubmit() {
     this.index.search<Skill[]>(this.searchControl.value).then((result) => {
       if (result.hits.length > 0) {
-        this.doSelect((result.hits[0] as unknown) as Skill);
+        this.onSelect((result.hits[0] as unknown) as Skill);
       }
     });
   }
 
-  doSelect(skill: Skill) {
-    this.addPill.emit(skill.skillId);
+  onSelect(skill: Skill) {
+    this.appendSkill.emit(skill.skillId);
     this.searchControl.setValue('');
   }
 }

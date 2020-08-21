@@ -7,14 +7,14 @@
             *ngIf="skill"
             [skill]="skill"
             [isLargeFont]="isSkillPillLargeFont"
-            (removePill)="onRemoveSkillPill($event)"
+            (removeSkill)="onRemoveSkill($event)"
           >
           </app-skill-pill>
         </ng-container>
         <app-skill-search-pill
           *ngIf="isShowSkillPillSearch"
           [isLargeFont]="isSkillPillLargeFont"
-          (addPill)="onSearchSelectSkillPill($event)"
+          (appendSkill)="onAppendSkill($event)"
         ></app-skill-search-pill>
       </div>
     </div>

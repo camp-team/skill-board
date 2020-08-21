@@ -12,13 +12,13 @@ export class SkillPillComponent implements OnInit {
   @Input() isLargeFont: boolean;
   @Input() skill: SkillDataModel;
 
-  @Output() removePill: EventEmitter<string> = new EventEmitter();
+  @Output() removeSkill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
   ngOnInit(): void {}
 
-  doRemovePill() {
-    this.removePill.emit(this.skill.skillId);
+  onRemoveSkill() {
+    this.removeSkill.emit(this.skill.skillId);
   }
 }

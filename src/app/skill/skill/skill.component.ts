@@ -44,20 +44,20 @@ export class SkillComponent implements OnInit {
   refleshViewProperties() {
     // 幅広 かつ 4カラム以下(検索欄込み)の場合、skill-pill内のfontを大きくする
     this.isSkillPillLargeFont =
-      window.innerWidth >= 960 && this.skillHeaderModel.skills.length < 4;
+      window.innerWidth >= 960 && this.skillHeaderModel.getSkills().length < 4;
 
     // 検索欄はskillが最大件数未満の場合のみ表示
     this.isShowSkillPillSearch =
-      this.skillHeaderModel.skills.length < this.maxSkillPillsLength;
+      this.skillHeaderModel.getSkills().length < this.maxSkillPillsLength;
   }
 
-  onRemoveSkillPill(skillId: string) {
+  onRemoveSkill(skillId: string) {
     if (this.skillHeaderModel.removeSkill(skillId)) {
       this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
     }
   }
 
-  onSearchSelectSkillPill(skillId: string) {
+  onAppendSkill(skillId: string) {
     if (this.skillHeaderModel.appendSkill(skillId)) {
       this.updateParams(this.skillHeaderModel.toParam()); // 成功時のみパラメータ更新
     }

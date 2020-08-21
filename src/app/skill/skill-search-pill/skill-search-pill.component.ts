@@ -28,7 +28,7 @@ export class SkillSearchPillComponent implements OnInit {
 
   @ViewChild('skillPill') elm: ElementRef;
 
-  @Output() addPill: EventEmitter<string> = new EventEmitter();
+  @Output() appendSkill: EventEmitter<string> = new EventEmitter();
 
   constructor(private skillService: SkillService) {}
 
@@ -36,32 +36,32 @@ export class SkillSearchPillComponent implements OnInit {
     this.searchControl.valueChanges
       .pipe(startWith(''), debounceTime(500))
       .subscribe((key) => {
-        this.index.search<Skill[]>(key).then((result) => {
-          this.autoComplateOptions = result.hits.slice(0, 4);
-        });
+        if (key) {
+          this.index.search<Skill[]>(key).then((result) => {
+            this.autoComplateOptions = result.hits.slice(0, 4);
+          });
+        } else {
+          this.autoComplateOptions = [];
+        }
       });
   }
 
   @HostListener('window:resize', ['$event'])
-  doWindowResize(event) {
+  onWindowResize(event) {
     // autoComplateのサイズを、pillの要素幅に合わせる
     this.autoComplateWidth = this.elm.nativeElement.clientWidth;
   }
 
-  doSearchSkillKeyDown(event: KeyboardEvent) {
-    // input中にenter押下で、1番目の候補を選択したと見なす
-    // 入力から更新にラグを設けているのでautoComplateOptionsの値は使わず、直接検索実施する。
-    if (event.key === 'Enter') {
-      this.index.search<Skill[]>(this.searchControl.value).then((result) => {
-        if (result.hits.length > 0) {
-          this.doSelect((result.hits[0] as unknown) as Skill);
-        }
-      });
-    }
+  onSubmit() {
+    this.index.search<Skill[]>(this.searchControl.value).then((result) => {
+      if (result.hits.length > 0) {
+        this.onSelect((result.hits[0] as unknown) as Skill);
+      }
+    });
   }
 
-  doSelect(skill: Skill) {
-    this.addPill.emit(skill.skillId);
+  onSelect(skill: Skill) {
+    this.appendSkill.emit(skill.skillId);
     this.searchControl.setValue('');
   }
 }

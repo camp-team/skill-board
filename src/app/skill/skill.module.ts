@@ -12,9 +12,16 @@ import { SkillRoutingModule } from './skill-routing.module';
 import { SkillComponent } from './skill/skill.component';
 import { SkillPillComponent } from './skill-pill/skill-pill.component';
 import { SkillSearchPillComponent } from './skill-search-pill/skill-search-pill.component';
+import { SkillTransitionChartComponent } from './skill-transition-chart/skill-transition-chart.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [SkillComponent, SkillPillComponent, SkillSearchPillComponent],
+  declarations: [
+    SkillComponent,
+    SkillPillComponent,
+    SkillSearchPillComponent,
+    SkillTransitionChartComponent,
+  ],
   imports: [
     CommonModule,
     SkillRoutingModule,
@@ -26,6 +33,7 @@ import { SkillSearchPillComponent } from './skill-search-pill/skill-search-pill.
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
 })
 export class SkillModule {}

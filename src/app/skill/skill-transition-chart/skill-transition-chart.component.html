@@ -1,0 +1,32 @@
+<div class="widget-container">
+  <div class="widget-header">
+    <div class="title">
+      推移チャート
+      <button
+        class="widget-help-button"
+        mat-icon-button
+        aria-label="help_outline"
+      >
+        <mat-icon>help_outline</mat-icon>
+      </button>
+    </div>
+
+    <div class="actions">
+      <button class="widget-action-button" mat-icon-button aria-label="share">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="widget-contents">
+    <div class="chart-wrapper">
+      <app-transition-chart
+        [chartDataGroups]="
+          transitionSkills$ | async | skillsToChartDataGroup: 'price'
+        "
+        [xAxisLabel]="'集計日'"
+        [showYAxisLabel]="false"
+        [height]="360"
+      ></app-transition-chart>
+    </div>
+  </div>
+</div>

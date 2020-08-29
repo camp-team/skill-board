@@ -19,14 +19,7 @@
   </div>
   <div class="widget-contents">
     <div class="chart-wrapper">
-      <app-transition-chart
-        [chartDataGroups]="
-          transitionSkills$ | async | skillsToChartDataGroup: 'price'
-        "
-        [xAxisLabel]="'集計日'"
-        [showYAxisLabel]="false"
-        [height]="360"
-      ></app-transition-chart>
+      <canvas #canvas></canvas>
     </div>
   </div>
 </div>

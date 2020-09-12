@@ -1,6 +1,6 @@
-import { Skill } from 'functions/src/interface/skill';
 import { ParamMap } from '@angular/router';
 import { SkillDataModel } from './skill-data.model';
+import { Skill } from 'src/app/interfaces/skill';
 
 export class SkillsHeaderModel {
   // 全skillのDB値(数10件程度なので、都度アクセスさせず最初に読み込んでしまう)

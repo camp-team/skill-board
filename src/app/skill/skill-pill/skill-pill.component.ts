@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SkillService } from 'src/app/services/skill.service';
-import { Skill } from 'functions/src/interface/skill';
 import { SkillDataModel } from '../model/skill-data.model';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Skill } from 'functions/src/interface/skill';
+import { Skill } from 'src/app/interfaces/skill';
 
 export interface SkillDataModel extends Skill {
   skillColor: string;

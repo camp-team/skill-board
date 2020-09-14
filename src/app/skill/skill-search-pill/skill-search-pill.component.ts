@@ -11,7 +11,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { SkillService } from 'src/app/services/skill.service';
 import { startWith, debounceTime } from 'rxjs/operators';
-import { Skill } from 'functions/src/interface/skill';
+import { Skill } from 'src/app/interfaces/skill';
 
 @Component({
   selector: 'app-skill-search-pill',

@@ -44,7 +44,7 @@ export class SkillService {
     );
   }
 
-  getTransitionSkills(skillId: string): Observable<Skill[]> {
+  getSkillHistories(skillId: string): Observable<Skill[]> {
     // 累積データ(history)から、直近の10件を取得
     // ※firestore取得時は件数制限するために降順にしているが、pipe(map)で昇順に戻す
     return this.afs

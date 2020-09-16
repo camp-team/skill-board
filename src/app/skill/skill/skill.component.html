@@ -24,7 +24,9 @@
 
   <div class="content-body">
     <div class="content-wrapper">
-      <app-skill-transition-chart></app-skill-transition-chart>
+      <app-skill-transition-chart
+        [skills]="skillHeaderModel.getSkills()"
+      ></app-skill-transition-chart>
     </div>
   </div>
 </ng-container>

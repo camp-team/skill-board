@@ -16,7 +16,7 @@ export class SkillDetailTransitionComponent implements OnInit {
   constructor(private skillService: SkillService) {}
 
   ngOnInit(): void {
-    this.transitionSkills = this.skillService.getTransitionSkills(
+    this.transitionSkills = this.skillService.getSkillHistories(
       this.skill.skillId
     );
   }
